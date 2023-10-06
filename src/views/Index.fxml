@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.IndexController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/telas/index.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnVendas" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" onAction="#onVendasAction" onMouseEntered="#onVendasEntered" onMouseExited="#onVendasExited" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="VENDAS" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <StackPane.margin>
+            <Insets left="250.0" top="24.0" />
+         </StackPane.margin>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnProdutos" alignment="CENTER" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" onAction="#onProdutosAction" onMouseEntered="#onProdutosEntered" onMouseExited="#onProdutosExited" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="PRODUTOS" textAlignment="CENTER" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <StackPane.margin>
+            <Insets left="432.0" top="24.0" />
+         </StackPane.margin>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnRelatorios" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" onAction="#onRelatoriosAction" onMouseEntered="#onRelatoriosEntered" onMouseExited="#onRelatoriosExited" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="RELATÓRIOS" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <StackPane.margin>
+            <Insets left="612.0" top="24.0" />
+         </StackPane.margin>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</StackPane>
