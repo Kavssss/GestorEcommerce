@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import utils.LoadScene;
 import utils.Paths;
+import views.utils.Constraints;
 
 public class IndexController {
 	
@@ -20,32 +21,32 @@ public class IndexController {
 
     @FXML
     void onVendasEntered(MouseEvent event) {
-    	hoverEffect(btnVendas);
+    	Constraints.hoverEffect(btnVendas);
     }
     
     @FXML
     void onVendasExited(MouseEvent event) {
-    	unhoverEffect(btnVendas);
+    	Constraints.unhoverEffect(btnVendas);
     }
     
     @FXML
     void onProdutosEntered(MouseEvent event) {
-    	hoverEffect(btnProdutos);
+    	Constraints.hoverEffect(btnProdutos);
     }
     
     @FXML
     void onProdutosExited(MouseEvent event) {
-    	unhoverEffect(btnProdutos);
+    	Constraints.unhoverEffect(btnProdutos);
     }
     
     @FXML
     void onRelatoriosEntered(MouseEvent event) {
-    	hoverEffect(btnRelatorios);
+    	Constraints.hoverEffect(btnRelatorios);
     }
     
     @FXML
     void onRelatoriosExited(MouseEvent event) {
-    	unhoverEffect(btnRelatorios);
+    	Constraints.unhoverEffect(btnRelatorios);
     }
     
     @FXML
@@ -61,17 +62,6 @@ public class IndexController {
     @FXML
     void onRelatoriosAction(ActionEvent event) {
 
-    }
-
-    private void hoverEffect(Button btn) {
-    	String styles = btn.getStyle();
-    	btn.setStyle(styles.concat(" -fx-background-color: #00FFFF;"));
-    }
-    
-    private void unhoverEffect(Button btn) {
-    	String styles = btn.getStyle();
-    	btn.setStyle(styles.replace(" -fx-background-color: #00FFFF;", ""));
-    	
     }
     
 }

@@ -19,7 +19,7 @@
             <Image url="@../../images/telas/vendas.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnVendas" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="VENDAS" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="btnVendas" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" onMouseEntered="#onVendasEntered" onMouseExited="#onVendasExited" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="VENDAS" textFill="#00003c" StackPane.alignment="TOP_LEFT">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -33,7 +33,7 @@
             <Insets left="250.0" top="24.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="btnProdutos" alignment="CENTER" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="PRODUTOS" textAlignment="CENTER" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="btnProdutos" alignment="CENTER" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" onMouseEntered="#onProdutosEntered" onMouseExited="#onProdutosExited" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="PRODUTOS" textAlignment="CENTER" textFill="#00003c" StackPane.alignment="TOP_LEFT">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -47,7 +47,7 @@
             <Insets left="432.0" top="24.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="btnRelatorios" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="RELATÓRIOS" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="btnRelatorios" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" onMouseEntered="#onRelatoriosEntered" onMouseExited="#onRelatoriosExited" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="RELATÓRIOS" textFill="#00003c" StackPane.alignment="TOP_LEFT">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -128,7 +128,7 @@
             <Insets left="707.0" top="123.0" />
          </StackPane.margin>
       </TextField>
-      <Button fx:id="btnInserir" alignment="CENTER" contentDisplay="CENTER" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15;" text="INSERIR +" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="btnInserir" alignment="CENTER" contentDisplay="CENTER" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" onAction="#onInserirAction" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15;" text="INSERIR +" textFill="#00003c" StackPane.alignment="TOP_LEFT">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

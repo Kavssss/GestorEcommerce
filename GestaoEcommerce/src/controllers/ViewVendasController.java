@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,7 +18,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import utils.LoadScene;
 import views.utils.Constraints;
 
 public class ViewVendasController implements Initializable {
@@ -79,6 +82,36 @@ public class ViewVendasController implements Initializable {
     @FXML
     private ObservableList<String> obsList;
 
+    @FXML
+    void onVendasEntered(MouseEvent event) {
+    	Constraints.hoverEffect(btnVendas);
+    }
+    
+    @FXML
+    void onVendasExited(MouseEvent event) {
+    	Constraints.unhoverEffect(btnVendas);
+    }
+    
+    @FXML
+    void onProdutosEntered(MouseEvent event) {
+    	Constraints.hoverEffect(btnProdutos);
+    }
+    
+    @FXML
+    void onProdutosExited(MouseEvent event) {
+    	Constraints.unhoverEffect(btnProdutos);
+    }
+    
+    @FXML
+    void onRelatoriosEntered(MouseEvent event) {
+    	Constraints.hoverEffect(btnRelatorios);
+    }
+    
+    @FXML
+    void onRelatoriosExited(MouseEvent event) {
+    	Constraints.unhoverEffect(btnRelatorios);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     	Constraints.setTextFieldInteger(txtQtde);
@@ -94,6 +127,11 @@ public class ViewVendasController implements Initializable {
 		stage.setTitle("Morais Couros");
 		stage.setResizable(false);			
 		stage.show();
+    }
+    
+    @FXML
+    void onInserirAction(ActionEvent event) {
+    	LoadScene.callModalInserirVenda(Constraints.currentStage(event));
     }
     
 }

@@ -5,6 +5,10 @@ public interface Paths {
 		String INDEX = "/views/Index.fxml";
 		String VENDAS = "/views/ViewVendas.fxml";
 		String PRODUTOS = "/views/ViewProdutos.fxml";
-		String RELATORIOS = "/views/ViewRelatorios.fxml";		
-	}	
+		String RELATORIOS = "/views/ViewRelatorios.fxml";
+	}
+	
+	interface MODAL {
+		String INSERIR_VENDA = "/views/ModalInserir.fxml";		
+	}
 }

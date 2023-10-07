@@ -1,6 +1,10 @@
 package views.utils;
 
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class Constraints {
 	
@@ -28,4 +32,19 @@ public class Constraints {
 		});
 	}
 	
+	public static void hoverEffect(Button btn) {
+    	String styles = btn.getStyle();
+    	btn.setStyle(styles.concat(" -fx-background-color: #00FFFF;"));
+    }
+    
+    public static void unhoverEffect(Button btn) {
+    	String styles = btn.getStyle();
+    	btn.setStyle(styles.replace(" -fx-background-color: #00FFFF;", ""));
+    	
+    }
+	
+    public static Stage currentStage(ActionEvent event) {
+    	return (Stage) ((Node) event.getSource()).getScene().getWindow();
+    }
+    
 }
