@@ -1,0 +1,5 @@
+package backend.entities.shopeeEntity;
+
+public class ItemShopeeEntity {
+
+}

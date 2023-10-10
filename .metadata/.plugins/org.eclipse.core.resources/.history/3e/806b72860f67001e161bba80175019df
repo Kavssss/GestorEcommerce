@@ -1,0 +1,5 @@
+package frontend.utils;
+
+public enum StatusVenda {
+
+}

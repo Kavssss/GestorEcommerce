@@ -1,0 +1,5 @@
+package backend.entities.mercadoLivreEntity;
+
+public class VendaMercadoLivreEntity {
+
+}

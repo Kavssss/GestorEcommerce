@@ -1,0 +1,14 @@
+1696881193285	Rename type 'Paths'
+1696891570918	Delete element
+1696891991554	Rename type 'StringConstants'
+1696892246480	Rename package 'application'
+1696892256671	Rename package 'controllers'
+1696892282893	Rename package 'utils'
+1696892294096	Rename package 'views'
+1696892327459	Rename package 'views.utils'
+1696893017594	Delete element
+1696893121901	Delete element
+1696900934567	Rename type 'Entities'
+1696900994736	Move compilation unit
+1696901036707	Rename compilation unit 'ShopeeEntity.java'
+1696903486735	Move compilation unit

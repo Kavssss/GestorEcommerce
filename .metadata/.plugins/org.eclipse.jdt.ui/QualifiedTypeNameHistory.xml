@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="utils.Paths"/>
     <fullyQualifiedTypeName name="views.utils.Constraints"/>
+    <fullyQualifiedTypeName name="javafx.stage.Modality"/>
+    <fullyQualifiedTypeName name="javafx.event.ActionEvent"/>
+    <fullyQualifiedTypeName name="javafx.scene.Node"/>
+    <fullyQualifiedTypeName name="utils.Paths"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.Alert"/>
+    <fullyQualifiedTypeName name="utils.Paths.VIEWS"/>
+    <fullyQualifiedTypeName name="utils.Paths.MODAL"/>
+    <fullyQualifiedTypeName name="utils.StringConstants.LOJA"/>
+    <fullyQualifiedTypeName name="utils.StringConstants"/>
+    <fullyQualifiedTypeName name="utils.StringConstants.CONTA_ANUNCIO"/>
+    <fullyQualifiedTypeName name="javafx.css.converter.StringConverter"/>
+    <fullyQualifiedTypeName name="javafx.util.StringConverter"/>
+    <fullyQualifiedTypeName name="utils.DataUtils"/>
+    <fullyQualifiedTypeName name="javafx.scene.input.KeyEvent"/>
+    <fullyQualifiedTypeName name="javafx.scene.input.KeyCode"/>
+    <fullyQualifiedTypeName name="utils.StringConstants.STATUS"/>
+    <fullyQualifiedTypeName name="views.utils.Alerts"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.Alert.AlertType"/>
+    <fullyQualifiedTypeName name="java.io.IOException"/>
+    <fullyQualifiedTypeName name="frontend.utils.StatusVenda"/>
+    <fullyQualifiedTypeName name="frontend.utils.Constants.STATUS"/>
+    <fullyQualifiedTypeName name="frontend.utils.TipoAnuncioMercadoLivre"/>
+    <fullyQualifiedTypeName name="frontend.utils.TipoContaShopee"/>
+    <fullyQualifiedTypeName name="frontend.utils.Constants"/>
+    <fullyQualifiedTypeName name="frontend.utils.Constants.CONTA_ANUNCIO"/>
+    <fullyQualifiedTypeName name="backend.utils.Constants"/>
+    <fullyQualifiedTypeName name="models.DbException"/>
+    <fullyQualifiedTypeName name="backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity"/>
 </qualifiedTypeNameHistroy>

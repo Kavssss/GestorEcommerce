@@ -1,0 +1,22 @@
+package backend.repositories;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+
+import tipoVenda.shopee.VendaShopee;
+
+public interface ShopeeRepository  {
+
+	void insertAfter(LocalDate data) throws SQLException;
+    
+    void insertIn(LocalDate data) throws SQLException;
+    
+    List<VendaShopee> findAll() throws SQLException;
+    
+    List<VendaShopee> findVendasPorPeriodo(Integer dia, Integer mes, Integer ano);
+    
+    List<VendaShopee> findVendasPorCliente(String cliente);
+	
+}
+

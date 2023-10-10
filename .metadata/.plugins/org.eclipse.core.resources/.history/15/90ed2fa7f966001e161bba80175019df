@@ -1,0 +1,56 @@
+package models;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import frontend.views.utils.Alerts;
+import javafx.scene.control.Alert.AlertType;
+
+public class DAO {
+	
+	private Connection conexao;
+	private String url;
+	private String user;
+	private String password;
+
+	public DAO() {
+		try {
+			url = "jdbc:mysql://localhost:3306/bd_vendas";
+			user = "root";
+			password = "123456";
+			conexao = null;
+		} catch (Exception e) {
+			throw new DbException(e.getMessage());
+		}
+	}
+	
+	
+	/**
+     * Faz conexão ao Banco de Dados
+     * @return Connection
+     */
+    public Connection conectar() {
+        try {
+            conexao = DriverManager.getConnection(url, user, password);
+            return conexao;
+        }
+        catch (SQLException ex) {
+        	Alerts.showAlert("SQL Exception", "CONNECTION ERROR", ex.getMessage(), AlertType.ERROR);
+            return null;
+        }
+    }
+    
+    /**
+     * Desconecta com o Banco de Dados
+     * @param c - Connection
+	 * @return void
+     */
+    public void desconectar(Connection conexao) {
+        try {
+    		conexao.close();
+        } catch (SQLException ex) {
+            Alerts.showAlert("SQL Exception", "CONNECTION ERROR", ex.getMessage(), AlertType.ERROR);
+        }
+    } 
+}

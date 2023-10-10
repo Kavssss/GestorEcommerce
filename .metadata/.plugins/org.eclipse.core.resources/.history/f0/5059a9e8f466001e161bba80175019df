@@ -1,0 +1,33 @@
+package utils;
+
+public interface StringConstants {
+	
+	interface LOJA {
+		String SHOPEE = "Shopee";
+		String MERCADO_LIVRE = "Mercado Livre";
+		String TODOS = "Todos";
+	}
+	
+	interface CONTA_ANUNCIO {
+		String CONTA = "Conta";
+		String TIPO_ANUNCIO = "Tipo de Anúncio";
+		
+		String PRINCIPAL = "Principal";
+		String SECUNDARIA = "Secundária";
+		String CLASSICO = "Classico";
+		String PREMIUM = "Premium";
+		String CLASSICO_FG = "Clássico - Frete Grátis";
+		String PREMIUM_FG = "Premium - Frete Grátis";
+	}
+	
+	interface VIEWS {		
+		String INDEX = "/views/Index.fxml";
+		String VENDAS = "/views/ViewVendas.fxml";
+		String PRODUTOS = "/views/ViewProdutos.fxml";
+		String RELATORIOS = "/views/ViewRelatorios.fxml";
+	}
+	
+	interface MODAL {
+		String INSERIR_VENDA = "/views/ModalInserir.fxml";		
+	}
+}
