@@ -1,0 +1,16 @@
+package backend.services;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import backend.entities.geralEntity.VendaGeralFormatadaEntity;
+
+public class VendaGeralService {
+
+	VendaGeralRepository repository = new VendaGeralRepositoryImpl();
+	
+	public List<VendaGeralFormatadaEntity> findAll() throws SQLException {
+		return repository.findAll();
+	}
+	
+}

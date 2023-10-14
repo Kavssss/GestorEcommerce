@@ -1,0 +1,16 @@
+package frontend.services;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ViewVendasService {
+	
+	public static void seearchParameters(List<Object> list) {		
+		List<Boolean> isNull = new ArrayList<>();
+		for(Object obj : list) {
+			isNull.add(obj != null);
+		}
+		
+	}
+	
+}

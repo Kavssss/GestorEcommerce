@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import backend.entities.shopeeEntity.ItemShopeeEntity;
 import backend.entities.shopeeEntity.VendaShopeeEntity;
-import backend.utils.Constants;
+import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
 import models.DAO;
 import models.DbException;
 
@@ -18,7 +19,7 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     ResultSet resultSet;
 
     @Override
-	public List<VendaShopeeEntity> findAll() throws SQLException {
+	public List<VendaShopeeFormatadaEntity> findAll() throws SQLException {
     	try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(getQuerySearch());
@@ -30,7 +31,7 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 	}
 
     @Override
-    public List<VendaShopeeEntity> findVendasPorPeriodo(Integer dia, Integer mes, Integer ano) {
+    public List<VendaShopeeFormatadaEntity> findVendasPorPeriodo(Integer dia, Integer mes, Integer ano) {
     	StringBuilder sql = new StringBuilder(getQuerySearch());
     	if (Objects.nonNull(ano))
     		sql.append(" AND year(venda.DATA_VENDA) = ?");
@@ -51,7 +52,7 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     }
     
     @Override
-    public List<VendaShopeeEntity> findVendasPorCliente(String cliente) {
+    public List<VendaShopeeFormatadaEntity> findVendasPorCliente(String cliente) {
     	StringBuilder sql = new StringBuilder(getQuerySearch());
     	sql.append(" AND venda.CLIENTE LIKE %?%");
     	try {
@@ -88,8 +89,8 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     }
     
     private String getQuerySearch() {
-    	StringBuilder sql = new StringBuilder("SELECT venda.ID_VENDA, venda.DATA_VENDA, venda.CONTA, dados.QTDE, item.MODELO, ");
-    	sql.append(" item.VARIACAO, venda.CLIENTE, dados.VALOR_UNITARIO, dados.VALOR_TOTAL, dados.VALOR_RECEBIDO, venda.STATUS ");
+    	StringBuilder sql = new StringBuilder("SELECT venda.ID_VENDA, venda.DATA_VENDA, venda.CONTA, dados.QTDE, item.COD_ITEM, ");
+    	sql.append(" venda.CLIENTE, dados.VALOR_UNITARIO, dados.VALOR_TOTAL, dados.VALOR_RECEBIDO, venda.STATUS ");
     	sql.append(" FROM TB_VENDA_SHOPEE venda ");
     	sql.append(" INNER JOIN TB_DADOS_VENDA_SHOPEE dados ON dados.ID_VENDA = venda.ID_VENDA ");
     	sql.append(" INNER JOIN TB_ITEM item ON item.COD_ITEM = dados.COD_ITEM ");
@@ -97,77 +98,108 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     	return sql.toString();
     }
 
-    private void insertTbVenda(VendaShopeeEntity venda) throws SQLException {
-    	StringBuilder sql = new StringBuilder("INSERT INTO TB_VENDA_SHOPEE(");
-    	sql.append("DATA_VENDA, CONTA, CLIENTE, STATUS) VALUES");
-		sql.append("(");
-    	sql.append(colocaAspas(venda.getData().toString())).append(", ");
-    	sql.append(colocaAspas(venda.getConta())).append(", ");
-    	sql.append(colocaAspas(venda.getCliente())).append(", ");
-    	sql.append(colocaAspas(venda.getStatus()));
-    	sql.append(")");
-    	executeQueryUpdate(sql.toString());
-    }
+//    private void insertTbVenda(VendaShopeeEntity venda) throws SQLException {
+//    	StringBuilder sql = new StringBuilder("INSERT INTO TB_VENDA_SHOPEE(");
+//    	sql.append("DATA_VENDA, CONTA, CLIENTE, STATUS) VALUES");
+//		sql.append("(");
+//    	sql.append(colocaAspas(venda.getData().toString())).append(", ");
+//    	sql.append(colocaAspas(venda.getConta())).append(", ");
+//    	sql.append(colocaAspas(venda.getCliente())).append(", ");
+//    	sql.append(colocaAspas(venda.getStatus()));
+//    	sql.append(")");
+//    	executeQueryUpdate(sql.toString());
+//    }
+//
+//    private void insertTbItem(VendaShopeeEntity venda) throws SQLException {
+//    	StringBuilder sql = new StringBuilder("INSERT INTO TB_ITEM VALUES");
+//    	Integer sizeQuery = sql.toString().length();
+//		for (ItemShopee item : venda.getItens()) {
+//    		if (!verificaItemExistente(item.getCodItem())) {
+//				sql.append("(");
+//				sql.append(colocaAspas(item.getCodItem())).append(", ");
+//		    	sql.append(colocaAspas(item.getModelo())).append(", ");
+//		    	sql.append(colocaAspas(item.getVariacao()));
+//		    	sql.append("), ");
+//    		}
+//		}
+//		if (sql.toString().length() > sizeQuery) {
+//			removeVirgula(sql);
+//			executeQueryUpdate(sql.toString());
+//		}
+//    }
+//    
+//    private void insertTbDadosVenda(VendaShopeeEntity venda) throws SQLException {
+//    	StringBuilder sql = new StringBuilder("INSERT INTO TB_DADOS_VENDA_SHOPEE VALUES ");
+//    	for (ItemShopee item : venda.getItens()) {
+//    		sql.append("(");
+//    		sql.append(colocaAspas(findLastId(Constants.SHOPEE))).append(", ");
+//	    	sql.append(colocaAspas(item.getCodItem())).append(", ");
+//	    	sql.append(colocaAspas(item.getQtde().toString())).append(", ");
+//	    	sql.append(colocaAspas(item.getValorUnitario().toString())).append(", ");
+//	    	sql.append(colocaAspas(item.getValorTotal().toString())).append(", ");
+//	    	sql.append(colocaAspas(item.getValorRecebido().toString()));
+//	    	sql.append("), ");
+//    	}
+//    	removeVirgula(sql);
+//    	executeQueryUpdate(sql.toString());
+//    }
 
-    private void insertTbItem(VendaShopeeEntity venda) throws SQLException {
-    	StringBuilder sql = new StringBuilder("INSERT INTO TB_ITEM VALUES");
-    	Integer sizeQuery = sql.toString().length();
-		for (ItemShopee item : venda.getItens()) {
-    		if (!verificaItemExistente(item.getCodItem())) {
-				sql.append("(");
-				sql.append(colocaAspas(item.getCodItem())).append(", ");
-		    	sql.append(colocaAspas(item.getModelo())).append(", ");
-		    	sql.append(colocaAspas(item.getVariacao()));
-		    	sql.append("), ");
-    		}
-		}
-		if (sql.toString().length() > sizeQuery) {
-			removeVirgula(sql);
-			executeQueryUpdate(sql.toString());
-		}
-    }
-    
-    private void insertTbDadosVenda(VendaShopeeEntity venda) throws SQLException {
-    	StringBuilder sql = new StringBuilder("INSERT INTO TB_DADOS_VENDA_SHOPEE VALUES ");
-    	for (ItemShopee item : venda.getItens()) {
-    		sql.append("(");
-    		sql.append(colocaAspas(findLastId(Constants.SHOPEE))).append(", ");
-	    	sql.append(colocaAspas(item.getCodItem())).append(", ");
-	    	sql.append(colocaAspas(item.getQtde().toString())).append(", ");
-	    	sql.append(colocaAspas(item.getValorUnitario().toString())).append(", ");
-	    	sql.append(colocaAspas(item.getValorTotal().toString())).append(", ");
-	    	sql.append(colocaAspas(item.getValorRecebido().toString()));
-	    	sql.append("), ");
-    	}
-    	removeVirgula(sql);
-    	executeQueryUpdate(sql.toString());
-    }
-
-    private List<VendaShopeeEntity> resultSetToVenda(ResultSet resultSet) throws SQLException {
+    private List<VendaShopeeFormatadaEntity> resultSetToVenda(ResultSet resultSet) throws SQLException {
     	List<VendaShopeeEntity> vendas = new ArrayList<>();
-		if (resultSet.next()) {
-    		List<String> list = new ArrayList<>();
-    		for (int i = 2; i < 11; i++) 
-	        	list.add(resultSet.getString(i));
-        	if (!vendas.isEmpty() && vendas.get(vendas.size() - 1).getId().equals(resultSet.getLong(1)))
-				vendas.get(vendas.size() - 1).addItens(list.get(2), list.get(3), list.get(4), list.get(6));
-    		else
-    			vendas.add(new VendaShopeeEntity(resultSet.getString(1), list));
+    	Long lastId = 0L;
+		while (resultSet.next()) {
+			ItemShopeeEntity item = new ItemShopeeEntity(
+					resultSet.getString(5),
+					resultSet.getInt(4),
+					resultSet.getDouble(7),
+					resultSet.getDouble(8),
+					resultSet.getDouble(9));
+			if (!lastId.equals(resultSet.getLong(1))) {
+				vendas.add(new VendaShopeeEntity(
+						resultSet.getLong(1),
+						resultSet.getDate(2),
+						resultSet.getString(3),
+						resultSet.getString(6),
+						resultSet.getString(10)));
+			}
+			vendas.get(vendas.size()-1).addItem(item);
+			lastId = resultSet.getLong(1);
     	}
     	this.desconectar(this.conexao);
-    	return vendas;
+    	return buildVendaFormatada(vendas);
     }
-
-    private List<VendaShopeeEntity> excelToObjects(List<List<String>> matrizDeString) {
-    	List<VendaShopeeEntity> vendasShopee = new ArrayList<>();
-    	for (List<String> linha : matrizDeString) {   		
-    		if (linha.get(8).isBlank()) 
-    			vendasShopee.get(vendasShopee.size() - 1).addItens(
-    					linha.get(2), linha.get(3), linha.get(4), linha.get(6));
-    		else
-    			vendasShopee.add(new VendaShopeeEntity(linha));
+    
+    private List<VendaShopeeFormatadaEntity> buildVendaFormatada(List<VendaShopeeEntity> vendas) {
+    	List<VendaShopeeFormatadaEntity> list = new ArrayList<>();
+    	
+    	for (VendaShopeeEntity venda : vendas) {
+    		for (int i = 0; i < venda.getItens().size(); i++) {
+    			ItemShopeeEntity item = venda.getItens().get(i);
+    			if (i > 0) {
+    	    		VendaShopeeFormatadaEntity vendaItem = new VendaShopeeFormatadaEntity(
+		    				item.getCodItem(),
+			    			item.getQtde(),
+			    			item.getValorUnitario(),
+			    			item.getValorTotal(),
+			    			item.getValorRecebido());
+    	    		list.add(vendaItem);
+    	    		continue;
+    	    	}
+    	    	VendaShopeeFormatadaEntity vendaItem = new VendaShopeeFormatadaEntity(
+    	    			venda.getId(),
+    	    			venda.getData(),
+    	    			venda.getConta(),
+    	    			venda.getCliente(),
+    	    			venda.getStatus(),
+    	    			item.getCodItem(),
+    	    			item.getQtde(),
+    	    			item.getValorUnitario(),
+    	    			item.getValorTotal(),
+    	    			item.getValorRecebido());
+    	    	list.add(vendaItem);
+    	    }
     	}
-    	return vendasShopee;
+    	return list;
     }
   
 }

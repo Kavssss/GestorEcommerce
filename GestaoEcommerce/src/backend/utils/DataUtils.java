@@ -1,23 +1,34 @@
 package backend.utils;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DataUtils {
 	
-	public static LocalDate stringExcelToLocalDate(String in) {  // entrada no formato dd/mmm./aaaa
+	public static Date stringExcelToDate(String in) {  // entrada no formato dd/mmm./aaaa
 		String dia = in.substring(0, 2);
 		String mes = retornaMes(in.substring(3, 6));
 		String ano = in.substring(8, 12);
 		
 		StringBuilder data = new StringBuilder(dia).append("/").append(mes).append("/").append(ano);
-		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
-		return LocalDate.parse(data.toString(), formato);
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			return formato.parse(data.toString());
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
-	public static LocalDate stringToLocalDate(String in) {  // entrada no formato dd/MM/yyyy
-		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyy"); 
-		return LocalDate.parse(in, formato);
+	public static Date stringToDate(String in) {  // entrada no formato dd/MM/yyyy
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			return formato.parse(in);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public static String formataData(Integer dia, Integer mes, Integer ano) {	

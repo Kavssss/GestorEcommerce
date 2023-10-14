@@ -1,0 +1,5 @@
+package backend.repositories.vendaGeral;
+
+public interface VendaGeralRepository {
+
+}

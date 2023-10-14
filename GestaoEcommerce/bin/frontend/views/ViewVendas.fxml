@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ViewVendasController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ViewVendasController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
          <image>
@@ -82,7 +82,7 @@
             <Insets left="446.0" top="76.0" />
          </StackPane.margin>
       </TextField>
-      <ComboBox fx:id="cbContaAnuncio" maxHeight="29.0" maxWidth="190.0" minHeight="29.0" minWidth="190.0" onAction="#onContaAction" prefHeight="29.0" prefWidth="190.0" promptText="Conta" style="-fx-background-color: rgb(128,128,158); -fx-text-fill: rgb(0,0,0); -fx-background-radius: 15;" StackPane.alignment="TOP_LEFT">
+      <ComboBox fx:id="cbContaAnuncio" maxHeight="29.0" maxWidth="190.0" minHeight="29.0" minWidth="190.0" prefHeight="29.0" prefWidth="190.0" promptText="Conta" style="-fx-background-color: rgb(128,128,158); -fx-text-fill: rgb(0,0,0); -fx-background-radius: 15;" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
             <Insets left="647.0" top="76.0" />
          </StackPane.margin>
@@ -117,7 +117,7 @@
             <Insets left="287.0" top="123.0" />
          </StackPane.margin>
       </TextField>
-      <ComboBox fx:id="cbStatus" maxHeight="29.0" maxWidth="190.0" minHeight="29.0" minWidth="190.0" onAction="#onStatusAction" prefHeight="29.0" prefWidth="190.0" promptText="Status" style="-fx-background-color: rgb(128,128,158); -fx-text-fill: rgb(0,0,0); -fx-background-radius: 15;" StackPane.alignment="TOP_LEFT">
+      <ComboBox fx:id="cbStatus" maxHeight="29.0" maxWidth="190.0" minHeight="29.0" minWidth="190.0" prefHeight="29.0" prefWidth="190.0" promptText="Status" style="-fx-background-color: rgb(128,128,158); -fx-text-fill: rgb(0,0,0); -fx-background-radius: 15;" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
             <Insets left="707.0" top="123.0" />
          </StackPane.margin>
@@ -180,15 +180,15 @@
       </Button>
       <TableView fx:id="tbGeral" maxHeight="345.0" maxWidth="924.0" minHeight="345.0" minWidth="924.0" prefHeight="345.0" prefWidth="924.0" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" StackPane.alignment="TOP_LEFT">
         <columns>
-          <TableColumn editable="false" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" resizable="false" sortable="false" text="DATA" />
-            <TableColumn editable="false" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" resizable="false" sortable="false" text="QTD" />
-            <TableColumn editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" text="ITEM" />
-            <TableColumn editable="false" maxWidth="324.0" minWidth="324.0" prefWidth="324.0" resizable="false" sortable="false" text="CLIENTE" />
-            <TableColumn editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" resizable="false" sortable="false" text="UNIT" />
-            <TableColumn editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" resizable="false" sortable="false" text="TOTAL" />
-            <TableColumn editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" resizable="false" sortable="false" text="RECEBIDO" />
-            <TableColumn editable="false" maxWidth="80.0" minWidth="80.0" resizable="false" sortable="false" text="STATUS" />
-            <TableColumn maxWidth="44.0" minWidth="44.0" prefWidth="44.0" resizable="false" text="CANAL" />
+          <TableColumn fx:id="columnDataTbGeral" editable="false" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" resizable="false" sortable="false" text="DATA" />
+            <TableColumn fx:id="columnClienteTbGeral" editable="false" maxWidth="324.0" minWidth="324.0" prefWidth="324.0" resizable="false" sortable="false" text="CLIENTE" />
+            <TableColumn fx:id="columnQtdTbGeral" editable="false" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" resizable="false" sortable="false" text="QTD" />
+            <TableColumn fx:id="columnItemTbGeral" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" text="ITEM" />
+            <TableColumn fx:id="columnUnitTbGeral" editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" resizable="false" sortable="false" text="UNIT" />
+            <TableColumn fx:id="columnTotalTbGeral" editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" resizable="false" sortable="false" text="TOTAL" />
+            <TableColumn fx:id="columnRecebidoTbGeral" editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" resizable="false" sortable="false" text="RECEBIDO" />
+            <TableColumn fx:id="columnStatusTbGeral" editable="false" maxWidth="80.0" minWidth="80.0" resizable="false" sortable="false" text="STATUS" />
+            <TableColumn fx:id="columnCanalTbGeral" maxWidth="44.0" minWidth="44.0" prefWidth="44.0" resizable="false" text="CANAL" />
         </columns>
          <StackPane.margin>
             <Insets left="50.0" top="202.0" />
@@ -196,31 +196,31 @@
       </TableView>
       <TableView fx:id="tbShopee" layoutX="60.0" layoutY="212.0" maxHeight="345.0" maxWidth="924.0" minHeight="345.0" minWidth="924.0" prefHeight="345.0" prefWidth="924.0" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" StackPane.alignment="TOP_LEFT">
          <columns>
-            <TableColumn editable="false" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" sortable="false" text="DATA" />
-            <TableColumn maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="CONTA" />
-            <TableColumn editable="false" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" sortable="false" text="QTD" />
-            <TableColumn editable="false" maxWidth="115.0" minWidth="115.0" prefWidth="115.0" sortable="false" text="ITEM" />
-            <TableColumn editable="false" maxWidth="279.0" minWidth="279.0" prefWidth="279.0" sortable="false" text="CLIENTE" />
-            <TableColumn editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" sortable="false" text="UNIT" />
-            <TableColumn editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" sortable="false" text="TOTAL" />
-            <TableColumn editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" sortable="false" text="RECEBIDO" />
-            <TableColumn editable="false" maxWidth="80.0" minWidth="80.0" sortable="false" text="STATUS" />
+            <TableColumn fx:id="columnDataTbShopee" editable="false" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="DATA" />
+            <TableColumn fx:id="columnContaTbShopee" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="CONTA" />
+            <TableColumn fx:id="columnClienteTbShopee" editable="false" maxWidth="278.0" minWidth="275.0" prefWidth="278.0" sortable="false" style="-fx-alignment: CENTER;" text="CLIENTE" />
+            <TableColumn fx:id="columnQtdTbShopee" editable="false" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" sortable="false" style="-fx-alignment: CENTER;" text="QTD" />
+            <TableColumn fx:id="columnItemTbShopee" editable="false" maxWidth="115.0" minWidth="115.0" prefWidth="115.0" sortable="false" style="-fx-alignment: CENTER;" text="ITEM" />
+            <TableColumn fx:id="columnUnitTbShopee" editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" sortable="false" style="-fx-alignment: CENTER;" text="UNIT" />
+            <TableColumn fx:id="columnTotalTbShopee" editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" sortable="false" style="-fx-alignment: CENTER;" text="TOTAL" />
+            <TableColumn fx:id="columnRecebidoTbShopee" editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" sortable="false" style="-fx-alignment: CENTER;" text="RECEBIDO" />
+            <TableColumn fx:id="columnStatusTbShopee" editable="false" maxWidth="80.0" minWidth="80.0" sortable="false" style="-fx-alignment: CENTER;" text="STATUS" />
          </columns>
          <StackPane.margin>
             <Insets left="50.0" top="202.0" />
          </StackPane.margin>
       </TableView>
-      <TableView fx:id="tbMercadoLivre" layoutX="60.0" layoutY="212.0" maxHeight="345.0" maxWidth="924.0" minHeight="345.0" minWidth="924.0" prefHeight="345.0" prefWidth="924.0" style="-fx-background-radius: 7; -fx-background-color: transparent;" StackPane.alignment="TOP_LEFT">
+      <TableView fx:id="tbMercadoLivre" layoutX="60.0" layoutY="212.0" maxHeight="345.0" maxWidth="924.0" minHeight="345.0" minWidth="924.0" prefHeight="345.0" prefWidth="924.0" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" StackPane.alignment="TOP_LEFT">
          <columns>
-            <TableColumn editable="false" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" sortable="false" text="DATA" />
-            <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="ANÚNCIO" />
-            <TableColumn editable="false" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" sortable="false" text="QTD" />
-            <TableColumn editable="false" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" sortable="false" text="ITEM" />
-            <TableColumn editable="false" maxWidth="279.0" minWidth="279.0" prefWidth="279.0" sortable="false" text="CLIENTE" />
-            <TableColumn editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" sortable="false" text="UNIT" />
-            <TableColumn editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" sortable="false" text="TOTAL" />
-            <TableColumn editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" sortable="false" text="RECEBIDO" />
-            <TableColumn editable="false" maxWidth="80.0" minWidth="80.0" sortable="false" text="STATUS" />
+            <TableColumn fx:id="columnDataTbMercadoLivre" editable="false" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" sortable="false" text="DATA" />
+            <TableColumn fx:id="columnClienteTbMercadoLivre" editable="false" maxWidth="279.0" minWidth="279.0" prefWidth="279.0" sortable="false" text="CLIENTE" />
+            <TableColumn fx:id="columnAnuncioTbMercadoLivre" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="ANÚNCIO" />
+            <TableColumn fx:id="columnQtdTbMercadoLivre" editable="false" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" sortable="false" text="QTD" />
+            <TableColumn fx:id="columnItemTbMercadoLivre" editable="false" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" sortable="false" text="ITEM" />
+            <TableColumn fx:id="columnUnitTbMercadoLivre" editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" sortable="false" text="UNIT" />
+            <TableColumn fx:id="columnTotalTbMercadoLivre" editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" sortable="false" text="TOTAL" />
+            <TableColumn fx:id="columnRecebidoTbMercadoLivre" editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" sortable="false" text="RECEBIDO" />
+            <TableColumn fx:id="columnStatusTbMercadoLivre" editable="false" maxWidth="80.0" minWidth="80.0" sortable="false" text="STATUS" />
          </columns>
          <StackPane.margin>
             <Insets left="50.0" top="202.0" />

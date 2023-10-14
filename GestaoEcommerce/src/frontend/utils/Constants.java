@@ -5,7 +5,7 @@ public interface Constants {
 	interface LOJA {
 		String SHOPEE = "Shopee";
 		String MERCADO_LIVRE = "Mercado Livre";
-		String TODOS = "Todos";
+		String GERAL = "Geral";
 	}
 	
 	interface CONTA_ANUNCIO {

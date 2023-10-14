@@ -1,31 +1,35 @@
 package backend.controllers;
 
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 
-import service.ShopeeService;
-import utils.DataUtils;
+import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
+import backend.services.VendaShopeeService;
 
 public class VendaShopeeController {
 
-	ShopeeService service = new ShopeeService();
+	VendaShopeeService service = new VendaShopeeService();
 	
 	/**
 	 * Recupera todas as vendas
 	 * @return Todas as vendas
 	 * @throws SQLException 
 	 */
-	public void findAll() throws SQLException {
-		service.findAll();
+	public List<VendaShopeeFormatadaEntity> findAll() throws SQLException {
+		return service.findAll();
 	}
+	
+	
 	
 	/**
 	 * Recupera as vendas da tabela Excel a partir da data passada como parâmetro e insere no banco de dados
 	 * @param data no formato "aaaa-MM-dd"
 	 * @return Mensagem de sucesso ou erro ao inserir
 	 */
-	public void inserirAPartirDe(String data) throws SQLException {
-		service.inserirAPartirDe(DataUtils.stringToLocalDate(data));
-	}
+//	public void inserirAPartirDe(String data) throws SQLException {
+//		service.inserirAPartirDe(DataUtils.stringToLocalDate(data));
+//	}
 	
 	/**
 	 * Recupera as vendas da tabela Excel a na data passada como parâmetro e insere no banco de dados
@@ -33,9 +37,9 @@ public class VendaShopeeController {
 	 * @return Mensagem de sucesso ou erro ao inserir
 	 * @throws SQLException 
 	 */
-	public void inserirEm(String data) throws SQLException {
-		service.inserirEm(DataUtils.stringToLocalDate(data));
-	}
+//	public void inserirEm(String data) throws SQLException {
+//		service.inserirEm(DataUtils.stringToLocalDate(data));
+//	}
 	
 	/**
 	 * Recupera o valor total das vendas referentes ao mês passado por parâmetro

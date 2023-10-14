@@ -1,0 +1,15 @@
+package frontend.services;
+
+import java.util.List;
+
+public class ViewVendasService {
+	
+	public static void seearchParameters(List<Object> list) {
+		
+		for(Object obj : list) {
+			
+		}
+		
+	}
+	
+}

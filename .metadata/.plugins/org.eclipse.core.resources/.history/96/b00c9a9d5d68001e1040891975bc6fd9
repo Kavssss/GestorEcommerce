@@ -1,0 +1,9 @@
+package frontend.utils.enuns;
+
+public enum TipoCanalVenda {
+
+	GERAL,
+	SHOPEE,
+	MERCADO_LIVRE
+	
+}

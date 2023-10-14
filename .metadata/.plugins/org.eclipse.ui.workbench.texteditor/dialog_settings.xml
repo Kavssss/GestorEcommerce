@@ -1,33 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="vendaShopee"/>
+		<item key="selection" value="cbCanal.getSelectionModel().getSelectedItem()"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="cbCanal.getSelectionModel().getSelectedItem()"/>
+			<item value="Shopee"/>
+			<item value="vs"/>
+			<item value="venda"/>
+			<item value="VendaShopeeEntity"/>
+			<item value="private"/>
+			<item value="&lt;?"/>
+			<item value="MercadoLivre"/>
+			<item value="TbGeral"/>
 			<item value="VendaShopee"/>
 			<item value="ItemML"/>
 			<item value="VendaML"/>
 			<item value="ItemShopee"/>
 			<item value="prompt"/>
 			<item value="unConstraints.hoverEffect"/>
-			<item value="hoverEffect"/>
 		</list>
 		<list key="replacehistory">
+			<item value="selection"/>
+			<item value="Geral"/>
+			<item value="vml"/>
+			<item value="vs"/>
+			<item value="VendaShopeeFormatadaEntity"/>
+			<item value="protected"/>
+			<item value="&lt;VendaShopeeEntity"/>
+			<item value="&lt;VendaMercadoLivreEntity"/>
+			<item value="Shopee"/>
+			<item value="TbMercadoLivre"/>
 			<item value="VendaShopeeEntity"/>
 			<item value="ItemMercadoLivreEntity"/>
 			<item value="VendaMercadoLivreEntity"/>
 			<item value="ItemShopeeEntity"/>
 			<item value="Constraints.unhoverEffect"/>
-			<item value="Constraints.hoverEffect"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="764"/>
-		<item key="DIALOG_Y_ORIGIN" value="60"/>
+		<item key="DIALOG_X_ORIGIN" value="1018"/>
+		<item key="DIALOG_Y_ORIGIN" value="10"/>
 		<item key="DIALOG_WIDTH" value="322"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

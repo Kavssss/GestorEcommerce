@@ -1,0 +1,7 @@
+package backend.entities.geralEntity;
+
+import backend.entities.ItemEntity;
+
+public class ItemGeralEntity extends ItemEntity {
+
+}

@@ -29,4 +29,9 @@
     <fullyQualifiedTypeName name="backend.utils.Constants"/>
     <fullyQualifiedTypeName name="models.DbException"/>
     <fullyQualifiedTypeName name="backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity"/>
+    <fullyQualifiedTypeName name="frontend.utils.Constants.LOJA"/>
+    <fullyQualifiedTypeName name="com.mysql.jdbc.PreparedStatement"/>
+    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="java.util.Objects"/>
 </qualifiedTypeNameHistroy>

@@ -1,42 +1,18 @@
 package backend.services;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import repository.shopee.ShopeeRepository;
-import repository.shopee.ShopeeRepositoryImpl;
-import tipoVenda.shopee.ItemShopee;
-import tipoVenda.shopee.VendaShopee;
+import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
+import backend.repositories.vendaShopee.VendaShopeeRepository;
+import backend.repositories.vendaShopee.VendaShopeeRepositoryImpl;
 
 public class VendaShopeeService {
 
-	ShopeeRepository repository = new ShopeeRepositoryImpl();
+	VendaShopeeRepository repository = new VendaShopeeRepositoryImpl();
 	
-	public void inserirAPartirDe(LocalDate data) throws SQLException {
-		repository.insertAfter(data);
-	}
-	
-	public void inserirEm(LocalDate data) throws SQLException {
-		repository.insertIn(data);
-	}
-	
-	public void findAll() throws SQLException {
-		List<VendaShopee> vendas = repository.findAll();
-		String qtdePedidos = calculaQtdePedidos(vendas).toString();
-		String valorTotal = String.format("%.2f", calculaValorTotal(vendas));
-		String mediaPorPedido = String.format("%.2f", calculaValorTotal(vendas) / calculaQtdePedidos(vendas));
-		String qtdeItens = calculaQtdeItens(vendas).toString();
-		String mediaPorItem = String.format("%.2f", calculaValorTotal(vendas) / calculaQtdeItens(vendas));		
-		String valorRecebidoTotal = String.format("%.2f", calculaValorRecebido(vendas));
-		
-		System.out.println("Total de pedidos: ".concat(qtdePedidos).concat(" pedidos"));
-		System.out.println("Valor total: R$".concat(valorTotal));
-		System.out.println("Médida por pedido: R$".concat(mediaPorPedido));
-		System.out.println("Total de itens: ".concat(qtdeItens));
-		System.out.println("Médida por item: R$".concat(mediaPorItem));
-		System.out.println("Total recebido: R$".concat(valorRecebidoTotal));
+	public List<VendaShopeeFormatadaEntity> findAll() throws SQLException {
+		return repository.findAll();
 	}
 	
 //	public String findTotalVendasPorMes(Integer mes, Integer ano) {
@@ -107,33 +83,33 @@ public class VendaShopeeService {
 //    	return sb.toString();
 //    }
 	
-	private Integer calculaQtdePedidos(List<VendaShopee> vendas) {
-		return vendas.stream()
-			    .map(VendaShopee::getId)
-			    .collect(Collectors.toSet())
-			    .size();
-	}
-	
-	private Integer calculaQtdeItens(List<VendaShopee> vendas) {
-		return vendas.stream()
-			    .flatMap(venda -> venda.getItens().stream())
-			    .mapToInt(ItemShopee::getQtde)
-			    .sum();
-	}
-	
-	private Double calculaValorTotal(List<VendaShopee> vendas) {
-		return vendas.stream()
-				.flatMap(venda -> venda.getItens().stream())
-				.mapToDouble(ItemShopee::getValorTotal)
-				.sum();
-	}
-	
-	private Double calculaValorRecebido(List<VendaShopee> vendas) {
-		return vendas.stream()
-				.flatMap(venda -> venda.getItens().stream())
-				.mapToDouble(ItemShopee::getValorRecebido)
-				.sum();
-	}
+//	private Integer calculaQtdePedidos(List<VendaShopee> vendas) {
+//		return vendas.stream()
+//			    .map(VendaShopee::getId)
+//			    .collect(Collectors.toSet())
+//			    .size();
+//	}
+//	
+//	private Integer calculaQtdeItens(List<VendaShopee> vendas) {
+//		return vendas.stream()
+//			    .flatMap(venda -> venda.getItens().stream())
+//			    .mapToInt(ItemShopee::getQtde)
+//			    .sum();
+//	}
+//	
+//	private Double calculaValorTotal(List<VendaShopee> vendas) {
+//		return vendas.stream()
+//				.flatMap(venda -> venda.getItens().stream())
+//				.mapToDouble(ItemShopee::getValorTotal)
+//				.sum();
+//	}
+//	
+//	private Double calculaValorRecebido(List<VendaShopee> vendas) {
+//		return vendas.stream()
+//				.flatMap(venda -> venda.getItens().stream())
+//				.mapToDouble(ItemShopee::getValorRecebido)
+//				.sum();
+//	}
 	
 }
 
