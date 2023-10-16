@@ -1,7 +1,7 @@
 package backend.services;
 
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import backend.entities.geralEntity.VendaGeralFormatadaEntity;
@@ -12,9 +12,9 @@ public class VendaGeralService {
 
 	VendaGeralRepository repository = new VendaGeralRepositoryImpl();
 	
-	public List<VendaGeralFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String contaAnuncio,
-			Integer qtde, String codItem, String cliente, String status) throws SQLException {
-		return repository.findVendas(dataInicio, dataFim, contaAnuncio, qtde, codItem, cliente, status);
+	public List<VendaGeralFormatadaEntity> findVendas(Date dataInicio, Date dataFim, Integer qtde, String codItem,
+			String cliente, String status) throws SQLException {
+		return repository.findVendas(dataInicio, dataFim, qtde, codItem, cliente, status);
 	}
 	
 }

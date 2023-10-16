@@ -2,17 +2,18 @@ package frontend.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import backend.controllers.VendaGeralController;
+import backend.controllers.VendaMercadoLivreController;
 import backend.controllers.VendaShopeeController;
 import backend.entities.geralEntity.VendaGeralFormatadaEntity;
 import backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity;
+import backend.entities.mercadoLivreEntity.VendaMercadoLivreFormatadaEntity;
 import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
 import frontend.utils.Constants;
 import frontend.utils.DataUtils;
@@ -23,10 +24,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -34,6 +37,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -41,6 +45,7 @@ public class ViewVendasController implements Initializable {
 
 	VendaGeralController geralController = new VendaGeralController();
 	VendaShopeeController shopeeController = new VendaShopeeController();
+	VendaMercadoLivreController mercadoLivreController = new VendaMercadoLivreController();
 
 	@FXML
 	private Button btnBuscar;
@@ -150,6 +155,9 @@ public class ViewVendasController implements Initializable {
 	@FXML
 	private ComboBox<String> cbStatus;
 	
+	@FXML
+	private Label txtErroData;
+	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		setNumberFields();
@@ -231,29 +239,51 @@ public class ViewVendasController implements Initializable {
 	@FXML
 	void onBuscarAction() {
 		String canal = cbCanal.getSelectionModel().getSelectedItem();
-		Date dataInicio = Optional.ofNullable(DataUtils.stringToDate(txtDataInicio.getText())).orElse(null);
-		Date dataFim = Optional.ofNullable(DataUtils.stringToDate(txtDataFim.getText())).orElse(null);
+		Date dataInicio = !txtDataInicio.getText().isBlank() ? DataUtils.stringToDate(txtDataInicio.getText()) : null;
+		Date dataFim = !txtDataFim.getText().isBlank() ? DataUtils.stringToDate(txtDataFim.getText()) : null;
 		String contaAnuncio = cbContaAnuncio.getSelectionModel().getSelectedItem();
 		Integer qtde = !txtQtde.getText().isBlank() ? Integer.parseInt(txtQtde.getText()) : null;
-		String codItem = !txtCodItem.getText().isBlank() ? txtCodItem.getText() : null; 
-		String cliente = !txtCliente.getText().isBlank() ? txtCliente.getText() : null;
+		String codItem = !txtCodItem.getText().isBlank() ? "%"+txtCodItem.getText()+"%" : null; 
+		String cliente = !txtCliente.getText().isBlank() ? "%"+txtCliente.getText()+"%" : null;
 		String status = cbStatus.getSelectionModel().getSelectedItem();
+		
+		if (dataInicio == null && dataFim != null) {
+			Insets curMargins = StackPane.getMargin(txtErroData);
+			StackPane.setMargin(txtErroData, new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), 260));
+			txtErroData.setVisible(true);
+			return;
+		}
+		
+		if (dataInicio != null && dataFim == null) {
+			Insets curMargins = StackPane.getMargin(txtErroData);
+			StackPane.setMargin(txtErroData, new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), 458));
+			txtErroData.setVisible(true);
+			return;
+		}
+		
+		if ((dataInicio == null && dataFim == null) || (dataInicio != null && dataFim != null)) {
+			txtErroData.setVisible(false);
+		}
 		
 		if (canal == null || canal.equals(Constants.LOJA.GERAL)) {
 			try {
-				montaTabelaGeral(geralController.findVendas(dataInicio, dataFim, contaAnuncio, qtde, codItem, cliente, status));
+				montaTabelaGeral(geralController.findVendas(dataInicio, dataFim, qtde, codItem, cliente, status));
 			} catch (SQLException e) {
 				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			}
 		} else if (canal.equals(Constants.LOJA.SHOPEE)) {
 			try {
-				montaTabelaShopee(shopeeController.findAll());
+				montaTabelaShopee(shopeeController.findVendas(dataInicio, dataFim, contaAnuncio, qtde, codItem, cliente, status));
 			} catch (SQLException e) {
 				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			}			
+		} else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
+			try {
+				montaTabelaML(mercadoLivreController.findVendas(dataInicio, dataFim, contaAnuncio, qtde, codItem, cliente, status));
+			} catch (SQLException e) {
+				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+			}
 		}
-		
-		
 	}
 	
 	private void montaTabelaGeral(List<VendaGeralFormatadaEntity> vendas) {
@@ -286,6 +316,21 @@ public class ViewVendasController implements Initializable {
 		tbShopee.setItems(FXCollections.observableArrayList(vendas));
 	}
 	
+	private void montaTabelaML(List<VendaMercadoLivreFormatadaEntity> vendas) {
+		columnDataTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("data"));
+		columnAnuncioTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("tipoAnuncio"));
+		columnQtdTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("qtde"));
+		columnItemTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("codItem"));
+		columnClienteTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("cliente"));
+		columnUnitTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("valorUnitario"));
+		columnTotalTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
+		columnRecebidoTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("valorRecebido"));
+		columnStatusTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("status"));
+		setVisibilityTables(false, false, true);
+		
+		tbMercadoLivre.setItems(FXCollections.observableArrayList(vendas));
+	}
+	
 	@FXML
 	void onLimparAction() {
 		cbCanal.getSelectionModel().clearSelection();
@@ -299,6 +344,7 @@ public class ViewVendasController implements Initializable {
 		cbStatus.getSelectionModel().clearSelection();
 		cbStatus.setPromptText("Status");
 		setVisibilityTables(false, false, false);
+		txtErroData.setVisible(false);
 	}
 	
 	private void setNumberFields() {
@@ -329,5 +375,5 @@ public class ViewVendasController implements Initializable {
 		if (!ml)
 			tbMercadoLivre.getItems().clear();
 	}
-
+	
 }

@@ -21,14 +21,14 @@ public class VendaGeralEntity {
 	private String cliente;
 	private List<ItemGeralEntity> itens = new ArrayList<>();
 	private String status;
-	private CanalVenda canal;
+	private String canal;
 	
 	public VendaGeralEntity(Long id, Date data, String cliente, String status, CanalVenda canal) {
 		this.id = id;
 		this.data = data;
 		this.cliente = cliente;
 		this.status = status;
-		this.canal = canal;
+		this.canal = canal.toString();
 	}
 	
 	public VendaGeralEntity(Long id, Date data, String cliente, String status, String canal) {
@@ -36,7 +36,7 @@ public class VendaGeralEntity {
 		this.data = data;
 		this.cliente = cliente;
 		this.status = status;
-		this.canal = canal.equals("S") ? CanalVenda.SHOPEE : CanalVenda.MERCADO_LIVRE;
+		this.canal = canal.equals(CanalVenda.SHOPEE) ? CanalVenda.SHOPEE : CanalVenda.MERCADO_LIVRE;
 	}
 	
 	public void addItem(ItemGeralEntity item) {

@@ -1,7 +1,7 @@
 package backend.controllers;
 
+import java.sql.Date;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
@@ -16,8 +16,9 @@ public class VendaShopeeController {
 	 * @return Todas as vendas
 	 * @throws SQLException 
 	 */
-	public List<VendaShopeeFormatadaEntity> findAll() throws SQLException {
-		return service.findAll();
+	public List<VendaShopeeFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String contaAnuncio,
+			Integer qtde, String codItem, String cliente, String status) throws SQLException {
+		return service.findVendas(dataInicio, dataFim, contaAnuncio, qtde, codItem, cliente, status);
 	}
 	
 	

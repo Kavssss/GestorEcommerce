@@ -1,0 +1,22 @@
+package backend.utils;
+
+public enum CanalVenda {
+
+	SHOPEE("S"),
+	MERCADO_LIVRE("ML")
+	
+	String name;
+	
+	CanalVenda(String string) {
+		// TODO Auto-generated constructor stub
+	}
+
+	String getValue() {
+		return name;
+	}
+	
+	void setValue(String s) {
+		name = s;
+	}
+	
+}

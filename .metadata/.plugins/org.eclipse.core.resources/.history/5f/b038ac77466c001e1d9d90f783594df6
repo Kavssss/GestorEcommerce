@@ -1,0 +1,14 @@
+package backend.utils;
+
+public enum CanalVenda {
+
+	SHOPEE("S"),
+	MERCADO_LIVRE("ML")
+	
+	String name;
+	
+	String getValue() {
+		return name;
+	}
+	
+}

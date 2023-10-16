@@ -1,5 +1,6 @@
 package backend.services;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,8 +12,9 @@ public class VendaShopeeService {
 
 	VendaShopeeRepository repository = new VendaShopeeRepositoryImpl();
 	
-	public List<VendaShopeeFormatadaEntity> findAll() throws SQLException {
-		return repository.findAll();
+	public List<VendaShopeeFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String contaAnuncio,
+			Integer qtde, String codItem, String cliente, String status) throws SQLException {
+		return repository.findVendas(dataInicio, dataFim, contaAnuncio, qtde, codItem, cliente, status);
 	}
 	
 //	public String findTotalVendasPorMes(Integer mes, Integer ano) {

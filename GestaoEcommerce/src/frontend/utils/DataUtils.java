@@ -2,7 +2,7 @@ package frontend.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 public class DataUtils {
 
@@ -14,13 +14,13 @@ public class DataUtils {
 		return data;
 	}
 	
-	public static Date stringToDate(String in) {  // entrada no formato dd/MM/yyy
+	public static Date stringToDate(String in) {  // entrada no formato dd/MM/yyyy
 		if (in.isBlank())
 			return null;
 
 		try {
 			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-			return formato.parse(in);
+			return new java.sql.Date(formato.parse(in).getTime());
 		} catch (ParseException e) {
 			return null;
 		}		

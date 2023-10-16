@@ -2,7 +2,6 @@ package backend.entities.geralEntity;
 
 import java.util.Date;
 
-import backend.utils.CanalVenda;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +19,7 @@ public class VendaGeralFormatadaEntity extends VendaGeralEntity {
 	private Double valorTotal;
 	private Double valorRecebido;
 	
-	public VendaGeralFormatadaEntity(Long id, Date data, String cliente, String status, CanalVenda canal, String codItem,
+	public VendaGeralFormatadaEntity(Long id, Date data, String cliente, String status, String canal, String codItem,
 			Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido) {
 		super(id, data, cliente, status, canal);
 		this.codItem = codItem;
