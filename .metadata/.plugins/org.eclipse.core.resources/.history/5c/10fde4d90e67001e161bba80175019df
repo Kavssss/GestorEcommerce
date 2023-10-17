@@ -1,5 +1,0 @@
-package frontend.utils;
-
-public enum TipoAnuncioMercadoLivre {
-
-}

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
@@ -19,7 +20,7 @@
             <Image url="@../images/telas/modal_inserir.png" />
          </image>
       </ImageView>
-      <ComboBox fx:id="cbCanal" maxHeight="29.0" maxWidth="180.0" minHeight="29.0" minWidth="180.0" prefHeight="29.0" prefWidth="180.0" promptText="Canal de Venda" style="-fx-background-radius: 15; -fx-background-color: rgb(128,128,155);" StackPane.alignment="TOP_LEFT">
+      <ComboBox fx:id="cbCanal" maxHeight="29.0" maxWidth="180.0" minHeight="29.0" minWidth="180.0" onAction="#onCanalAction" prefHeight="29.0" prefWidth="180.0" promptText="Canal de Venda" style="-fx-background-radius: 15; -fx-background-color: rgb(128,128,155);" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
             <Insets left="20.0" top="20.0" />
          </StackPane.margin>
@@ -29,7 +30,7 @@
             <Insets left="82.0" top="69.0" />
          </StackPane.margin>
       </TextField>
-      <ComboBox fx:id="cbConta" maxHeight="29.0" maxWidth="190.0" minHeight="29.0" minWidth="190.0" prefHeight="29.0" prefWidth="190.0" promptText="Conta" style="-fx-background-radius: 15; -fx-background-color: rgb(128,128,155);" StackPane.alignment="TOP_LEFT">
+      <ComboBox fx:id="cbContaAnuncio" maxHeight="29.0" maxWidth="190.0" minHeight="29.0" minWidth="190.0" prefHeight="29.0" prefWidth="190.0" promptText="Conta" style="-fx-background-radius: 15; -fx-background-color: rgb(128,128,155);" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
             <Insets left="282.0" top="69.0" />
          </StackPane.margin>
@@ -39,30 +40,6 @@
             <Insets left="492.0" top="69.0" />
          </StackPane.margin>
       </TextField>
-      <Button fx:id="btnSalvar" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="SALVAR" StackPane.alignment="TOP_LEFT">
-         <font>
-            <Font name="Arial Bold" size="12.0" />
-         </font>
-         <StackPane.margin>
-            <Insets left="860.0" top="317.0" />
-         </StackPane.margin>
-      </Button>
-      <Button fx:id="btnCancelar" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="CANCELAR" StackPane.alignment="TOP_LEFT">
-         <font>
-            <Font name="Arial Bold" size="12.0" />
-         </font>
-         <StackPane.margin>
-            <Insets left="756.0" top="317.0" />
-         </StackPane.margin>
-      </Button>
-      <Button fx:id="btnAddItem" maxHeight="23.0" maxWidth="75.0" minHeight="23.0" minWidth="75.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="75.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="+ ITEM" StackPane.alignment="TOP_LEFT">
-         <font>
-            <Font name="Arial Bold" size="12.0" />
-         </font>
-         <StackPane.margin>
-            <Insets left="20.0" top="317.0" />
-         </StackPane.margin>
-      </Button>
       <TextField fx:id="txtCodItem1" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Cód. Item" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
             <Insets left="117.0" top="118.0" />
@@ -83,12 +60,23 @@
             <Insets left="557.0" top="118.0" />
          </StackPane.margin>
       </TextField>
+      <Button fx:id="btnAddItem" maxHeight="23.0" maxWidth="75.0" minHeight="23.0" minWidth="75.0" mnemonicParsing="false" onAction="#onAddItemAction" prefHeight="23.0" prefWidth="75.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="+ ITEM" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="20.0" top="317.0" />
+         </StackPane.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
       <TextField fx:id="txtValorRecebido1" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Valor Recebido" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
             <Insets left="717.0" top="118.0" />
          </StackPane.margin>
       </TextField>
-      <GridPane>
+      <GridPane fx:id="grid">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
@@ -112,42 +100,76 @@
             <TextField fx:id="txtValorUnitario2" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Valor Unitário" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
             <TextField fx:id="txtValorTotal2" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Valor Total" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
             <TextField fx:id="txtValorRecebido2" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Valor Recebido" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
-            <Button fx:id="btnX2" maxHeight="23.0" maxWidth="23.0" minHeight="23.0" minWidth="23.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="X" textAlignment="CENTER" textFill="#00003c" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+            <Button fx:id="btnX2" maxHeight="23.0" maxWidth="23.0" minHeight="23.0" minWidth="23.0" mnemonicParsing="false" onAction="#onBtnX2Action" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="X" textAlignment="CENTER" textFill="#00003c" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                <font>
                   <Font name="Arial Bold" size="11.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <TextField fx:id="txtCodItem3" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Cód. Item" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <TextField fx:id="txtQtde3" maxHeight="29.0" maxWidth="100.0" minHeight="29.0" minWidth="100.0" prefHeight="29.0" prefWidth="100.0" promptText="Qtde" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <TextField fx:id="txtValorUnitario3" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Valor Unitário" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <TextField fx:id="txtValorTotal3" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Valor Total" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <TextField fx:id="txtValorRecebido3" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Valor Recebido" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-            <Button fx:id="btnX3" maxHeight="23.0" maxWidth="23.0" minHeight="23.0" minWidth="23.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="X" textAlignment="CENTER" textFill="#00003c" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Button fx:id="btnX3" maxHeight="23.0" maxWidth="23.0" minHeight="23.0" minWidth="23.0" mnemonicParsing="false" onAction="#onBtnX3Action" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="X" textAlignment="CENTER" textFill="#00003c" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
                   <Font name="Arial Bold" size="11.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <TextField fx:id="txtCodItem4" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Cód. Item" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
             <TextField fx:id="txtQtde4" maxHeight="29.0" maxWidth="100.0" minHeight="29.0" minWidth="100.0" prefHeight="29.0" prefWidth="100.0" promptText="Qtde" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
             <TextField fx:id="txtValorUnitario4" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Valor Unitário" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
             <TextField fx:id="txtValorTotal4" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Valor Total" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
             <TextField fx:id="txtValorRecebido4" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Valor Recebido" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-            <Button fx:id="btnX4" maxHeight="23.0" maxWidth="23.0" minHeight="23.0" minWidth="23.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="X" textAlignment="CENTER" textFill="#00003c" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <Button fx:id="btnX4" maxHeight="23.0" maxWidth="23.0" minHeight="23.0" minWidth="23.0" mnemonicParsing="false" onAction="#onBtnX4Action" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="X" textAlignment="CENTER" textFill="#00003c" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <font>
                   <Font name="Arial Bold" size="11.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <TextField fx:id="txtCodItem5" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Cód. Item" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
             <TextField fx:id="txtQtde5" maxHeight="29.0" maxWidth="100.0" minHeight="29.0" minWidth="100.0" prefHeight="29.0" prefWidth="100.0" promptText="Qtde" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
             <TextField fx:id="txtValorUnitario5" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Valor Unitário" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
             <TextField fx:id="txtValorTotal5" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Valor Total" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
             <TextField fx:id="txtValorRecebido5" maxHeight="29.0" maxWidth="140.0" minHeight="29.0" minWidth="140.0" prefHeight="29.0" prefWidth="140.0" promptText="Valor Recebido" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-            <Button fx:id="btnX5" maxHeight="23.0" maxWidth="23.0" minHeight="23.0" minWidth="23.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="X" textAlignment="CENTER" textFill="#00003c" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <Button fx:id="btnX5" maxHeight="23.0" maxWidth="23.0" minHeight="23.0" minWidth="23.0" mnemonicParsing="false" onAction="#onBtnX5Action" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="X" textAlignment="CENTER" textFill="#00003c" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
                <font>
                   <Font name="Arial Bold" size="11.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </GridPane>
+      <Button fx:id="btnCancelar" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" onAction="#onCancelarAction" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="CANCELAR" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="756.0" top="317.0" />
+         </StackPane.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnSalvar" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" onAction="#onSalvarAction" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="SALVAR" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="860.0" top="317.0" />
+         </StackPane.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </StackPane>

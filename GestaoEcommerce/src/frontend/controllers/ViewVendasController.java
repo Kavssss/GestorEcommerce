@@ -1,6 +1,5 @@
 package frontend.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -17,15 +16,14 @@ import backend.entities.mercadoLivreEntity.VendaMercadoLivreFormatadaEntity;
 import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
 import frontend.utils.Constants;
 import frontend.utils.DataUtils;
+import frontend.utils.LoadScene;
 import frontend.views.utils.Alerts;
 import frontend.views.utils.Constraints;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -36,9 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ViewVendasController implements Initializable {
@@ -221,19 +217,7 @@ public class ViewVendasController implements Initializable {
 	}
 
 	private void callModalInserirVenda(Stage parentStage) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MODAL.INSERIR_VENDA));
-			Pane pane = loader.load();
-			Stage modalStage = new Stage();
-			modalStage.setTitle("Inserir venda");
-			modalStage.setScene(new Scene(pane));
-			modalStage.setResizable(false);
-			modalStage.initOwner(parentStage);
-			modalStage.initModality(Modality.WINDOW_MODAL);
-			modalStage.showAndWait();
-		} catch (IOException e) {
-			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
-		}
+		LoadScene.callModal(parentStage, getClass());
 	}
 	
 	@FXML

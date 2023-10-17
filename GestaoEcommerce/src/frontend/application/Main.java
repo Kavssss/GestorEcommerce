@@ -9,7 +9,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			new LoadScene().load(stage);
+			LoadScene.load(stage, getClass());
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

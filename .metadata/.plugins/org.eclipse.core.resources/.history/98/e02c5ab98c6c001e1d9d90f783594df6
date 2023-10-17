@@ -1,0 +1,73 @@
+package frontend.utils;
+
+import java.io.IOException;
+
+import frontend.views.utils.Alerts;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+public class LoadScene {
+	
+	private static Stage stage;
+	private static Scene indexScene;
+	private static Scene vendasScene;
+	
+	public void load(Stage stage) throws IOException {
+		setStage(stage);
+		stage.setTitle("Morais Couros");
+		stage.setResizable(false);
+		
+		Parent indexFxml = FXMLLoader.load(getClass().getResource(Constants.VIEWS.INDEX));
+		Parent vendasFxml = FXMLLoader.load(getClass().getResource(Constants.VIEWS.VENDAS));
+		
+		indexScene = new Scene(indexFxml);
+		vendasScene = new Scene(vendasFxml);
+					
+		stage.setScene(indexScene);
+		stage.show();
+    }
+	
+	public static void changeScene(String newScene) {
+		switch(newScene) {
+			case Constants.VIEWS.INDEX:
+				getStage().setScene(indexScene);
+				break;
+			case Constants.VIEWS.VENDAS:
+				getStage().setScene(vendasScene);
+				break;
+			default:
+				System.out.println("ERROR");
+				break;
+		}
+	}
+	
+	public static void callModal(Stage parentStage, Class<?> classe) {
+		try {
+			FXMLLoader loader = new FXMLLoader(classe.getResource(Constants.MODAL.INSERIR_VENDA));
+			Pane pane = loader.load();
+			Stage modalStage = new Stage();
+			modalStage.setTitle("Inserir venda");
+			modalStage.setScene(new Scene(pane));
+			modalStage.setResizable(false);
+			modalStage.initOwner(parentStage);
+			modalStage.initModality(Modality.WINDOW_MODAL);
+			modalStage.showAndWait();
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+		}
+	}
+
+	public static Stage getStage() {
+		return stage;
+	}
+
+	public static void setStage(Stage stage) {
+		LoadScene.stage = stage;
+	}
+	
+}

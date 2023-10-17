@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="cbCanal.getSelectionModel().getSelectedItem()"/>
+		<item key="selection" value="5"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="2"/>
+			<item value="&apos;%&apos;?&apos;%&apos;"/>
 			<item value="cbCanal.getSelectionModel().getSelectedItem()"/>
 			<item value="Shopee"/>
 			<item value="vs"/>
@@ -21,10 +23,12 @@
 			<item value="ItemML"/>
 			<item value="VendaML"/>
 			<item value="ItemShopee"/>
-			<item value="prompt"/>
-			<item value="unConstraints.hoverEffect"/>
 		</list>
 		<list key="replacehistory">
+			<item value="5"/>
+			<item value="4"/>
+			<item value="3"/>
+			<item value="?"/>
 			<item value="selection"/>
 			<item value="Geral"/>
 			<item value="vml"/>
@@ -36,10 +40,6 @@
 			<item value="Shopee"/>
 			<item value="TbMercadoLivre"/>
 			<item value="VendaShopeeEntity"/>
-			<item value="ItemMercadoLivreEntity"/>
-			<item value="VendaMercadoLivreEntity"/>
-			<item value="ItemShopeeEntity"/>
-			<item value="Constraints.unhoverEffect"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
