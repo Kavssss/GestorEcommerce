@@ -1,0 +1,17 @@
+package frontend.utils;
+
+import java.text.NumberFormat;
+import java.util.Locale;
+
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+
+public class DoubleUtils {
+
+	public static String formataDouble(TextField textField) {
+		Locale brazil = new Locale("pt", "BR");
+        NumberFormat nf = NumberFormat.getCurrencyInstance(brazil);
+        return nf.format(textField.getText());
+	}
+	
+}

@@ -11,9 +11,9 @@ public class VendaMercadoLivreController {
 
 	VendaMercadoLivreService service = new VendaMercadoLivreService();
 	
-	public List<VendaMercadoLivreFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String contaAnuncio,
+	public List<VendaMercadoLivreFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio,
 			Integer qtde, String codItem, String cliente, String status) throws SQLException {
-		return service.findVendas(dataInicio, dataFim, contaAnuncio, qtde, codItem, cliente, status);
+		return service.findVendas(dataInicio, dataFim, tipoAnuncio, qtde, codItem, cliente, status);
 	}
 	
 }

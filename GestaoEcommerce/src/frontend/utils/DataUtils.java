@@ -2,6 +2,11 @@ package frontend.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+
 import java.sql.Date;
 
 public class DataUtils {
@@ -24,6 +29,28 @@ public class DataUtils {
 		} catch (ParseException e) {
 			return null;
 		}		
+	}
+	
+	public static void formataData(TextField textField, KeyEvent event) {
+		String text = textField.getText();
+		
+		if (text.contains("//"))
+			textField.setText(text.replace("//", "/"));
+
+		if (event.getCode() != KeyCode.BACK_SPACE) {
+			textField.setText(DataUtils.addBarraData(text));
+			if (text.length() == 3) {
+				String formattedDate = new StringBuilder(text.substring(0, 2)).append("/").append(text.substring(2))
+						.toString();
+				textField.setText(formattedDate);
+			}
+			if (text.length() == 6) {
+				String formattedDate = new StringBuilder(text.substring(0, 5)).append("/").append(text.substring(5))
+						.toString();
+				textField.setText(formattedDate);
+			}
+			textField.positionCaret(textField.getLength());
+		}
 	}
 
 }

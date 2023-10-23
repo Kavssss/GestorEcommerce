@@ -8,13 +8,10 @@ public interface Constants {
 		String GERAL = "Geral";
 	}
 	
-	interface CONTA_ANUNCIO {
-		String CONTA = "Conta";
+	interface TIPO_ANUNCIO {
 		String TIPO_ANUNCIO = "Tipo de Anúncio";
 		
-		String PRINCIPAL = "Principal";
-		String SECUNDARIA = "Secundária";
-		String CLASSICO = "Classico";
+		String CLASSICO = "Clássico";
 		String PREMIUM = "Premium";
 		String CLASSICO_FG = "Clássico - Frete Grátis";
 		String PREMIUM_FG = "Premium - Frete Grátis";
@@ -25,6 +22,7 @@ public interface Constants {
 		String CONCLUIDO = "Concluído";
 		String DEVOLUCAO = "Devolução";
 		String CANCELADO = "Cancelado";
+		String TODOS = "Todos";
 	}
 	
 	interface VIEWS {		
@@ -36,6 +34,10 @@ public interface Constants {
 	
 	interface MODAL {
 		String INSERIR_VENDA = "/frontend/views/ModalInserir.fxml";		
+	}
+	
+	interface MESSAGE {
+		String CAMPOS_NAO_PREENCHIDOS = "Preencha os campos obrigatórios para prosseguir";
 	}
 	
 }

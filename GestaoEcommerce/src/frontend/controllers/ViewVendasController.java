@@ -32,7 +32,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -68,7 +67,7 @@ public class ViewVendasController implements Initializable {
 	private ComboBox<String> cbCanal;
 
 	@FXML
-	private ComboBox<String> cbContaAnuncio;
+	private ComboBox<String> cbTipoAnuncio;
 
 	@FXML
 	private TableView<VendaGeralFormatadaEntity> tbGeral;	
@@ -117,8 +116,6 @@ public class ViewVendasController implements Initializable {
 	@FXML
 	private TableColumn<VendaShopeeFormatadaEntity, String> columnDataTbShopee;
 	@FXML
-	private TableColumn<VendaShopeeFormatadaEntity, String> columnContaTbShopee;
-	@FXML
 	private TableColumn<VendaShopeeFormatadaEntity, Number> columnQtdTbShopee;
 	@FXML
 	private TableColumn<VendaShopeeFormatadaEntity, String> columnItemTbShopee;
@@ -164,51 +161,25 @@ public class ViewVendasController implements Initializable {
 	void onCanalAction() {
 		List<String> options;
 		String selection = cbCanal.getSelectionModel().getSelectedItem();
-		if (selection != null && selection.equals(Constants.LOJA.SHOPEE)) {
-			cbContaAnuncio.setPromptText(Constants.CONTA_ANUNCIO.CONTA);
-			options = Arrays.asList("", Constants.CONTA_ANUNCIO.PRINCIPAL, Constants.CONTA_ANUNCIO.SECUNDARIA);
-			cbContaAnuncio.setItems(FXCollections.observableArrayList(options));
-		} else if (selection != null && selection.equals(Constants.LOJA.MERCADO_LIVRE)) {
-			cbContaAnuncio.setPromptText(Constants.CONTA_ANUNCIO.TIPO_ANUNCIO);
-			options = Arrays.asList("", Constants.CONTA_ANUNCIO.CLASSICO, Constants.CONTA_ANUNCIO.CLASSICO_FG,
-					Constants.CONTA_ANUNCIO.PREMIUM, Constants.CONTA_ANUNCIO.PREMIUM_FG);
-			cbContaAnuncio.setItems(FXCollections.observableArrayList(options));
+		if (selection != null && selection.equals(Constants.LOJA.MERCADO_LIVRE)) {
+			cbTipoAnuncio.setPromptText(Constants.TIPO_ANUNCIO.TIPO_ANUNCIO);
+			options = Arrays.asList(Constants.TIPO_ANUNCIO.CLASSICO, Constants.TIPO_ANUNCIO.CLASSICO_FG,
+					Constants.TIPO_ANUNCIO.PREMIUM, Constants.TIPO_ANUNCIO.PREMIUM_FG);
+			cbTipoAnuncio.setItems(FXCollections.observableArrayList(options));
 		} else {
-			cbContaAnuncio.setPromptText("-");
-			cbContaAnuncio.setItems(null);
+			cbTipoAnuncio.setPromptText("-");
+			cbTipoAnuncio.setItems(null);
 		}
 	}
 
 	@FXML
 	void onDataInicioReleased(KeyEvent event) {
-		formataData(txtDataInicio, event);
+		DataUtils.formataData(txtDataInicio, event);
 	}
 
 	@FXML
 	void onDataFimReleased(KeyEvent event) {
-		formataData(txtDataFim, event);
-	}
-
-	private void formataData(TextField textField, KeyEvent event) {
-		String text = textField.getText();
-		
-		if (text.contains("//"))
-			textField.setText(text.replace("//", "/"));
-
-		if (event.getCode() != KeyCode.BACK_SPACE) {
-			textField.setText(DataUtils.addBarraData(text));
-			if (text.length() == 3) {
-				String formattedDate = new StringBuilder(text.substring(0, 2)).append("/").append(text.substring(2))
-						.toString();
-				txtDataInicio.setText(formattedDate);
-			}
-			if (text.length() == 6) {
-				String formattedDate = new StringBuilder(text.substring(0, 5)).append("/").append(text.substring(5))
-						.toString();
-				textField.setText(formattedDate);
-			}
-			textField.positionCaret(textField.getLength());
-		}
+		DataUtils.formataData(txtDataFim, event);
 	}
 
 	@FXML
@@ -225,7 +196,7 @@ public class ViewVendasController implements Initializable {
 		String canal = cbCanal.getSelectionModel().getSelectedItem();
 		Date dataInicio = !txtDataInicio.getText().isBlank() ? DataUtils.stringToDate(txtDataInicio.getText()) : null;
 		Date dataFim = !txtDataFim.getText().isBlank() ? DataUtils.stringToDate(txtDataFim.getText()) : null;
-		String contaAnuncio = cbContaAnuncio.getSelectionModel().getSelectedItem();
+		String tipoAnuncio = cbTipoAnuncio.getSelectionModel().getSelectedItem();
 		Integer qtde = !txtQtde.getText().isBlank() ? Integer.parseInt(txtQtde.getText()) : null;
 		String codItem = !txtCodItem.getText().isBlank() ? "%"+txtCodItem.getText()+"%" : null; 
 		String cliente = !txtCliente.getText().isBlank() ? "%"+txtCliente.getText()+"%" : null;
@@ -257,13 +228,13 @@ public class ViewVendasController implements Initializable {
 			}
 		} else if (canal.equals(Constants.LOJA.SHOPEE)) {
 			try {
-				montaTabelaShopee(shopeeController.findVendas(dataInicio, dataFim, contaAnuncio, qtde, codItem, cliente, status));
+				montaTabelaShopee(shopeeController.findVendas(dataInicio, dataFim, qtde, codItem, cliente, status));
 			} catch (SQLException e) {
 				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			}			
 		} else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
 			try {
-				montaTabelaML(mercadoLivreController.findVendas(dataInicio, dataFim, contaAnuncio, qtde, codItem, cliente, status));
+				montaTabelaML(mercadoLivreController.findVendas(dataInicio, dataFim, tipoAnuncio, qtde, codItem, cliente, status));
 			} catch (SQLException e) {
 				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			}
@@ -286,8 +257,7 @@ public class ViewVendasController implements Initializable {
 	}
 	
 	private void montaTabelaShopee(List<VendaShopeeFormatadaEntity> vendas) {
-		columnDataTbShopee.setCellValueFactory(new PropertyValueFactory<>("data"));		
-		columnContaTbShopee.setCellValueFactory(new PropertyValueFactory<>("conta"));
+		columnDataTbShopee.setCellValueFactory(new PropertyValueFactory<>("data"));
 		columnClienteTbShopee.setCellValueFactory(new PropertyValueFactory<>("cliente"));
 		columnQtdTbShopee.setCellValueFactory(new PropertyValueFactory<>("qtde"));
 		columnItemTbShopee.setCellValueFactory(new PropertyValueFactory<>("codItem"));
@@ -321,7 +291,7 @@ public class ViewVendasController implements Initializable {
 		cbCanal.setPromptText("Canal de Venda");
 		txtDataInicio.setText("");
 		txtDataFim.setText("");
-		cbContaAnuncio.getSelectionModel().clearSelection();
+		cbTipoAnuncio.getSelectionModel().clearSelection();
 		txtQtde.setText("");
 		txtCodItem.setText("");
 		txtCliente.setText("");
@@ -342,8 +312,8 @@ public class ViewVendasController implements Initializable {
 	private void setItensComboBox() {
 		List<String> options = Arrays.asList(Constants.LOJA.SHOPEE, Constants.LOJA.MERCADO_LIVRE, Constants.LOJA.GERAL);
 		cbCanal.setItems(FXCollections.observableArrayList(options));
-		cbContaAnuncio.setPromptText(null);
-		options = Arrays.asList("", Constants.STATUS.PENDENTE, Constants.STATUS.CONCLUIDO, Constants.STATUS.DEVOLUCAO,
+		cbTipoAnuncio.setPromptText("-");
+		options = Arrays.asList(Constants.STATUS.TODOS, Constants.STATUS.PENDENTE, Constants.STATUS.CONCLUIDO, Constants.STATUS.DEVOLUCAO,
 				Constants.STATUS.CANCELADO);
 		cbStatus.setItems(FXCollections.observableArrayList(options));
 	}

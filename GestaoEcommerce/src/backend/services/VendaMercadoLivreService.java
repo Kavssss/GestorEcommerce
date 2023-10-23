@@ -12,9 +12,9 @@ public class VendaMercadoLivreService {
 
 	VendaMercadoLivreRepository repository = new VendaMercadoLivreRepositoryImpl();
 	
-	public List<VendaMercadoLivreFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String contaAnuncio,
+	public List<VendaMercadoLivreFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio,
 			Integer qtde, String codItem, String cliente, String status) throws SQLException {
-		return repository.findVendas(dataInicio, dataFim, contaAnuncio, qtde, codItem, cliente, status);
+		return repository.findVendas(dataInicio, dataFim, tipoAnuncio, qtde, codItem, cliente, status);
 	}
 	
 }

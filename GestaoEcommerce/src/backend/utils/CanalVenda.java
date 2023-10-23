@@ -2,7 +2,9 @@ package backend.utils;
 
 public interface CanalVenda {
 
-	String SHOPEE = "S";
-	String MERCADO_LIVRE = "ML";
+	String S = "S";
+	String ML = "ML";
+	String SHOPEE = "Shopee";
+	String MERCADO_LIVRE = "Mercado Livre";
 	
 }

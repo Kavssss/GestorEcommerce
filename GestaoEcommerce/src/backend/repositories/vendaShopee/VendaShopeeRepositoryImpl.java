@@ -11,6 +11,7 @@ import java.util.Objects;
 import backend.entities.shopeeEntity.ItemShopeeEntity;
 import backend.entities.shopeeEntity.VendaShopeeEntity;
 import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
+import frontend.utils.Constants;
 import models.DAO;
 import models.DbException;
 
@@ -20,11 +21,10 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     ResultSet resultSet;
 
     @Override
-	public List<VendaShopeeFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String contaAnuncio,
+	public List<VendaShopeeFormatadaEntity> findVendas(Date dataInicio, Date dataFim,
 			Integer qtde, String codItem, String cliente, String status) throws SQLException {
     	List<Object> params = new ArrayList<>();
-    	StringBuilder sql = new StringBuilder("SELECT vs.ID_VENDA, vs.DATA_VENDA, vs.CONTA, vs.CLIENTE, ds.QTDE, i.COD_ITEM, ");
-		sql.append(" ds.VALOR_UNITARIO, ds.VALOR_TOTAL, ds.VALOR_RECEBIDO, vs.STATUS ");
+    	StringBuilder sql = new StringBuilder("SELECT vs.*, ds.* ");
 		sql.append(" FROM TB_VENDA_SHOPEE vs ");
 		sql.append(" INNER JOIN TB_DADOS_VENDA_SHOPEE ds ON ds.ID_VENDA = vs.ID_VENDA ");
 		sql.append(" INNER JOIN TB_ITEM i ON i.COD_ITEM = ds.COD_ITEM ");
@@ -33,10 +33,6 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 			sql.append(" AND (vs.DATA_VENDA BETWEEN ? AND ?) ");
 			params.add(dataInicio);
 			params.add(dataFim);
-		}
-		if (Objects.nonNull(contaAnuncio)) {
-			sql.append(" AND vs.CANAL = ? ");
-			params.add(contaAnuncio);
 		}
 		if (Objects.nonNull(qtde)) {
 			sql.append(" AND ds.QTDE = ? ");
@@ -50,7 +46,7 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 			sql.append(" AND vs.CLIENTE LIKE ? ");
 			params.add(cliente);
 		}
-		if (Objects.nonNull(status)) {
+		if (Objects.nonNull(status) && !status.equals(Constants.STATUS.TODOS)) {
 			sql.append(" AND vs.STATUS = ? ");
 			params.add(status);
 		}
@@ -74,24 +70,48 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
        	 	throw new DbException(e.getMessage());
         }
 	}
+    
+    @Override
+    public void insertVenda(Date data, String cliente, String codItem, Integer qtde, Double valorUnitario, Double valorTotal,
+    		Double valorRecebido) throws SQLException {
+    	StringBuilder sql = new StringBuilder("INSERT INTO TB_VENDA_SHOPEE( ");
+		sql.append(" DATA_VENDA, CLIENTE, STATUS) ");
+		sql.append(" VALUES(?, ?, \"PENDENTE\");");
+	}
+
+    private String insertTbVenda() {
+    	StringBuilder sql = new StringBuilder("INSERT INTO TB_VENDA_SHOPEE( ");
+		sql.append(" DATA_VENDA, CLIENTE, STATUS) ");
+		sql.append(" VALUES(?, ?, ?);");
+		return sql.toString();
+    }
+
+    private String insertTbItem() {
+		return "INSERT INTO TB_ITEM VALUES(?, ?, ?);";
+    }
+    
+    private String insertTbDadosVenda() {
+    	StringBuilder sql = new StringBuilder("INSERT INTO TB_DADOS_VENDA_SHOPEE VALUES( ");
+		sql.append(" ?, ?, ?, ?, ?, ?);");
+		return sql.toString();
+    }
 
     private List<VendaShopeeFormatadaEntity> resultSetToVenda(ResultSet resultSet) throws SQLException {
     	List<VendaShopeeEntity> vendas = new ArrayList<>();
     	Long lastId = 0L;
 		while (resultSet.next()) {
 			ItemShopeeEntity item = new ItemShopeeEntity(
-					resultSet.getString(5),
-					resultSet.getInt(4),
-					resultSet.getDouble(7),
+					resultSet.getString(6),
+					resultSet.getInt(7),
 					resultSet.getDouble(8),
-					resultSet.getDouble(9));
+					resultSet.getDouble(9),
+					resultSet.getDouble(10));
 			if (!lastId.equals(resultSet.getLong(1))) {
 				vendas.add(new VendaShopeeEntity(
 						resultSet.getLong(1),
 						resultSet.getDate(2),
 						resultSet.getString(3),
-						resultSet.getString(6),
-						resultSet.getString(10)));
+						resultSet.getString(4)));
 			}
 			vendas.get(vendas.size()-1).addItem(item);
 			lastId = resultSet.getLong(1);
@@ -119,7 +139,6 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     	    	VendaShopeeFormatadaEntity vendaItem = new VendaShopeeFormatadaEntity(
     	    			venda.getId(),
     	    			venda.getData(),
-    	    			venda.getConta(),
     	    			venda.getCliente(),
     	    			venda.getStatus(),
     	    			item.getCodItem(),

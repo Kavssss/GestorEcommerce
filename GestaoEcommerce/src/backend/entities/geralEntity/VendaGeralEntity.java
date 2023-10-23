@@ -36,7 +36,7 @@ public class VendaGeralEntity {
 		this.data = data;
 		this.cliente = cliente;
 		this.status = status;
-		this.canal = canal.equals(CanalVenda.SHOPEE) ? CanalVenda.SHOPEE : CanalVenda.MERCADO_LIVRE;
+		this.canal = canal.equals(CanalVenda.S) ? CanalVenda.S : CanalVenda.ML;
 	}
 	
 	public void addItem(ItemGeralEntity item) {

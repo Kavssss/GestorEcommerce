@@ -54,7 +54,7 @@ public class LoadScene {
 			Stage modalStage = new Stage();
 			modalStage.setTitle("Inserir venda");
 			modalStage.setScene(new Scene(pane));
-			modalStage.setResizable(false);
+			modalStage.setResizable(Boolean.FALSE);
 			modalStage.initOwner(parentStage);
 			modalStage.initModality(Modality.WINDOW_MODAL);
 			setModalStage(modalStage);

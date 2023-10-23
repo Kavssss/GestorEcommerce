@@ -17,15 +17,13 @@ public class VendaShopeeEntity {
 		
 	private Long id;
 	private Date data;
-	private String conta;
 	private String cliente;
 	private List<ItemShopeeEntity> itens = new ArrayList<>();
 	private String status;
 	
-	public VendaShopeeEntity(Long id, Date data, String conta, String cliente, String status) {
+	public VendaShopeeEntity(Long id, Date data, String cliente, String status) {
 		this.id = id;
 		this.data = data;
-		this.conta = conta;
 		this.cliente = cliente;
 		this.status = status;
 	}

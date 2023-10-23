@@ -1,0 +1,11 @@
+package frontend.utils;
+
+import javafx.scene.control.TextField;
+
+public class DoubleUtils {
+
+	public static String formataDouble(TextField textField) {
+		return "R$" + textField.getText();
+	}
+	
+}

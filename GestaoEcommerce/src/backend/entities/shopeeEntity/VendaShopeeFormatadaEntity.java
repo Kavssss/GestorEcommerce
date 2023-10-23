@@ -19,9 +19,9 @@ public class VendaShopeeFormatadaEntity extends VendaShopeeEntity {
 	private Double valorTotal;
 	private Double valorRecebido;
 	
-	public VendaShopeeFormatadaEntity(Long id, Date data, String conta, String cliente, String status, String codItem,
+	public VendaShopeeFormatadaEntity(Long id, Date data, String cliente, String status, String codItem,
 			Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido) {
-		super(id, data, conta, cliente, status);
+		super(id, data, cliente, status);
 		this.codItem = codItem;
 		this.qtde = qtde;
 		this.valorUnitario = valorUnitario;

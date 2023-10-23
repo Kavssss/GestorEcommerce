@@ -8,7 +8,7 @@ import backend.entities.mercadoLivreEntity.VendaMercadoLivreFormatadaEntity;
 
 public interface VendaMercadoLivreRepository {
 
-	List<VendaMercadoLivreFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String contaAnuncio,
+	List<VendaMercadoLivreFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio,
 			Integer qtde, String codItem, String cliente, String status) throws SQLException;
 	
 }

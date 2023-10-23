@@ -11,6 +11,7 @@ import java.util.Objects;
 import backend.entities.mercadoLivreEntity.ItemMercadoLivreEntity;
 import backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity;
 import backend.entities.mercadoLivreEntity.VendaMercadoLivreFormatadaEntity;
+import backend.utils.Constants;
 import models.DAO;
 import models.DbException;
 
@@ -20,7 +21,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     ResultSet resultSet;
 
     @Override
-	public List<VendaMercadoLivreFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String contaAnuncio,
+	public List<VendaMercadoLivreFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio,
 			Integer qtde, String codItem, String cliente, String status) throws SQLException {
     	List<Object> params = new ArrayList<>();
     	StringBuilder sql = new StringBuilder("SELECT vml.*, dml.* ");
@@ -29,16 +30,22 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 		sql.append(" INNER JOIN TB_ITEM i ON i.COD_ITEM = dml.COD_ITEM ");
 		sql.append(" WHERE 1 = 1 ");
 		if (Objects.nonNull(dataInicio) && Objects.nonNull(dataFim)) {
-			sql.append(" AND (vs.DATA_VENDA BETWEEN ? AND ?) ");
+			sql.append(" AND (vml.DATA_VENDA BETWEEN ? AND ?) ");
 			params.add(dataInicio);
 			params.add(dataFim);
 		}
-		if (Objects.nonNull(contaAnuncio)) {
+		if (Objects.nonNull(tipoAnuncio)) {
+			System.out.println(tipoAnuncio);
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO_FG)
+					|| tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM_FG))
+				sql.append(" AND dml.IS_FRETE_GRATIS = 1 ");
+			else
+				sql.append(" AND dml.IS_FRETE_GRATIS = 0 ");
 			sql.append(" AND dml.TIPO_ANUNCIO = ? ");
-			params.add(contaAnuncio);
+			params.add(tipoAnuncio.replace(" - Frete Grátis", ""));
 		}
 		if (Objects.nonNull(qtde)) {
-			sql.append(" AND ds.QTDE = ? ");
+			sql.append(" AND dml.QTDE = ? ");
 			params.add(qtde);
 		}
 		if (Objects.nonNull(codItem)) {
@@ -46,11 +53,11 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			params.add(codItem);
 		}
 		if (Objects.nonNull(cliente)) {
-			sql.append(" AND vs.CLIENTE LIKE ? ");
+			sql.append(" AND vml.CLIENTE LIKE ? ");
 			params.add(cliente);
 		}
-		if (Objects.nonNull(status)) {
-			sql.append(" AND vs.STATUS = ? ");
+		if (Objects.nonNull(status) && !status.equals("Todos")) {
+			sql.append(" AND vml.STATUS = ? ");
 			params.add(status);
 		}
     	try {
