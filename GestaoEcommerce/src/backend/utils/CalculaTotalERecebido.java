@@ -30,7 +30,7 @@ public class CalculaTotalERecebido {
 		Double valorUnitario = Double.valueOf(unitario);
 		Integer qtde = Integer.valueOf(quantidade);
 		Double valorTotal = valorUnitario * qtde;
-		Double valorSemFrete = valorTotal - Constants.TAXA_ML.FRETE * qtde;
+		Double valorSemFrete = valorSemFreteML(valorTotal, qtde);
 		
 		if (valorUnitario < 79)
 			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO_FG))
@@ -43,6 +43,10 @@ public class CalculaTotalERecebido {
 			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM_FG))
 				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_PREMIUM;
 		return null;
+	}
+	
+	public static Double valorSemFreteML(Double valorTotal, Integer qtde) {
+		return valorTotal - Constants.TAXA_ML.FRETE * qtde;
 	}
 	
 }

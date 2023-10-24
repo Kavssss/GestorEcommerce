@@ -1,0 +1,52 @@
+package backend.utils;
+
+public class CalculaTotalERecebido {
+	
+	public static Double calculaTotal(Integer qtde, Double unitario) {
+		return (Double) unitario * qtde;
+	}
+	
+	public static Double calculaTotal(String qtde, String unitario) {
+		return (Double) Double.valueOf(unitario) * Integer.valueOf(qtde);
+	}
+	
+	public static Double calculaRecebidoShopee(Double total, Integer qtde) {
+		return (Double) total - total * Constants.TAXA_SHOPEE.TAXA - Constants.TAXA_SHOPEE.CUSTO_FIXO * qtde;
+	}
+	
+	public static Double calculaRecebidoShopee(Double total, String qtde) {
+		return (Double) total - total * Constants.TAXA_SHOPEE.TAXA - Constants.TAXA_SHOPEE.CUSTO_FIXO * Integer.valueOf(qtde);
+	}
+	
+	public static Double calculaRecebidoML(Double unitario, Integer qtde, String tipoAnuncio) {
+		return calculaRecebidoMercadoLivre(tipoAnuncio, String.valueOf(qtde), String.valueOf(unitario));
+    }
+	
+	public static Double calculaRecebidoML(String unitario, String qtde, String tipoAnuncio) {
+		return calculaRecebidoMercadoLivre(tipoAnuncio, qtde, unitario);
+    }
+	
+	private static Double calculaRecebidoMercadoLivre(String tipoAnuncio, String quantidade, String unitario) {
+		Double valorUnitario = Double.valueOf(unitario);
+		Integer qtde = Integer.valueOf(quantidade);
+		Double valorTotal = valorUnitario * qtde;
+		Double valorSemFrete = ;
+		
+		if (valorUnitario < 79)
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO_FG))
+				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_CLASSICO - Constants.TAXA_ML.CUSTO_FIXO;
+		if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM_FG))
+				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_PREMIUM - Constants.TAXA_ML.CUSTO_FIXO;
+		else
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO_FG))
+				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_CLASSICO;
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM_FG))
+				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_PREMIUM;
+		return null;
+	}
+	
+	private static Double valorSemFreteML(Double valorTotal, Integer qtde) {
+		return valorTotal - Constants.TAXA_ML.FRETE * qtde;
+	}
+	
+}

@@ -23,8 +23,8 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     ResultSet resultSet;
 
     @Override
-	public List<VendaShopeeFormatadaEntity> findVendas(Date dataInicio, Date dataFim,
-			Integer qtde, String codItem, String cliente, String status) throws SQLException {
+	public List<VendaShopeeFormatadaEntity> findVendas(Date dataInicio, Date dataFim, Integer qtde, String codItem,
+			String cliente, String status) throws SQLException {
     	List<Object> params = new ArrayList<>();
     	StringBuilder sql = new StringBuilder("SELECT vs.*, ds.* ");
 		sql.append(" FROM TB_VENDA_SHOPEE vs ");

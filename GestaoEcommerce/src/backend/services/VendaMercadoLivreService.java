@@ -17,4 +17,14 @@ public class VendaMercadoLivreService {
 		return repository.findVendas(dataInicio, dataFim, tipoAnuncio, qtde, codItem, cliente, status);
 	}
 	
+	public void insertVenda(Date data, String cliente, String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario,
+			Double valorTotal, Double valorRecebido) throws SQLException {
+		repository.insertVenda(data, cliente, codItem, tipoAnuncio, qtde, valorUnitario, valorTotal, valorRecebido);
+	}
+	
+	public void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal,
+    		Double valorRecebido) throws SQLException {
+		repository.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal, valorRecebido);
+	}
+	
 }

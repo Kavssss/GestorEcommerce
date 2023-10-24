@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value=""/>
+		<item key="selection" value="onAdd"/>
 		<item key="wrap" value="true"/>
-		<item key="casesensitive" value="true"/>
+		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="onadd"/>
+			<item value="add"/>
+			<item value="1"/>
+			<item value="txtValorTotal1"/>
+			<item value="txtValorUnitario1"/>
+			<item value="txtQtde1"/>
 			<item value="CalculaTotalERecebido."/>
 			<item value="Released"/>
 			<item value="linhasVisiveis."/>
 			<item value="linhasVisiveis = "/>
 			<item value="ds"/>
 			<item value="vs"/>
-			<item value="1"/>
 			<item value="ComboBox"/>
 			<item value="field"/>
 			<item value="&lt;?&gt;"/>
-			<item value="2"/>
-			<item value="&apos;%&apos;?&apos;%&apos;"/>
-			<item value="cbCanal.getSelectionModel().getSelectedItem()"/>
-			<item value="Shopee"/>
-			<item value="venda"/>
 		</list>
 		<list key="replacehistory">
-			<item value=""/>
-			<item value="setLinhasVisiveis("/>
-			<item value="dml"/>
-			<item value="vml"/>
-			<item value="2"/>
-			<item value="ComboBox&lt;?&gt;"/>
-			<item value="btn"/>
-			<item value="Button"/>
-			<item value="&lt;String&gt;"/>
 			<item value="5"/>
 			<item value="4"/>
 			<item value="3"/>
-			<item value="?"/>
-			<item value="selection"/>
-			<item value="Geral"/>
+			<item value="2"/>
+			<item value="txtValorTotal2"/>
+			<item value="txtValorUnitario5"/>
+			<item value="txtValorUnitario4"/>
+			<item value="txtValorUnitario3"/>
+			<item value="txtValorUnitario2"/>
+			<item value="txtQtde5"/>
+			<item value="txtQtde4"/>
+			<item value="txtQtde3"/>
+			<item value="txtQtde2"/>
+			<item value=""/>
+			<item value="setLinhasVisiveis("/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

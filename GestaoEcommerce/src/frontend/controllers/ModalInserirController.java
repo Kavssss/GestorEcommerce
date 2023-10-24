@@ -373,9 +373,22 @@ public class ModalInserirController implements Initializable {
 			if (linhasVisiveis > 4)
 				inserirOutrosItensShopee(cbItem5, txtQtde5, txtValorUnitario5);
 		}
-//		else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
-//			
-//		}
+		else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
+			try {
+				mercadoLivreController.insertVenda(data, cliente, codItem, tipoAnuncio, qtde, valorUnitario, valorTotal,
+						valorRecebido);
+			} catch (SQLException e) {
+				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+			}
+			if (linhasVisiveis > 1)				
+				inserirOutrosItensML(cbItem2, cbTipoAnuncio2, txtQtde2, txtValorUnitario2);
+			if (linhasVisiveis > 2)
+				inserirOutrosItensML(cbItem3, cbTipoAnuncio3, txtQtde3, txtValorUnitario3);
+			if (linhasVisiveis > 3)
+				inserirOutrosItensML(cbItem4, cbTipoAnuncio4, txtQtde4, txtValorUnitario4);
+			if (linhasVisiveis > 4)
+				inserirOutrosItensML(cbItem5, cbTipoAnuncio5, txtQtde5, txtValorUnitario5);
+		}
 	}
 	
 	private void inserirOutrosItensShopee(ComboBox<String> cbItem, TextField txtQtde, TextField txtValorUnitario) {
@@ -386,6 +399,21 @@ public class ModalInserirController implements Initializable {
 		Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
 		try {
 			shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+		} catch (SQLException e) {
+			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	private void inserirOutrosItensML(ComboBox<String> cbItem, ComboBox<String> cbTipoAnuncio, TextField txtQtde,
+			TextField txtValorUnitario) {
+		String codItem = cbItem.getSelectionModel().getSelectedItem();
+		String tipoAnuncio = cbTipoAnuncio.getSelectionModel().getSelectedItem();
+		Integer qtde = !txtQtde.getText().isBlank() ? Integer.parseInt(txtQtde.getText()) : null;
+		Double valorUnitario = !txtValorUnitario.getText().isBlank() ? Double.valueOf(txtValorUnitario.getText()) : null;
+		Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+		Double valorRecebido = CalculaTotalERecebido.calculaRecebidoML(valorUnitario, qtde, tipoAnuncio);
+		try {
+			mercadoLivreController.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal, valorRecebido);
 		} catch (SQLException e) {
 			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 		}

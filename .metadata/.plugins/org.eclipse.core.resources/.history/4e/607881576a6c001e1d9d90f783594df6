@@ -1,5 +1,0 @@
-package backend.repositories.vendaML;
-
-public class VendaMercadoLivreRepositoryImpl {
-
-}

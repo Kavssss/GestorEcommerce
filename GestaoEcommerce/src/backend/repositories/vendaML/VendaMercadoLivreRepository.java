@@ -11,4 +11,10 @@ public interface VendaMercadoLivreRepository {
 	List<VendaMercadoLivreFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio,
 			Integer qtde, String codItem, String cliente, String status) throws SQLException;
 	
+	void insertVenda(Date data, String cliente, String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario,
+			Double valorTotal, Double valorRecebido) throws SQLException;
+	
+	void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal,
+    		Double valorRecebido) throws SQLException;
+	
 }

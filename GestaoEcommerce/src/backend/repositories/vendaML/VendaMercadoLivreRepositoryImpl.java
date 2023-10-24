@@ -5,13 +5,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import backend.entities.mercadoLivreEntity.ItemMercadoLivreEntity;
 import backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity;
 import backend.entities.mercadoLivreEntity.VendaMercadoLivreFormatadaEntity;
+import backend.utils.CalculaTotalERecebido;
 import backend.utils.Constants;
+import backend.utils.TextUtils;
+import frontend.views.utils.Alerts;
+import javafx.scene.control.Alert.AlertType;
 import models.DAO;
 import models.DbException;
 
@@ -144,6 +149,107 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     	    }
     	}
     	return list;
+    }
+    
+    @Override
+    public void insertVenda(Date data, String cliente, String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario,
+			Double valorTotal, Double valorRecebido) throws SQLException {
+		try {
+			this.conectar();
+		 	preparedStatement = this.conexao.prepareStatement(insertTbVenda());
+		 	preparedStatement.setDate(1, data);
+		 	preparedStatement.setString(2, cliente);
+		 	System.out.println(preparedStatement.toString());
+		 	preparedStatement.executeUpdate();
+		 	this.desconectar(this.conexao);
+		 	
+		 	Long lastId = findLastId();
+		 	
+		 	this.conectar();
+		 	preparedStatement = this.conexao.prepareStatement(insertTbDadosVenda());
+		 	preparedStatement.setLong(1, lastId);
+	 		preparedStatement.setString(2, codItem);
+	 		preparedStatement.setString(3, (String) tipoAndFrete(tipoAnuncio).get(0));
+	 		preparedStatement.setBoolean(4, (Boolean) tipoAndFrete(tipoAnuncio).get(1));
+	 		preparedStatement.setInt(5, qtde);
+	 		preparedStatement.setDouble(6, valorUnitario);
+	 		preparedStatement.setDouble(7, valorTotal);
+	 		preparedStatement.setDouble(8, CalculaTotalERecebido.valorSemFreteML(valorTotal, qtde));
+	 		preparedStatement.setDouble(9, valorRecebido);
+	 		System.out.println(preparedStatement.toString());
+	 		preparedStatement.executeUpdate();
+		 	this.desconectar(this.conexao);   		 	
+		 	
+	 		Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", "Venda cadastrada.", AlertType.INFORMATION);
+	    } catch (SQLException e) {
+	    	Alerts.showAlert("Erro", "ERRO", "Não foi possível cadastrar a venda.", AlertType.ERROR);
+	   	 	throw new DbException(e.getMessage());
+	    }
+    }
+    
+    @Override
+    public void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal,
+    		Double valorRecebido) throws SQLException {
+    	Long lastId = findLastId();
+    	try {
+    		this.conectar();
+		 	preparedStatement = this.conexao.prepareStatement(insertTbDadosVenda());
+		 	preparedStatement.setLong(1, lastId);
+	 		preparedStatement.setString(2, codItem);
+	 		preparedStatement.setString(3, (String) tipoAndFrete(tipoAnuncio).get(0));
+	 		preparedStatement.setBoolean(4, (Boolean) tipoAndFrete(tipoAnuncio).get(1));
+	 		preparedStatement.setInt(5, qtde);
+	 		preparedStatement.setDouble(6, valorUnitario);
+	 		preparedStatement.setDouble(7, valorTotal);
+	 		preparedStatement.setDouble(8, CalculaTotalERecebido.valorSemFreteML(valorTotal, qtde));
+	 		preparedStatement.setDouble(9, valorRecebido);
+	 		System.out.println(preparedStatement.toString());
+	 		preparedStatement.executeUpdate();
+		 	this.desconectar(this.conexao);  		 	
+   		 	
+	 		Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", "Venda cadastrada.", AlertType.INFORMATION);
+    	} catch (SQLException e) {
+    		Alerts.showAlert("Erro", "ERRO", "Não foi possível cadastrar a venda.", AlertType.ERROR);
+       	 	throw new DbException(e.getMessage());
+    	}
+    }
+    
+    private String insertTbVenda() {
+    	StringBuilder sql = new StringBuilder("INSERT INTO TB_VENDA_ML( ");
+		sql.append(" DATA_VENDA, CLIENTE, STATUS) ");
+		sql.append(" VALUES(?, ?, 'PENDENTE')");
+		return sql.toString();
+    }
+    
+    private String insertTbDadosVenda() {
+    	StringBuilder sql = new StringBuilder("INSERT INTO TB_DADOS_VENDA_ML VALUES( ");
+		sql.append(" ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		return sql.toString();
+    }
+    
+    private Long findLastId() {
+    	String sql = "SELECT MAX(ID_VENDA) FROM TB_VENDA_ML";
+    	try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql);
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	resultSet.next();
+   		 	Long value = resultSet.getLong(1);
+   		 	this.desconectar(this.conexao);
+   		 	return value;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+    }
+    
+    private List<Object> tipoAndFrete(String tipoAnuncio) {
+    	tipoAnuncio = TextUtils.removeSpaces(tipoAnuncio);
+    	if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM))
+    		return Arrays.asList(tipoAnuncio, Boolean.FALSE);
+    	if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO_FG) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM_FG))
+    		return Arrays.asList(tipoAnuncio.split("-")[0], Boolean.TRUE);
+    	return null;
     }
 	
 }
