@@ -105,7 +105,6 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 						resultSet.getLong("ID_VENDA"),
 						resultSet.getDate("DATA_VENDA"),
 						resultSet.getString("CLIENTE"),
-						resultSet.getString("TELEFONE"),
 						resultSet.getString("STATUS")));
 			}
 			vendas.get(vendas.size() - 1).addItem(item);
@@ -135,7 +134,6 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     	    			venda.getId(),
     	    			venda.getData(),
     	    			venda.getCliente(),
-    	    			venda.getTelefone(),
     	    			venda.getStatus(),
     	    			item.getCodItem(),
     	    			item.getQtde(),
@@ -250,6 +248,58 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     	if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO_FG) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM_FG))
     		return Arrays.asList(tipoAnuncio.split("-")[0], Boolean.TRUE);
     	return null;
+    }
+
+    @Override
+	public VendaMercadoLivreEntity findById(Long id) throws SQLException {
+		StringBuilder sql = new StringBuilder("SELECT vml.ID_VENDA, vml.DATA_VENDA, vml.CLIENTE, vml.STATUS, dml.ID_VENDA, ");
+		sql.append(" dml.COD_ITEM,  dml.QTDE, dml.VALOR_UNITARIO, dml.VALOR_TOTAL, dml.VALOR_RECEBIDO ");
+		sql.append(" FROM TB_VENDA_ML vml ");
+		sql.append(" INNER JOIN TB_DADOS_VENDA_ML dml ON dml.ID_VENDA = vml.ID_VENDA ");
+		sql.append(" INNER JOIN TB_ITEM i ON i.COD_ITEM = dml.COD_ITEM ");
+		sql.append(" WHERE vml.ID_VENDA = ?");
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
+   		 	preparedStatement.setLong(1, id);
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	return resultSetToVendaEdit(resultSet);
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+    
+    private VendaMercadoLivreEntity resultSetToVendaEdit(ResultSet resultSet) throws SQLException {
+		resultSet.next();
+		VendaMercadoLivreEntity venda = new VendaMercadoLivreEntity(
+					resultSet.getLong(1),
+					resultSet.getDate(2),
+					resultSet.getString(3),
+					resultSet.getString(4));
+		venda.addItem(new ItemMercadoLivreEntity(
+				resultSet.getString(6),
+				resultSet.getInt(7),
+				resultSet.getDouble(8),
+				resultSet.getDouble(9),
+				resultSet.getDouble(10),
+				resultSet.getString(11),
+				resultSet.getBoolean(12),
+				resultSet.getDouble(13)));
+    	while (resultSet.next()) {
+    		ItemMercadoLivreEntity item = new ItemMercadoLivreEntity(
+    				resultSet.getString(6),
+    				resultSet.getInt(7),
+    				resultSet.getDouble(8),
+    				resultSet.getDouble(9),
+    				resultSet.getDouble(10),
+    				resultSet.getString(11),
+    				resultSet.getBoolean(12),
+    				resultSet.getDouble(13));
+    		venda.addItem(item);
+    	}			
+    	this.desconectar(this.conexao);
+    	return venda;
     }
 	
 }

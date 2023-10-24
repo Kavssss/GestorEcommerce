@@ -31,6 +31,11 @@ public class DataUtils {
 		}		
 	}
 	
+	public static String dateToString(Date in) {  // saída no formato dd/MM/yyyy
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		return formato.format(in);
+	}
+	
 	public static void formataData(TextField textField, KeyEvent event) {
 		String text = textField.getText();
 		

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import backend.entities.shopeeEntity.VendaShopeeEntity;
 import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
 
 public interface VendaShopeeRepository {
@@ -17,4 +18,6 @@ public interface VendaShopeeRepository {
 	void insertItemVenda(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
 			throws SQLException;
 
+	VendaShopeeEntity findById(Long id) throws SQLException;
+	
 }

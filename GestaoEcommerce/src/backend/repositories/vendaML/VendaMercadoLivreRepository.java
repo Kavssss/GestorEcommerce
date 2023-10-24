@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity;
 import backend.entities.mercadoLivreEntity.VendaMercadoLivreFormatadaEntity;
 
 public interface VendaMercadoLivreRepository {
@@ -16,5 +17,7 @@ public interface VendaMercadoLivreRepository {
 	
 	void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal,
     		Double valorRecebido) throws SQLException;
+	
+	VendaMercadoLivreEntity findById(Long id) throws SQLException;
 	
 }

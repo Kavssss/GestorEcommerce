@@ -11,6 +11,10 @@ import java.util.ResourceBundle;
 import backend.controllers.VendaGeralController;
 import backend.controllers.VendaMercadoLivreController;
 import backend.controllers.VendaShopeeController;
+import backend.entities.mercadoLivreEntity.ItemMercadoLivreEntity;
+import backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity;
+import backend.entities.shopeeEntity.ItemShopeeEntity;
+import backend.entities.shopeeEntity.VendaShopeeEntity;
 import backend.utils.CalculaTotalERecebido;
 import frontend.utils.Constants;
 import frontend.utils.DataUtils;
@@ -157,9 +161,9 @@ public class ModalInserirController implements Initializable {
 
 	@FXML
 	private TextField txtValorUnitario5;
-
+	
 	@Override
-	public void initialize(URL url, ResourceBundle rb) {
+	public void initialize(URL url, ResourceBundle rb) {		
 		setNumberFields();
 		for (int i = 2; i <= 5; i++)
 			setVisibilityInsertItem(i, Boolean.FALSE);
@@ -557,6 +561,50 @@ public class ModalInserirController implements Initializable {
 			txtValorRecebido5.setVisible(visible);
 			btnX5.setVisible(visible);
 			break;
+		}
+	}
+	
+	public void updateFieldsEdit(Long id, String canal) {
+		if (canal.equals("S")) {
+			updateFieldsEditShopee(id);
+		}
+		else if (canal.equals("ML")) {
+			updateFieldsEditMercadoLivre(id);
+		}
+	}
+	
+	public void updateFieldsEditShopee(Long id) {
+		try {
+			VendaShopeeEntity vendaShopee = shopeeController.findById(id);
+			ItemShopeeEntity itemShopee = vendaShopee.getItens().get(0);
+			cbCanal.setValue(Constants.LOJA.SHOPEE);
+			txtData.setText(DataUtils.dateToString(vendaShopee.getData()));
+			txtCliente.setText(vendaShopee.getCliente());
+			cbItem1.setValue(itemShopee.getCodItem());
+			txtQtde1.setText(itemShopee.getQtde().toString());
+			txtValorUnitario1.setText(itemShopee.getValorUnitario().toString());
+			txtValorTotal1.setText(itemShopee.getValorTotal().toString());
+			txtValorRecebido1.setText(itemShopee.getValorRecebido().toString());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateFieldsEditMercadoLivre(Long id) {
+		try {
+			VendaMercadoLivreEntity vendaML = mercadoLivreController.findById(id);
+			ItemMercadoLivreEntity itemML = vendaML.getItens().get(0);
+			cbCanal.setValue(Constants.LOJA.MERCADO_LIVRE);
+			txtData.setText(DataUtils.dateToString(vendaML.getData()));
+			txtCliente.setText(vendaML.getCliente());
+			cbItem1.setValue(itemML.getCodItem());
+			cbTipoAnuncio1.setValue(itemML.getTipoAnuncio());
+			txtQtde1.setText(itemML.getQtde().toString());
+			txtValorUnitario1.setText(itemML.getValorUnitario().toString());
+			txtValorTotal1.setText(itemML.getValorTotal().toString());
+			txtValorRecebido1.setText(itemML.getValorRecebido().toString());
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 

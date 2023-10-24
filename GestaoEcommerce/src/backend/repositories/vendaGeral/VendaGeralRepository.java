@@ -15,4 +15,5 @@ public interface VendaGeralRepository {
 	List<String> findItens() throws SQLException;
 	
 	void insertTbItem(String codItem) throws SQLException;
+	
 }

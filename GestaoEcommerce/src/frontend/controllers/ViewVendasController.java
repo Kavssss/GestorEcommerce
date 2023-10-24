@@ -21,6 +21,7 @@ import frontend.views.utils.Alerts;
 import frontend.views.utils.Constraints;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -33,6 +34,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -91,25 +93,25 @@ public class ViewVendasController implements Initializable {
 	private TableColumn<VendaGeralFormatadaEntity, String> columnCanalTbGeral;
 
 	@FXML
-	private TableView<VendaMercadoLivreEntity> tbMercadoLivre;
+	private TableView<VendaMercadoLivreFormatadaEntity> tbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreEntity, String> columnDataTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreFormatadaEntity, String> columnDataTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreEntity, String> columnAnuncioTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreFormatadaEntity, String> columnAnuncioTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreEntity, Number> columnQtdTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreFormatadaEntity, Number> columnQtdTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreEntity, String> columnItemTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreFormatadaEntity, String> columnItemTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreEntity, String> columnClienteTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreFormatadaEntity, String> columnClienteTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreEntity, Number> columnUnitTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreFormatadaEntity, Number> columnUnitTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreEntity, Number> columnTotalTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreFormatadaEntity, Number> columnTotalTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreEntity, Number> columnRecebidoTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreFormatadaEntity, Number> columnRecebidoTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreEntity, String> columnStatusTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreFormatadaEntity, String> columnStatusTbMercadoLivre;
 
 	@FXML
 	private TableView<VendaShopeeFormatadaEntity> tbShopee;
@@ -299,6 +301,40 @@ public class ViewVendasController implements Initializable {
 		cbStatus.setPromptText("Status");
 		setVisibilityTables(false, false, false);
 		txtErroData.setVisible(false);
+	}
+	
+	@FXML
+    void onTbGeralMouseClicked(MouseEvent event) {
+		if (event.getClickCount() == 2) {
+            VendaGeralFormatadaEntity selectedItem = tbGeral.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+            	callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), selectedItem.getCanal());
+            }
+        }
+    }
+	
+	@FXML
+    void onTbMercadoLivreClicked(MouseEvent event) {
+		if (event.getClickCount() == 2) {
+            VendaMercadoLivreFormatadaEntity selectedItem = tbMercadoLivre.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+            	callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), null);
+            }
+        }
+    }
+
+    @FXML
+    void onTbShopeeClicked(MouseEvent event) {
+    	if (event.getClickCount() == 2) {
+            VendaShopeeFormatadaEntity selectedItem = tbShopee.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+            	callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), null);
+            }
+        }
+    }
+	
+	private void callModalEditarVenda(Stage parentStage, Long id, String canal) {
+		LoadScene.callEditModal(parentStage, getClass(), id, canal);
 	}
 	
 	private void setNumberFields() {

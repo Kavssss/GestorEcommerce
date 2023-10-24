@@ -2,6 +2,7 @@ package frontend.utils;
 
 import java.io.IOException;
 
+import frontend.controllers.ModalInserirController;
 import frontend.views.utils.Alerts;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -53,6 +54,25 @@ public class LoadScene {
 			Pane pane = loader.load();
 			Stage modalStage = new Stage();
 			modalStage.setTitle("Inserir venda");
+			modalStage.setScene(new Scene(pane));
+			modalStage.setResizable(Boolean.FALSE);
+			modalStage.initOwner(parentStage);
+			modalStage.initModality(Modality.WINDOW_MODAL);
+			setModalStage(modalStage);
+			modalStage.showAndWait();
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	public static void callEditModal(Stage parentStage, Class<?> currentClass, Long id, String canal) {
+		try {
+			FXMLLoader loader = new FXMLLoader(currentClass.getResource(Constants.MODAL.INSERIR_VENDA));
+			Pane pane = loader.load();
+			Stage modalStage = new Stage();
+			ModalInserirController controller = loader.getController();
+			controller.updateFieldsEdit(id, canal);
+			modalStage.setTitle("Editar venda");
 			modalStage.setScene(new Scene(pane));
 			modalStage.setResizable(Boolean.FALSE);
 			modalStage.initOwner(parentStage);

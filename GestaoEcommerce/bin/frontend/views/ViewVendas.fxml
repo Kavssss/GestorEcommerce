@@ -179,10 +179,10 @@
             <Insets left="462.0" top="559.0" />
          </StackPane.margin>
       </Button>
-      <TableView fx:id="tbGeral" maxHeight="345.0" maxWidth="924.0" minHeight="345.0" minWidth="924.0" prefHeight="345.0" prefWidth="924.0" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" StackPane.alignment="TOP_LEFT">
+      <TableView fx:id="tbGeral" maxHeight="345.0" maxWidth="924.0" minHeight="345.0" minWidth="924.0" onMouseClicked="#onTbGeralMouseClicked" prefHeight="345.0" prefWidth="924.0" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" StackPane.alignment="TOP_LEFT">
         <columns>
           <TableColumn fx:id="columnDataTbGeral" editable="false" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="DATA" />
-            <TableColumn fx:id="columnClienteTbGeral" editable="false" maxWidth="323.0" minWidth="323.0" prefWidth="323.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="CLIENTE" />
+            <TableColumn fx:id="columnClienteTbGeral" editable="false" maxWidth="320.0" minWidth="310.0" prefWidth="310.0" sortable="false" style="-fx-alignment: CENTER;" text="CLIENTE" />
             <TableColumn fx:id="columnQtdTbGeral" editable="false" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="QTD" />
             <TableColumn fx:id="columnItemTbGeral" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="ITEM" />
             <TableColumn fx:id="columnUnitTbGeral" editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="UNIT" />
@@ -195,7 +195,7 @@
             <Insets left="50.0" top="202.0" />
          </StackPane.margin>
       </TableView>
-      <TableView fx:id="tbShopee" layoutX="60.0" layoutY="212.0" maxHeight="345.0" maxWidth="924.0" minHeight="345.0" minWidth="924.0" prefHeight="345.0" prefWidth="924.0" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" StackPane.alignment="TOP_LEFT">
+      <TableView fx:id="tbShopee" layoutX="60.0" layoutY="212.0" maxHeight="345.0" maxWidth="924.0" minHeight="345.0" minWidth="924.0" onMouseClicked="#onTbShopeeClicked" prefHeight="345.0" prefWidth="924.0" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" StackPane.alignment="TOP_LEFT">
          <columns>
             <TableColumn fx:id="columnDataTbShopee" editable="false" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" sortable="false" style="-fx-alignment: CENTER;" text="DATA" />
             <TableColumn fx:id="columnClienteTbShopee" editable="false" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" sortable="false" style="-fx-alignment: CENTER;" text="CLIENTE" />
@@ -210,7 +210,7 @@
             <Insets left="50.0" top="202.0" />
          </StackPane.margin>
       </TableView>
-      <TableView fx:id="tbMercadoLivre" layoutX="60.0" layoutY="212.0" maxHeight="345.0" maxWidth="924.0" minHeight="345.0" minWidth="924.0" prefHeight="345.0" prefWidth="924.0" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" StackPane.alignment="TOP_LEFT">
+      <TableView fx:id="tbMercadoLivre" layoutX="60.0" layoutY="212.0" maxHeight="345.0" maxWidth="924.0" minHeight="345.0" minWidth="924.0" onMouseClicked="#onTbMercadoLivreClicked" prefHeight="345.0" prefWidth="924.0" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" StackPane.alignment="TOP_LEFT">
          <columns>
             <TableColumn fx:id="columnDataTbMercadoLivre" editable="false" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="DATA" />
             <TableColumn fx:id="columnClienteTbMercadoLivre" editable="false" maxWidth="279.0" minWidth="279.0" prefWidth="279.0" sortable="false" style="-fx-alignment: CENTER;" text="CLIENTE" />

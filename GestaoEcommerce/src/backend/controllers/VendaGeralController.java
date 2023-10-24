@@ -30,4 +30,5 @@ public class VendaGeralController {
 	public List<String> findItens() throws SQLException {
 		return service.findItens();
 	}
+	
 }

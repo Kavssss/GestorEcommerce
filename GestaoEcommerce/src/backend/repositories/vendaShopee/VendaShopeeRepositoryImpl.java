@@ -215,6 +215,51 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     	}
     	return list;
     }
+
+	@Override
+	public VendaShopeeEntity findById(Long id) throws SQLException {
+		StringBuilder sql = new StringBuilder("SELECT vs.*, ds.* ");
+		sql.append(" FROM TB_VENDA_SHOPEE vs ");
+		sql.append(" INNER JOIN TB_DADOS_VENDA_SHOPEE ds ON ds.ID_VENDA = vs.ID_VENDA ");
+		sql.append(" INNER JOIN TB_ITEM i ON i.COD_ITEM = ds.COD_ITEM ");
+		sql.append(" WHERE vs.ID_VENDA = ?");
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
+   		 	preparedStatement.setLong(1, id);
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	return resultSetToVendaEdit(resultSet);
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+	
+	private VendaShopeeEntity resultSetToVendaEdit(ResultSet resultSet) throws SQLException {
+		resultSet.next();
+		VendaShopeeEntity venda = new VendaShopeeEntity(
+					resultSet.getLong(1),
+					resultSet.getDate(2),
+					resultSet.getString(3),
+					resultSet.getString(4));
+		venda.addItem(new ItemShopeeEntity(
+				resultSet.getString(6),
+				resultSet.getInt(7),
+				resultSet.getDouble(8),
+				resultSet.getDouble(9),
+				resultSet.getDouble(10)));
+    	while (resultSet.next()) {
+    		ItemShopeeEntity item = new ItemShopeeEntity(
+    				resultSet.getString(6),
+    				resultSet.getInt(7),
+    				resultSet.getDouble(8),
+    				resultSet.getDouble(9),
+    				resultSet.getDouble(10));
+    		venda.addItem(item);
+    	}			
+    	this.desconectar(this.conexao);
+    	return venda;
+    }
   
 }
 

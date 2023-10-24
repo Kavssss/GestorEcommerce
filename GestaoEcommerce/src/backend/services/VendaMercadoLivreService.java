@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity;
 import backend.entities.mercadoLivreEntity.VendaMercadoLivreFormatadaEntity;
 import backend.repositories.vendaML.VendaMercadoLivreRepository;
 import backend.repositories.vendaML.VendaMercadoLivreRepositoryImpl;
@@ -25,6 +26,10 @@ public class VendaMercadoLivreService {
 	public void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal,
     		Double valorRecebido) throws SQLException {
 		repository.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal, valorRecebido);
+	}
+	
+	public VendaMercadoLivreEntity findById(Long id) throws SQLException {
+		return repository.findById(id);
 	}
 	
 }

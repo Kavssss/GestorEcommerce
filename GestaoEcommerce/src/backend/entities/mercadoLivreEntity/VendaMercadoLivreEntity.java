@@ -18,15 +18,13 @@ public class VendaMercadoLivreEntity {
 	private Long id;
 	private Date data;
 	private String cliente;
-	private String telefone;
 	private List<ItemMercadoLivreEntity> itens = new ArrayList<>();
 	private String status;
 
-	public VendaMercadoLivreEntity(Long id, Date data, String cliente, String telefone, String status) {
+	public VendaMercadoLivreEntity(Long id, Date data, String cliente, String status) {
 		this.id = id;
 		this.data = data;
 		this.cliente = cliente;
-		this.telefone = telefone;
 		this.status = status;
 	}
 

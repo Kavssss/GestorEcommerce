@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import backend.entities.shopeeEntity.VendaShopeeEntity;
 import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
 import backend.services.VendaShopeeService;
 
@@ -40,6 +41,10 @@ public class VendaShopeeController {
 	public void insertItemVenda(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
 			throws SQLException {
 		service.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+	}
+	
+	public VendaShopeeEntity findById(Long id) throws SQLException {
+		return service.findById(id);
 	}
 	
 }

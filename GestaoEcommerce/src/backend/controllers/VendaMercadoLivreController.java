@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity;
 import backend.entities.mercadoLivreEntity.VendaMercadoLivreFormatadaEntity;
 import backend.services.VendaMercadoLivreService;
 
@@ -40,6 +41,10 @@ public class VendaMercadoLivreController {
 	public void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal,
     		Double valorRecebido) throws SQLException {
 		service.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal, valorRecebido);
+	}
+	
+	public VendaMercadoLivreEntity findById(Long id) throws SQLException {
+		return service.findById(id);
 	}
 	
 }

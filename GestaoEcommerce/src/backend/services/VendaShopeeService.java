@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import backend.entities.shopeeEntity.VendaShopeeEntity;
 import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
 import backend.repositories.vendaShopee.VendaShopeeRepository;
 import backend.repositories.vendaShopee.VendaShopeeRepositoryImpl;
@@ -27,4 +28,8 @@ public class VendaShopeeService {
 		repository.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
 	}
 
+	public VendaShopeeEntity findById(Long id) throws SQLException {
+		return repository.findById(id);
+	}
+	
 }
