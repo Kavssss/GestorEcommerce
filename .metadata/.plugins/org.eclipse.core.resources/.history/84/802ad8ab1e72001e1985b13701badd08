@@ -364,30 +364,65 @@ public class ModalInserirController implements Initializable {
 			} catch (SQLException e) {
 				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			}
-			if (linhasVisiveis > 1)				
-				inserirOutrosItensShopee(cbItem2, txtQtde2, txtValorUnitario2);
-			if (linhasVisiveis > 2)
-				inserirOutrosItensShopee(cbItem3, txtQtde3, txtValorUnitario3);
-			if (linhasVisiveis > 3)
-				inserirOutrosItensShopee(cbItem4, txtQtde4, txtValorUnitario4);
-			if (linhasVisiveis > 4)
-				inserirOutrosItensShopee(cbItem5, txtQtde5, txtValorUnitario5);
+			inserirOutrosItens();
 		}
 //		else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
 //			
 //		}
 	}
 	
-	private void inserirOutrosItensShopee(ComboBox<String> cbItem, TextField txtQtde, TextField txtValorUnitario) {
-		String codItem = cbItem.getSelectionModel().getSelectedItem();
-		Integer qtde = !txtQtde.getText().isBlank() ? Integer.parseInt(txtQtde.getText()) : null;
-		Double valorUnitario = !txtValorUnitario.getText().isBlank() ? Double.valueOf(txtValorUnitario.getText()) : null;
-		Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
-		Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
-		try {
-			shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
-		} catch (SQLException e) {
-			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+	private void inserirOutrosItens() {
+		switch (linhasVisiveis) {
+		case 2:
+			String codItem = cbItem2.getSelectionModel().getSelectedItem();
+			Integer qtde = !txtQtde2.getText().isBlank() ? Integer.parseInt(txtQtde2.getText()) : null;
+			Double valorUnitario = !txtValorUnitario2.getText().isBlank() ? Double.valueOf(txtValorUnitario2.getText()) : null;
+			Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+			Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+			try {
+				shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+			} catch (SQLException e) {
+				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+			}
+			break;
+		case 3:
+			codItem = cbItem3.getSelectionModel().getSelectedItem();
+			qtde = !txtQtde3.getText().isBlank() ? Integer.parseInt(txtQtde3.getText()) : null;
+			valorUnitario = !txtValorUnitario3.getText().isBlank() ? Double.valueOf(txtValorUnitario3.getText()) : null;
+			valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+			valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+			try {
+				shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+			} catch (SQLException e) {
+				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+			}
+			break;
+		case 4:
+			codItem = cbItem4.getSelectionModel().getSelectedItem();
+			qtde = !txtQtde4.getText().isBlank() ? Integer.parseInt(txtQtde4.getText()) : null;
+			valorUnitario = !txtValorUnitario4.getText().isBlank() ? Double.valueOf(txtValorUnitario4.getText()) : null;
+			valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+			valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+			try {
+				shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+			} catch (SQLException e) {
+				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+			}
+			break;
+		case 5:
+			codItem = cbItem5.getSelectionModel().getSelectedItem();
+			qtde = !txtQtde5.getText().isBlank() ? Integer.parseInt(txtQtde5.getText()) : null;
+			valorUnitario = !txtValorUnitario5.getText().isBlank() ? Double.valueOf(txtValorUnitario5.getText()) : null;
+			valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+			valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+			try {
+				shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+			} catch (SQLException e) {
+				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+			}
+			break;
+		default:
+			break;
 		}
 	}
 
