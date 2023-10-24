@@ -17,4 +17,8 @@ public class VendaGeralService {
 		return repository.findVendas(dataInicio, dataFim, qtde, codItem, cliente, status);
 	}
 	
+	public List<String> findItens() throws SQLException {
+		return repository.findItens();
+	}
+	
 }

@@ -14,4 +14,7 @@ public interface VendaShopeeRepository {
 	void insertVenda(Date data, String cliente, String codItem, Integer qtde, Double valorUnitario, Double valorTotal,
 			Double valorRecebido) throws SQLException;
 
+	void insertItemVenda(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
+			throws SQLException;
+
 }

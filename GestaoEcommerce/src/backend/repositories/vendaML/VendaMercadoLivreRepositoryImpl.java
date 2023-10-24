@@ -60,6 +60,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			sql.append(" AND vml.STATUS = ? ");
 			params.add(status);
 		}
+		sql.append(" ORDER BY 2");
     	try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(sql.toString());

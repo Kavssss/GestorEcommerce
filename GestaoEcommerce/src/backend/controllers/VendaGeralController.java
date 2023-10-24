@@ -21,4 +21,13 @@ public class VendaGeralController {
 		return service.findVendas(dataInicio, dataFim, qtde, codItem, cliente, status);
 	}
 	
+	/**
+	 * Recupera todos os códigos dos itens
+	 * 
+	 * @return Códigos itens
+	 * @throws SQLException
+	 */
+	public List<String> findItens() throws SQLException {
+		return service.findItens();
+	}
 }

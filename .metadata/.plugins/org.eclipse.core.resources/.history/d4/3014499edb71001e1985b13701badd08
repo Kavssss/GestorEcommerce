@@ -1,0 +1,46 @@
+package backend.utils;
+
+public class CalculaTotalERecebido {
+	
+	public static Double calculaTotal(String qtde, String unitario) {
+		return (Double) Double.valueOf(unitario) * Integer.valueOf(qtde);
+	}
+	
+	public static Double calculaRecebidoML(String total, String unitario, String qtde, String tipoAnuncio) {
+    	Double valorTotal = Double.valueOf(total);
+		return calculaRecebidoMercadoLivre(tipoAnuncio, unitario, qtde, valorTotal);
+    }
+	
+	public static Double calculaRecebidoShopee(String total) {
+		Double valorTotal = Double.valueOf(total);
+		return (Double) valorTotal - (valorTotal * Constants.TAXA_SHOPEE.TAXA) - Constants.TAXA_SHOPEE.CUSTO_FIXO;
+	}
+	
+	private static Double calculaRecebidoMercadoLivre(String tipoAnuncio, String quantidade, String unitario, Double valorTotal) {
+		Double valorUnitario = Double.valueOf(unitario);
+		Integer qtde = Integer.valueOf(quantidade);
+		System.out.println(qtde);
+		Double valorSemFrete = valorTotal - Constants.TAXA_ML.FRETE * qtde;
+		
+		if (valorUnitario < 79)
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO))
+				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_CLASSICO - Constants.TAXA_ML.CUSTO_FIXO;
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO_FG))
+				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_CLASSICO - Constants.TAXA_ML.FRETE - Constants.TAXA_ML.CUSTO_FIXO;
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM))
+				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_PREMIUM - Constants.TAXA_ML.CUSTO_FIXO;
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM_FG))
+				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_PREMIUM - Constants.TAXA_ML.FRETE - Constants.TAXA_ML.CUSTO_FIXO;
+		else
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO))
+				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_CLASSICO;
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO_FG))
+				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_CLASSICO - Constants.TAXA_ML.FRETE;
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM))
+				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_PREMIUM;
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM_FG))
+				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_PREMIUM - Constants.TAXA_ML.FRETE;
+		return null;
+	}
+	
+}

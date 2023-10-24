@@ -25,12 +25,21 @@ public class VendaShopeeController {
 	/**
 	 * Insere venda com 1 item no banco de dados
 	 * 
-	 * @return Mensagem de sucesso ou erro ao inserir
 	 * @throws SQLException
 	 */
 	public void insertVenda(Date data, String cliente, String codItem, Integer qtde, Double valorUnitario,
 			Double valorTotal, Double valorRecebido) throws SQLException {
 		service.insertVenda(data, cliente, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
 	}
-
+	
+	/**
+	 * Insere item extra na última venda do banco de dados
+	 * 
+	 * @throws SQLException
+	 */
+	public void insertItemVenda(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
+			throws SQLException {
+		service.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+	}
+	
 }

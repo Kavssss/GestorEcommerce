@@ -21,5 +21,10 @@ public class VendaShopeeService {
 			Double valorTotal, Double valorRecebido) throws SQLException {
 		repository.insertVenda(data, cliente, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
 	}
+	
+	public void insertItemVenda(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
+			throws SQLException {
+		repository.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+	}
 
 }

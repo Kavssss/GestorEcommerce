@@ -158,5 +158,40 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
     	}
     	return list;
     }
+
+	@Override
+	public List<String> findItens() throws SQLException {
+		String sql = "SELECT COD_ITEM from TB_ITEM";
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql);
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	List<String> result = new ArrayList<>();
+   		 	while (resultSet.next())
+   		 		result.add(resultSet.getString(1));
+   		 	this.desconectar(this.conexao);
+   		 	return result;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+	
+	@Override
+	public void insertTbItem(String codItem) throws SQLException {
+		String sql = "INSERT INTO TB_ITEM VALUES(?, ?, ?)";
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql);
+   		 	preparedStatement.setString(1, codItem);
+   		 	preparedStatement.setString(2, codItem.split("-")[0]);
+   		 	preparedStatement.setString(3, codItem.split("-")[1]);
+		 	System.out.println(preparedStatement.toString());
+   		 	preparedStatement.executeUpdate();
+   		 	this.desconectar(this.conexao);
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+    }
 	
 }

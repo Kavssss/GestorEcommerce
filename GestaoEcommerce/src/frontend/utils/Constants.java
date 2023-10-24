@@ -37,7 +37,7 @@ public interface Constants {
 	}
 	
 	interface MESSAGE {
-		String CAMPOS_NAO_PREENCHIDOS = "Preencha os campos obrigatórios para prosseguir";
+		String CAMPOS_NAO_PREENCHIDOS = "Preencha todos os campos para prosseguir";
 	}
 	
 }
