@@ -11,7 +11,6 @@ import backend.controllers.VendaGeralController;
 import backend.controllers.VendaMercadoLivreController;
 import backend.controllers.VendaShopeeController;
 import backend.entities.geralEntity.VendaGeralFormatadaEntity;
-import backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity;
 import backend.entities.mercadoLivreEntity.VendaMercadoLivreFormatadaEntity;
 import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
 import frontend.utils.Constants;
@@ -21,7 +20,6 @@ import frontend.views.utils.Alerts;
 import frontend.views.utils.Constraints;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -318,7 +316,7 @@ public class ViewVendasController implements Initializable {
 		if (event.getClickCount() == 2) {
             VendaMercadoLivreFormatadaEntity selectedItem = tbMercadoLivre.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
-            	callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), null);
+            	callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), "ML");
             }
         }
     }
@@ -328,7 +326,7 @@ public class ViewVendasController implements Initializable {
     	if (event.getClickCount() == 2) {
             VendaShopeeFormatadaEntity selectedItem = tbShopee.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
-            	callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), null);
+            	callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), "S");
             }
         }
     }

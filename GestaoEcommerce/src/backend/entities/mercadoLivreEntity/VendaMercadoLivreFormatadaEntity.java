@@ -22,10 +22,10 @@ public class VendaMercadoLivreFormatadaEntity extends VendaMercadoLivreEntity {
 	private Boolean isFreteGratis;
 	private Double totalSemFrete;
 
-	public VendaMercadoLivreFormatadaEntity(Long id, Date data, String cliente, String status,
+	public VendaMercadoLivreFormatadaEntity(Long idVenda, Date data, String cliente, String status, Long idDado,
 			String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido,
 			String tipoAnuncio, Boolean isFreteGratis, Double totalSemFrete) {
-		super(id, data, cliente, status);
+		super(idVenda, data, cliente, status, idDado);
 		this.codItem = codItem;
 		this.qtde = qtde;
 		this.valorUnitario = valorUnitario;

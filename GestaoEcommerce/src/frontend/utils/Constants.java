@@ -38,6 +38,8 @@ public interface Constants {
 	
 	interface MESSAGE {
 		String CAMPOS_NAO_PREENCHIDOS = "Preencha todos os campos para prosseguir";
+		String CANAL_NAO_PREENCHIDO = "Campo CANAL não selecionado";
+		String IRREVERSIVEL = "Essa ação é irreversível";
 	}
 	
 }

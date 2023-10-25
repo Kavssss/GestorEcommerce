@@ -75,13 +75,14 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 	}
     
     @Override
-    public void insertVenda(Date data, String cliente, String codItem, Integer qtde, Double valorUnitario, Double valorTotal,
-    		Double valorRecebido) throws SQLException {
+    public void insertVenda(Date data, String cliente, String status, String codItem, Integer qtde, Double valorUnitario,
+    		Double valorTotal, Double valorRecebido) throws SQLException {
     	try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(insertTbVenda());
    		 	preparedStatement.setDate(1, data);
    		 	preparedStatement.setString(2, cliente);
+   		 	preparedStatement.setString(3, status);
    		 	System.out.println(preparedStatement.toString());
    		 	preparedStatement.executeUpdate();
    		 	this.desconectar(this.conexao);
@@ -134,7 +135,7 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     private String insertTbVenda() {
     	StringBuilder sql = new StringBuilder("INSERT INTO TB_VENDA_SHOPEE( ");
 		sql.append(" DATA_VENDA, CLIENTE, STATUS) ");
-		sql.append(" VALUES(?, ?, 'PENDENTE')");
+		sql.append(" VALUES(?, ?, ?)");
 		return sql.toString();
     }
     
@@ -165,17 +166,18 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     	Long lastId = 0L;
 		while (resultSet.next()) {
 			ItemShopeeEntity item = new ItemShopeeEntity(
-					resultSet.getString(6),
-					resultSet.getInt(7),
-					resultSet.getDouble(8),
-					resultSet.getDouble(9),
-					resultSet.getDouble(10));
+					resultSet.getString("COD_ITEM"),
+					resultSet.getInt("QTDE"),
+					resultSet.getDouble("VALOR_UNITARIO"),
+					resultSet.getDouble("VALOR_TOTAL"),
+					resultSet.getDouble("VALOR_RECEBIDO"));
 			if (!lastId.equals(resultSet.getLong(1))) {
 				vendas.add(new VendaShopeeEntity(
-						resultSet.getLong(1),
-						resultSet.getDate(2),
-						resultSet.getString(3),
-						resultSet.getString(4)));
+						resultSet.getLong("ID_VENDA"),
+						resultSet.getDate("DATA_VENDA"),
+						resultSet.getString("CLIENTE"),
+						resultSet.getString("STATUS"),
+						resultSet.getLong("ID_DADO")));
 			}
 			vendas.get(vendas.size()-1).addItem(item);
 			lastId = resultSet.getLong(1);
@@ -205,6 +207,7 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     	    			venda.getData(),
     	    			venda.getCliente(),
     	    			venda.getStatus(),
+    	    			venda.getIdDado(),
     	    			item.getCodItem(),
     	    			item.getQtde(),
     	    			item.getValorUnitario(),
@@ -238,28 +241,106 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 	private VendaShopeeEntity resultSetToVendaEdit(ResultSet resultSet) throws SQLException {
 		resultSet.next();
 		VendaShopeeEntity venda = new VendaShopeeEntity(
-					resultSet.getLong(1),
-					resultSet.getDate(2),
-					resultSet.getString(3),
-					resultSet.getString(4));
+					resultSet.getLong("ID_VENDA"),
+					resultSet.getDate("DATA_VENDA"),
+					resultSet.getString("CLIENTE"),
+					resultSet.getString("STATUS"),
+					resultSet.getLong("ID_DADO"));
 		venda.addItem(new ItemShopeeEntity(
-				resultSet.getString(6),
-				resultSet.getInt(7),
-				resultSet.getDouble(8),
-				resultSet.getDouble(9),
-				resultSet.getDouble(10)));
+				resultSet.getString("COD_ITEM"),
+				resultSet.getInt("QTDE"),
+				resultSet.getDouble("VALOR_UNITARIO"),
+				resultSet.getDouble("VALOR_TOTAL"),
+				resultSet.getDouble("VALOR_RECEBIDO")));
     	while (resultSet.next()) {
     		ItemShopeeEntity item = new ItemShopeeEntity(
-    				resultSet.getString(6),
-    				resultSet.getInt(7),
-    				resultSet.getDouble(8),
-    				resultSet.getDouble(9),
-    				resultSet.getDouble(10));
+    				resultSet.getString("COD_ITEM"),
+    				resultSet.getInt("QTDE"),
+    				resultSet.getDouble("VALOR_UNITARIO"),
+    				resultSet.getDouble("VALOR_TOTAL"),
+    				resultSet.getDouble("VALOR_RECEBIDO"));
     		venda.addItem(item);
     	}			
     	this.desconectar(this.conexao);
     	return venda;
     }
+
+	@Override
+	public void editVenda(Long idVenda, Long idDado, Date data, String cliente, String status, String codItem, Integer qtde,
+			Double valorUnitario, Double valorTotal, Double valorRecebido) throws SQLException {
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(updateTbVenda());
+   		 	preparedStatement.setDate(1, data);
+   		 	preparedStatement.setString(2, cliente);
+   		 	preparedStatement.setString(3, status);
+   		 	preparedStatement.setLong(4, idVenda);
+   		 	System.out.println(preparedStatement.toString());
+   		 	preparedStatement.executeUpdate();
+   		 	this.desconectar(this.conexao);
+   		 	this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(updateTbDadosVenda());
+	 		preparedStatement.setString(1, codItem);
+	 		preparedStatement.setInt(2, qtde);
+	 		preparedStatement.setDouble(3, valorUnitario);
+	 		preparedStatement.setDouble(4, valorTotal);
+	 		preparedStatement.setDouble(5, valorRecebido);
+	 		preparedStatement.setLong(6, idDado);
+	 		System.out.println(preparedStatement.toString());
+	 		preparedStatement.executeUpdate();
+   		 	this.desconectar(this.conexao);
+   		 	
+	 		Alerts.showAlert("Sucesso", "EDITADO COM SUCESSO", "Venda editada.", AlertType.INFORMATION);
+        } catch (SQLException e) {
+        	Alerts.showAlert("Erro", "ERRO", "Não foi possível editar a venda.", AlertType.ERROR);
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+	
+	private String updateTbVenda() {
+		StringBuilder sql = new StringBuilder("UPDATE TB_VENDA_SHOPEE ");
+		sql.append(" SET DATA_VENDA = ?, CLIENTE = ?, STATUS = ? ");
+		sql.append(" WHERE ID_VENDA = ?");
+		return sql.toString();
+	}
+	
+    private String updateTbDadosVenda() {
+    	StringBuilder sql = new StringBuilder("UPDATE TB_DADOS_VENDA_SHOPEE ");
+		sql.append(" SET COD_ITEM = ?, QTDE = ?, VALOR_UNITARIO = ?, VALOR_TOTAL = ?, VALOR_RECEBIDO = ? ");
+		sql.append(" WHERE ID_DADO = ? ");
+		return sql.toString();
+    }
+
+	@Override
+	public void deleteVenda(Long idVenda, Long idDado) throws SQLException {		
+		try {
+   		 	this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(deleteTbDadosVenda());
+	 		preparedStatement.setLong(1, idDado);
+	 		System.out.println(preparedStatement.toString());
+	 		preparedStatement.executeUpdate();
+   		 	this.desconectar(this.conexao);
+   		 	this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(deleteTbVenda());
+   		 	preparedStatement.setLong(1, idVenda);
+   		 	System.out.println(preparedStatement.toString());
+   		 	preparedStatement.executeUpdate();
+   		 	this.desconectar(this.conexao);
+   		 	
+	 		Alerts.showAlert("Sucesso", null, "Venda excluída.", AlertType.INFORMATION);
+        } catch (SQLException e) {
+        	Alerts.showAlert("Erro", "ERRO", "Não foi possível excluir a venda.", AlertType.ERROR);
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+	
+	private String deleteTbVenda() {
+		return "DELETE FROM TB_VENDA_SHOPEE WHERE ID_VENDA = ?";
+	}
+	
+	private String deleteTbDadosVenda() {
+		return "DELETE FROM TB_DADOS_VENDA_SHOPEE WHERE ID_DADO = ?";
+	}
   
 }
 

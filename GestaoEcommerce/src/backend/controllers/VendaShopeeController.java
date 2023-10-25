@@ -28,9 +28,9 @@ public class VendaShopeeController {
 	 * 
 	 * @throws SQLException
 	 */
-	public void insertVenda(Date data, String cliente, String codItem, Integer qtde, Double valorUnitario,
+	public void insertVenda(Date data, String cliente, String status, String codItem, Integer qtde, Double valorUnitario,
 			Double valorTotal, Double valorRecebido) throws SQLException {
-		service.insertVenda(data, cliente, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+		service.insertVenda(data, cliente, status, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
 	}
 	
 	/**
@@ -45,6 +45,15 @@ public class VendaShopeeController {
 	
 	public VendaShopeeEntity findById(Long id) throws SQLException {
 		return service.findById(id);
+	}
+	
+	public void editVenda(Long idVenda, Long idDado, Date data, String cliente, String status, String codItem, Integer qtde, Double valorUnitario,
+			Double valorTotal, Double valorRecebido) throws SQLException {
+		service.editVenda(idVenda, idDado, data, cliente, status, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+	}
+	
+	public void deleteVenda(Long idVenda, Long idDado) throws SQLException {
+		service.deleteVenda(idVenda, idDado);
 	}
 	
 }

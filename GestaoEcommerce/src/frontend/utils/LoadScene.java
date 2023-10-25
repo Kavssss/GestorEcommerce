@@ -69,9 +69,9 @@ public class LoadScene {
 		try {
 			FXMLLoader loader = new FXMLLoader(currentClass.getResource(Constants.MODAL.INSERIR_VENDA));
 			Pane pane = loader.load();
-			Stage modalStage = new Stage();
 			ModalInserirController controller = loader.getController();
 			controller.updateFieldsEdit(id, canal);
+			Stage modalStage = new Stage();
 			modalStage.setTitle("Editar venda");
 			modalStage.setScene(new Scene(pane));
 			modalStage.setResizable(Boolean.FALSE);
@@ -81,6 +81,7 @@ public class LoadScene {
 			modalStage.showAndWait();
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
 		}
 	}
 

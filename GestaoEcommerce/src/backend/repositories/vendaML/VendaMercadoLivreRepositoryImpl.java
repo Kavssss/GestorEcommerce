@@ -105,7 +105,8 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 						resultSet.getLong("ID_VENDA"),
 						resultSet.getDate("DATA_VENDA"),
 						resultSet.getString("CLIENTE"),
-						resultSet.getString("STATUS")));
+						resultSet.getString("STATUS"),
+						resultSet.getLong("ID_DADO")));
 			}
 			vendas.get(vendas.size() - 1).addItem(item);
 			lastId = resultSet.getLong("ID_VENDA");
@@ -135,6 +136,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     	    			venda.getData(),
     	    			venda.getCliente(),
     	    			venda.getStatus(),
+    	    			venda.getIdDado(),
     	    			item.getCodItem(),
     	    			item.getQtde(),
     	    			item.getValorUnitario(),
@@ -150,13 +152,14 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     }
     
     @Override
-    public void insertVenda(Date data, String cliente, String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario,
-			Double valorTotal, Double valorRecebido) throws SQLException {
+    public void insertVenda(Date data, String cliente, String status, String codItem, String tipoAnuncio, Integer qtde,
+    		Double valorUnitario, Double valorTotal, Double valorRecebido) throws SQLException {
 		try {
 			this.conectar();
 		 	preparedStatement = this.conexao.prepareStatement(insertTbVenda());
 		 	preparedStatement.setDate(1, data);
 		 	preparedStatement.setString(2, cliente);
+		 	preparedStatement.setString(3, status);
 		 	System.out.println(preparedStatement.toString());
 		 	preparedStatement.executeUpdate();
 		 	this.desconectar(this.conexao);
@@ -215,7 +218,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     private String insertTbVenda() {
     	StringBuilder sql = new StringBuilder("INSERT INTO TB_VENDA_ML( ");
 		sql.append(" DATA_VENDA, CLIENTE, STATUS) ");
-		sql.append(" VALUES(?, ?, 'PENDENTE')");
+		sql.append(" VALUES(?, ?, ?)");
 		return sql.toString();
     }
     
@@ -233,7 +236,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 		 	System.out.println(preparedStatement.toString());
    		 	resultSet = preparedStatement.executeQuery();
    		 	resultSet.next();
-   		 	Long value = resultSet.getLong(1);
+   		 	Long value = resultSet.getLong("ID_VENDA");
    		 	this.desconectar(this.conexao);
    		 	return value;
         } catch (SQLException e) {
@@ -252,8 +255,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 
     @Override
 	public VendaMercadoLivreEntity findById(Long id) throws SQLException {
-		StringBuilder sql = new StringBuilder("SELECT vml.ID_VENDA, vml.DATA_VENDA, vml.CLIENTE, vml.STATUS, dml.ID_VENDA, ");
-		sql.append(" dml.COD_ITEM,  dml.QTDE, dml.VALOR_UNITARIO, dml.VALOR_TOTAL, dml.VALOR_RECEBIDO ");
+		StringBuilder sql = new StringBuilder("SELECT vml.*, dml.* ");
 		sql.append(" FROM TB_VENDA_ML vml ");
 		sql.append(" INNER JOIN TB_DADOS_VENDA_ML dml ON dml.ID_VENDA = vml.ID_VENDA ");
 		sql.append(" INNER JOIN TB_ITEM i ON i.COD_ITEM = dml.COD_ITEM ");
@@ -273,33 +275,85 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     private VendaMercadoLivreEntity resultSetToVendaEdit(ResultSet resultSet) throws SQLException {
 		resultSet.next();
 		VendaMercadoLivreEntity venda = new VendaMercadoLivreEntity(
-					resultSet.getLong(1),
-					resultSet.getDate(2),
-					resultSet.getString(3),
-					resultSet.getString(4));
+					resultSet.getLong("ID_VENDA"),
+					resultSet.getDate("DATA_VENDA"),
+					resultSet.getString("CLIENTE"),
+					resultSet.getString("STATUS"),
+					resultSet.getLong("ID_DADO"));
 		venda.addItem(new ItemMercadoLivreEntity(
-				resultSet.getString(6),
-				resultSet.getInt(7),
-				resultSet.getDouble(8),
-				resultSet.getDouble(9),
-				resultSet.getDouble(10),
-				resultSet.getString(11),
-				resultSet.getBoolean(12),
-				resultSet.getDouble(13)));
+				resultSet.getString("COD_ITEM"),
+				resultSet.getInt("QTDE"),
+				resultSet.getDouble("VALOR_UNITARIO"),
+				resultSet.getDouble("VALOR_TOTAL"),
+				resultSet.getDouble("VALOR_RECEBIDO"),
+				resultSet.getString("TIPO_ANUNCIO"),
+				resultSet.getBoolean("IS_FRETE_GRATIS"),
+				resultSet.getDouble("ID_DADO")));
     	while (resultSet.next()) {
     		ItemMercadoLivreEntity item = new ItemMercadoLivreEntity(
-    				resultSet.getString(6),
-    				resultSet.getInt(7),
-    				resultSet.getDouble(8),
-    				resultSet.getDouble(9),
-    				resultSet.getDouble(10),
-    				resultSet.getString(11),
-    				resultSet.getBoolean(12),
-    				resultSet.getDouble(13));
+    				resultSet.getString("COD_ITEM"),
+    				resultSet.getInt("QTDE"),
+    				resultSet.getDouble("VALOR_UNITARIO"),
+    				resultSet.getDouble("VALOR_TOTAL"),
+    				resultSet.getDouble("VALOR_RECEBIDO"),
+    				resultSet.getString("TIPO_ANUNCIO"),
+    				resultSet.getBoolean("IS_FRETE_GRATIS"),
+    				resultSet.getDouble("ID_DADO"));
     		venda.addItem(item);
     	}			
     	this.desconectar(this.conexao);
     	return venda;
+    }
+
+	@Override
+	public void editVenda(Long idVenda, Long idDado, Date data, String cliente, String status, String codItem,
+			String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
+			throws SQLException {
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(updateTbVenda());
+   		 	preparedStatement.setDate(1, data);
+   		 	preparedStatement.setString(2, cliente);
+   		 	preparedStatement.setString(3, status);
+   		 	preparedStatement.setLong(4, idVenda);
+   		 	System.out.println(preparedStatement.toString());
+   		 	preparedStatement.executeUpdate();
+   		 	this.desconectar(this.conexao);
+   		 	this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(updateTbDadosVenda());
+	 		preparedStatement.setString(1, codItem);
+	 		preparedStatement.setString(2, (String) tipoAndFrete(tipoAnuncio).get(0));
+	 		preparedStatement.setBoolean(3, (Boolean) tipoAndFrete(tipoAnuncio).get(1));
+	 		preparedStatement.setDouble(4, qtde);
+	 		preparedStatement.setDouble(5, valorUnitario);
+	 		preparedStatement.setDouble(6, valorTotal);
+	 		preparedStatement.setDouble(7, CalculaTotalERecebido.valorSemFreteML(valorTotal, qtde));
+	 		preparedStatement.setDouble(8, valorRecebido);
+	 		preparedStatement.setLong(9, idDado);
+	 		System.out.println(preparedStatement.toString());
+	 		preparedStatement.executeUpdate();
+   		 	this.desconectar(this.conexao);
+   		 	
+	 		Alerts.showAlert("Sucesso", "EDITADO COM SUCESSO", "Venda editada.", AlertType.INFORMATION);
+        } catch (SQLException e) {
+        	Alerts.showAlert("Erro", "ERRO", "Não foi possível editar a venda.", AlertType.ERROR);
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+	
+	private String updateTbVenda() {
+		StringBuilder sql = new StringBuilder("UPDATE TB_VENDA_ML ");
+		sql.append(" SET DATA_VENDA = ?, CLIENTE = ?, STATUS = ? ");
+		sql.append(" WHERE ID_VENDA = ?");
+		return sql.toString();
+	}
+	
+    private String updateTbDadosVenda() {
+    	StringBuilder sql = new StringBuilder("UPDATE TB_DADOS_VENDA_ML ");
+		sql.append(" SET COD_ITEM = ?, TIPO_ANUNCIO = ?, IS_FRETE_GRATIS = ?, QTDE = ?, ");
+    	sql.append(" VALOR_UNITARIO = ?, VALOR_TOTAL = ?, TOTAL_SEM_FRETE = ?, VALOR_RECEBIDO = ? ");
+		sql.append(" WHERE ID_DADO = ? ");
+		return sql.toString();
     }
 	
 }

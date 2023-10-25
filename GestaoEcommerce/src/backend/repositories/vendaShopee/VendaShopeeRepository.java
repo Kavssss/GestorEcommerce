@@ -12,7 +12,7 @@ public interface VendaShopeeRepository {
 	List<VendaShopeeFormatadaEntity> findVendas(Date dataInicio, Date dataFim, Integer qtde, String codItem,
 			String cliente, String status) throws SQLException;
 
-	void insertVenda(Date data, String cliente, String codItem, Integer qtde, Double valorUnitario, Double valorTotal,
+	void insertVenda(Date data, String cliente, String status, String codItem, Integer qtde, Double valorUnitario, Double valorTotal,
 			Double valorRecebido) throws SQLException;
 
 	void insertItemVenda(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
@@ -20,4 +20,9 @@ public interface VendaShopeeRepository {
 
 	VendaShopeeEntity findById(Long id) throws SQLException;
 	
+	
+	void editVenda(Long idVenda, Long idDado, Date data, String cliente, String status, String codItem, Integer qtde, Double valorUnitario,
+			Double valorTotal, Double valorRecebido) throws SQLException;
+	
+	void deleteVenda(Long idVenda, Long idDado) throws SQLException;
 }

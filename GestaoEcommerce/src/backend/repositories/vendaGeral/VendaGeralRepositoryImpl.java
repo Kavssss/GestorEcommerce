@@ -52,7 +52,7 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 		}
 		sql.append(" UNION ");
 		sql.append(" SELECT vml.ID_VENDA, vml.DATA_VENDA, vml.CLIENTE, vml.STATUS, dml.ID_VENDA, dml.COD_ITEM, ");
-		sql.append(" dml.QTDE, dml.VALOR_UNITARIO, dml.VALOR_TOTAL, dml.VALOR_RECEBIDO, 'ML' as CANAL ");
+		sql.append(" dml.QTDE, dml.VALOR_UNITARIO, dml.VALOR_TOTAL, dml.VALOR_RECEBIDO, dml.ID_DADO, 'ML' as CANAL ");
 		sql.append(" FROM TB_VENDA_ML vml ");
 		sql.append(" INNER JOIN TB_DADOS_VENDA_ML dml ON dml.ID_VENDA = vml.ID_VENDA ");
 		sql.append(" INNER JOIN TB_ITEM i ON i.COD_ITEM = dml.COD_ITEM ");
@@ -106,22 +106,22 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
     	String lastCanal = "";
 		while (resultSet.next()) {
 			ItemGeralEntity item = new ItemGeralEntity(
-					resultSet.getString(6),
-					resultSet.getInt(7),
-					resultSet.getDouble(8),
-					resultSet.getDouble(9),
-					resultSet.getDouble(10));
-			if ((lastCanal.equals(resultSet.getString(11)) && !lastId.equals(resultSet.getLong(1)))
-					|| !lastCanal.equals(resultSet.getString(11)))
+					resultSet.getString("COD_ITEM"),
+					resultSet.getInt("QTDE"),
+					resultSet.getDouble("VALOR_UNITARIO"),
+					resultSet.getDouble("VALOR_TOTAL"),
+					resultSet.getDouble("VALOR_RECEBIDO"));
+			if ((lastCanal.equals(resultSet.getString("CANAL")) && !lastId.equals(resultSet.getLong("ID_VENDA")))
+					|| !lastCanal.equals(resultSet.getString("CANAL")))
 				vendas.add(new VendaGeralEntity(
-						resultSet.getLong(1),
-						resultSet.getDate(2),
-						resultSet.getString(3),
-						resultSet.getString(4),
-						resultSet.getString(11)));			
+						resultSet.getLong("ID_VENDA"),
+						resultSet.getDate("DATA_VENDA"),
+						resultSet.getString("CLIENTE"),
+						resultSet.getString("STATUS"),
+						resultSet.getString("CANAL")));			
 			vendas.get(vendas.size() - 1).addItem(item);
-			lastId = resultSet.getLong(1);
-			lastCanal = resultSet.getString(11);
+			lastId = resultSet.getLong("ID_VENDA");
+			lastCanal = resultSet.getString("CANAL");
     	}
     	this.desconectar(this.conexao);
     	return buildVendaFormatada(vendas);

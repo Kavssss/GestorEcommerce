@@ -14,18 +14,20 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VendaShopeeEntity {
-		
+
 	private Long id;
 	private Date data;
 	private String cliente;
 	private List<ItemShopeeEntity> itens = new ArrayList<>();
 	private String status;
+	private Long idDado;
 	
-	public VendaShopeeEntity(Long id, Date data, String cliente, String status) {
+	public VendaShopeeEntity(Long id, Date data, String cliente, String status, Long idDado) {
 		this.id = id;
 		this.data = data;
 		this.cliente = cliente;
 		this.status = status;
+		this.idDado = idDado;
 	}
 
 	public void addItem(ItemShopeeEntity item) {

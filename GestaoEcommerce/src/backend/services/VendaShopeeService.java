@@ -18,9 +18,9 @@ public class VendaShopeeService {
 		return repository.findVendas(dataInicio, dataFim, qtde, codItem, cliente, status);
 	}
 
-	public void insertVenda(Date data, String cliente, String codItem, Integer qtde, Double valorUnitario,
+	public void insertVenda(Date data, String cliente, String status, String codItem, Integer qtde, Double valorUnitario,
 			Double valorTotal, Double valorRecebido) throws SQLException {
-		repository.insertVenda(data, cliente, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+		repository.insertVenda(data, cliente, status, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
 	}
 	
 	public void insertItemVenda(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
@@ -30,6 +30,15 @@ public class VendaShopeeService {
 
 	public VendaShopeeEntity findById(Long id) throws SQLException {
 		return repository.findById(id);
+	}
+	
+	public void editVenda(Long idVenda, Long idDado, Date data, String cliente, String status, String codItem, Integer qtde, Double valorUnitario,
+			Double valorTotal, Double valorRecebido) throws SQLException {
+		repository.editVenda(idVenda, idDado, data, cliente, status, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+	}
+	
+	public void deleteVenda(Long idVenda, Long idDado) throws SQLException {
+		repository.deleteVenda(idVenda, idDado);
 	}
 	
 }
