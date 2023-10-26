@@ -24,7 +24,7 @@ public class IndexController {
     
     @FXML
     void onProdutosAction(ActionEvent event) {
-
+    	LoadScene.changeScene(Constants.VIEWS.PRODUTOS);
     }
 
     @FXML

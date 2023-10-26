@@ -1,0 +1,5 @@
+package backend.repositories.item;
+
+public interface ItemRepository {
+
+}

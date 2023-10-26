@@ -1,0 +1,15 @@
+package backend.repositories.item;
+
+import java.sql.SQLException;
+
+import backend.entities.ItemEntity;
+
+public interface ItemRepository {
+
+	void insertItem(String codItem, String descricao) throws SQLException;
+	
+	void editItem(Long id, String codItem, String descricao) throws SQLException;
+	
+	ItemEntity findById(Long id) throws SQLException;
+	
+}

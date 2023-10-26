@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.util.List;
 
-import backend.entities.geralEntity.VendaGeralFormatadaEntity;
+import backend.dto.VendaGeralDTO;
 import backend.services.VendaGeralService;
 
 public class VendaGeralController {
@@ -13,10 +13,10 @@ public class VendaGeralController {
 	
 	/**
 	 * Recupera todas as vendas com base nos parâmetros passados
-	 * @return VendaGeralFormatadaEntity
+	 * @return VendaGeralDTO
 	 * @throws SQLException 
 	 */
-	public List<VendaGeralFormatadaEntity> findVendas(Date dataInicio, Date dataFim, Integer qtde, String codItem,
+	public List<VendaGeralDTO> findVendas(Date dataInicio, Date dataFim, Integer qtde, String codItem,
 			String cliente, String status) throws SQLException {
 		return service.findVendas(dataInicio, dataFim, qtde, codItem, cliente, status);
 	}

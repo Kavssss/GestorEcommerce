@@ -1,0 +1,31 @@
+package backend.services;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import backend.dto.ItemDTO;
+import backend.entities.ItemEntity;
+import backend.repositories.item.ItemRepository;
+import backend.repositories.item.ItemRepositoryImpl;
+
+public class ItemService {
+
+	ItemRepository repository = new ItemRepositoryImpl();
+	
+	public void insertItem(String codItem, String descricao) throws SQLException {
+		repository.insertItem(codItem, descricao);
+	}
+	
+	public void editItem(Long id, String codItem, String descricao) throws SQLException {
+		repository.editItem(id, codItem, descricao);
+	}
+	
+	public ItemEntity findById(Long id) throws SQLException {
+		return repository.findById(id);
+	}
+	
+	public List<ItemDTO> findProdutos(String codItem, String modelo, String variacao, String descricao) throws SQLException {
+		return repository.findProdutos(codItem, modelo, variacao, descricao);
+	}
+	
+}

@@ -34,8 +34,8 @@ public class VendaShopeeEntity {
 		this.itens.add(item);
 	}
 	
-	public void addItem(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido) {
-		this.itens.add(new ItemShopeeEntity(codItem, qtde, valorUnitario, valorTotal, valorRecebido));
+	public void addItem(Long idItem, String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido) {
+		this.itens.add(new ItemShopeeEntity(idItem, codItem, qtde, valorUnitario, valorTotal, valorRecebido));
 	}
 
 }

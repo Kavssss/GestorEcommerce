@@ -9,9 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import backend.dto.VendaMercadoLivreDTO;
 import backend.entities.mercadoLivreEntity.ItemMercadoLivreEntity;
 import backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity;
-import backend.entities.mercadoLivreEntity.VendaMercadoLivreFormatadaEntity;
 import backend.utils.CalculaTotalERecebido;
 import backend.utils.Constants;
 import backend.utils.TextUtils;
@@ -26,13 +26,13 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     ResultSet resultSet;
 
     @Override
-	public List<VendaMercadoLivreFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio,
+	public List<VendaMercadoLivreDTO> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio,
 			Integer qtde, String codItem, String cliente, String status) throws SQLException {
     	List<Object> params = new ArrayList<>();
-    	StringBuilder sql = new StringBuilder("SELECT vml.*, dml.* ");
+    	StringBuilder sql = new StringBuilder("SELECT vml.*, i.COD_ITEM, dml.* ");
 		sql.append(" FROM TB_VENDA_ML vml ");
 		sql.append(" INNER JOIN TB_DADOS_VENDA_ML dml ON dml.ID_VENDA = vml.ID_VENDA ");
-		sql.append(" INNER JOIN TB_ITEM i ON i.COD_ITEM = dml.COD_ITEM ");
+		sql.append(" INNER JOIN TB_ITEM i ON i.ID_ITEM = dml.ID_ITEM ");
 		sql.append(" WHERE 1 = 1 ");
 		if (Objects.nonNull(dataInicio) && Objects.nonNull(dataFim)) {
 			sql.append(" AND (vml.DATA_VENDA BETWEEN ? AND ?) ");
@@ -65,7 +65,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			sql.append(" AND vml.STATUS = ? ");
 			params.add(status);
 		}
-		sql.append(" ORDER BY 2");
+		sql.append(" ORDER BY 2, 1");
     	try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
@@ -87,11 +87,12 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
         }
 	}
     
-    private List<VendaMercadoLivreFormatadaEntity> resultSetToVenda(ResultSet resultSet) throws SQLException {
+    private List<VendaMercadoLivreDTO> resultSetToVenda(ResultSet resultSet) throws SQLException {
     	List<VendaMercadoLivreEntity> vendas = new ArrayList<>();
     	Long lastId = 0L;
 		while (resultSet.next()) {
 			ItemMercadoLivreEntity item = new ItemMercadoLivreEntity(
+					resultSet.getLong("ID_ITEM"),
 					resultSet.getString("COD_ITEM"),
 					resultSet.getInt("QTDE"),
 					resultSet.getDouble("VALOR_UNITARIO"),
@@ -115,14 +116,14 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     	return buildVendaFormatada(vendas);
     }
     
-    private List<VendaMercadoLivreFormatadaEntity> buildVendaFormatada(List<VendaMercadoLivreEntity> vendas) {
-    	List<VendaMercadoLivreFormatadaEntity> list = new ArrayList<>();
+    private List<VendaMercadoLivreDTO> buildVendaFormatada(List<VendaMercadoLivreEntity> vendas) {
+    	List<VendaMercadoLivreDTO> list = new ArrayList<>();
     	
     	for (VendaMercadoLivreEntity venda : vendas) {
     		for (int i = 0; i < venda.getItens().size(); i++) {
     			ItemMercadoLivreEntity item = venda.getItens().get(i);
 //    			if (i > 0) {
-//    	    		VendaMercadoLivreFormatadaEntity vendaItem = new VendaMercadoLivreFormatadaEntity(
+//    	    		VendaMercadoLivreDTO vendaItem = new VendaMercadoLivreFormatadaEntity(
 //		    				item.getCodItem(),
 //			    			item.getQtde(),
 //			    			item.getValorUnitario(),
@@ -131,7 +132,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 //    	    		list.add(vendaItem);
 //    	    		continue;
 //    	    	}
-    			VendaMercadoLivreFormatadaEntity vendaItem = new VendaMercadoLivreFormatadaEntity(
+    			VendaMercadoLivreDTO vendaItem = new VendaMercadoLivreDTO(
     	    			venda.getId(),
     	    			venda.getData(),
     	    			venda.getCliente(),
@@ -169,7 +170,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 		 	this.conectar();
 		 	preparedStatement = this.conexao.prepareStatement(insertTbDadosVenda());
 		 	preparedStatement.setLong(1, lastId);
-	 		preparedStatement.setString(2, codItem);
+	 		preparedStatement.setLong(2, findItemByCodItem(codItem));
 	 		preparedStatement.setString(3, (String) tipoAndFrete(tipoAnuncio).get(0));
 	 		preparedStatement.setBoolean(4, (Boolean) tipoAndFrete(tipoAnuncio).get(1));
 	 		preparedStatement.setInt(5, qtde);
@@ -196,7 +197,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     		this.conectar();
 		 	preparedStatement = this.conexao.prepareStatement(insertTbDadosVenda());
 		 	preparedStatement.setLong(1, lastId);
-	 		preparedStatement.setString(2, codItem);
+	 		preparedStatement.setLong(2, findItemByCodItem(codItem));
 	 		preparedStatement.setString(3, (String) tipoAndFrete(tipoAnuncio).get(0));
 	 		preparedStatement.setBoolean(4, (Boolean) tipoAndFrete(tipoAnuncio).get(1));
 	 		preparedStatement.setInt(5, qtde);
@@ -221,10 +222,11 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 		sql.append(" VALUES(?, ?, ?)");
 		return sql.toString();
     }
-    
+
     private String insertTbDadosVenda() {
-    	StringBuilder sql = new StringBuilder("INSERT INTO TB_DADOS_VENDA_ML VALUES( ");
-		sql.append(" ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    	StringBuilder sql = new StringBuilder("INSERT INTO TB_DADOS_VENDA_ML(ID_VENDA, ID_ITEM, TIPO_ANUNCIO, IS_FRETE_GRATIS, ");
+		sql.append(" QTDE, VALOR_UNITARIO, VALOR_TOTAL, TOTAL_SEM_FRETE, VALOR_RECEBIDO) VALUES( ");
+    	sql.append(" ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		return sql.toString();
     }
     
@@ -255,10 +257,10 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 
     @Override
 	public VendaMercadoLivreEntity findById(Long id) throws SQLException {
-		StringBuilder sql = new StringBuilder("SELECT vml.*, dml.* ");
+		StringBuilder sql = new StringBuilder("SELECT vml.*, i.COD_ITEM, dml.* ");
 		sql.append(" FROM TB_VENDA_ML vml ");
 		sql.append(" INNER JOIN TB_DADOS_VENDA_ML dml ON dml.ID_VENDA = vml.ID_VENDA ");
-		sql.append(" INNER JOIN TB_ITEM i ON i.COD_ITEM = dml.COD_ITEM ");
+		sql.append(" INNER JOIN TB_ITEM i ON i.ID_ITEM = dml.ID_ITEM ");
 		sql.append(" WHERE vml.ID_VENDA = ?");
 		try {
     		this.conectar();
@@ -281,6 +283,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 					resultSet.getString("STATUS"),
 					resultSet.getLong("ID_DADO"));
 		venda.addItem(new ItemMercadoLivreEntity(
+				resultSet.getLong("ID_ITEM"),
 				resultSet.getString("COD_ITEM"),
 				resultSet.getInt("QTDE"),
 				resultSet.getDouble("VALOR_UNITARIO"),
@@ -291,6 +294,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 				resultSet.getDouble("ID_DADO")));
     	while (resultSet.next()) {
     		ItemMercadoLivreEntity item = new ItemMercadoLivreEntity(
+    				resultSet.getLong("ID_ITEM"),
     				resultSet.getString("COD_ITEM"),
     				resultSet.getInt("QTDE"),
     				resultSet.getDouble("VALOR_UNITARIO"),
@@ -319,9 +323,10 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
    		 	System.out.println(preparedStatement.toString());
    		 	preparedStatement.executeUpdate();
    		 	this.desconectar(this.conexao);
+   		 	Long idItem = findItemByCodItem(codItem);
    		 	this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(updateTbDadosVenda());
-	 		preparedStatement.setString(1, codItem);
+	 		preparedStatement.setLong(1, idItem);
 	 		preparedStatement.setString(2, (String) tipoAndFrete(tipoAnuncio).get(0));
 	 		preparedStatement.setBoolean(3, (Boolean) tipoAndFrete(tipoAnuncio).get(1));
 	 		preparedStatement.setDouble(4, qtde);
@@ -350,10 +355,58 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 	
     private String updateTbDadosVenda() {
     	StringBuilder sql = new StringBuilder("UPDATE TB_DADOS_VENDA_ML ");
-		sql.append(" SET COD_ITEM = ?, TIPO_ANUNCIO = ?, IS_FRETE_GRATIS = ?, QTDE = ?, ");
+		sql.append(" SET ID_ITEM = ?, TIPO_ANUNCIO = ?, IS_FRETE_GRATIS = ?, QTDE = ?, ");
     	sql.append(" VALOR_UNITARIO = ?, VALOR_TOTAL = ?, TOTAL_SEM_FRETE = ?, VALOR_RECEBIDO = ? ");
 		sql.append(" WHERE ID_DADO = ? ");
 		return sql.toString();
     }
+    
+    private Long findItemByCodItem(String codItem) throws SQLException {
+		String sql = "SELECT ID_ITEM FROM TB_ITEM WHERE COD_ITEM = ?";
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql);
+   		 	preparedStatement.setString(1, codItem);
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	resultSet.next();
+   		 	Long value = resultSet.getLong(1);
+   		 	this.desconectar(this.conexao);
+   		 	return value;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+
+	@Override
+	public void deleteVenda(Long idVenda, Long idDado) throws SQLException {
+   		try { 	
+   			this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(deleteTbDadosVenda());
+	 		preparedStatement.setLong(1, idDado);
+	 		System.out.println(preparedStatement.toString());
+	 		preparedStatement.executeUpdate();
+   		 	this.desconectar(this.conexao);
+   		 	this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(deleteTbVenda());
+   		 	preparedStatement.setLong(1, idVenda);
+   		 	System.out.println(preparedStatement.toString());
+   		 	preparedStatement.executeUpdate();
+   		 	this.desconectar(this.conexao);
+   		 	
+	 		Alerts.showAlert("Sucesso", null, "Venda excluída.", AlertType.INFORMATION);
+        } catch (SQLException e) {
+        	Alerts.showAlert("Erro", "ERRO", "Não foi possível excluir a venda.", AlertType.ERROR);
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+	
+	private String deleteTbVenda() {
+		return "DELETE FROM TB_VENDA_ML WHERE ID_VENDA = ?";
+	}
+	
+	private String deleteTbDadosVenda() {
+		return "DELETE FROM TB_DADOS_VENDA_ML WHERE ID_DADO = ?";
+	}
 	
 }

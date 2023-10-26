@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import backend.dto.VendaGeralDTO;
 import backend.entities.geralEntity.ItemGeralEntity;
 import backend.entities.geralEntity.VendaGeralEntity;
-import backend.entities.geralEntity.VendaGeralFormatadaEntity;
 import frontend.utils.Constants;
 import models.DAO;
 import models.DbException;
@@ -21,13 +21,13 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 	ResultSet resultSet;
 	
 	@Override
-	public List<VendaGeralFormatadaEntity> findVendas(Date dataInicio, Date dataFim, Integer qtde, String codItem,
+	public List<VendaGeralDTO> findVendas(Date dataInicio, Date dataFim, Integer qtde, String codItem,
 			String cliente, String status) throws SQLException {
 		List<Object> params = new ArrayList<>();
-		StringBuilder sql = new StringBuilder("SELECT vs.*, ds.*, 'S' as CANAL ");
+		StringBuilder sql = new StringBuilder("SELECT vs.*, i.COD_ITEM, ds.*, 'S' as CANAL ");
 		sql.append(" FROM TB_VENDA_SHOPEE vs ");
 		sql.append(" INNER JOIN TB_DADOS_VENDA_SHOPEE ds ON ds.ID_VENDA = vs.ID_VENDA ");
-		sql.append(" INNER JOIN TB_ITEM i ON i.COD_ITEM = ds.COD_ITEM ");
+		sql.append(" INNER JOIN TB_ITEM i ON i.ID_ITEM = ds.ID_ITEM ");
 		sql.append(" WHERE 1 = 1 ");
 		if (Objects.nonNull(dataInicio) && Objects.nonNull(dataFim)) {
 			sql.append(" AND (vs.DATA_VENDA BETWEEN ? AND ?) ");
@@ -51,11 +51,11 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 			params.add(status);
 		}
 		sql.append(" UNION ");
-		sql.append(" SELECT vml.ID_VENDA, vml.DATA_VENDA, vml.CLIENTE, vml.STATUS, dml.ID_VENDA, dml.COD_ITEM, ");
-		sql.append(" dml.QTDE, dml.VALOR_UNITARIO, dml.VALOR_TOTAL, dml.VALOR_RECEBIDO, dml.ID_DADO, 'ML' as CANAL ");
+		sql.append(" SELECT vml.ID_VENDA, vml.DATA_VENDA, vml.CLIENTE, vml.STATUS, i.COD_ITEM, dml.ID_DADO, dml.ID_VENDA, ");
+		sql.append(" dml.ID_ITEM, dml.QTDE, dml.VALOR_UNITARIO, dml.VALOR_TOTAL, dml.VALOR_RECEBIDO, 'ML' as CANAL ");
 		sql.append(" FROM TB_VENDA_ML vml ");
 		sql.append(" INNER JOIN TB_DADOS_VENDA_ML dml ON dml.ID_VENDA = vml.ID_VENDA ");
-		sql.append(" INNER JOIN TB_ITEM i ON i.COD_ITEM = dml.COD_ITEM ");
+		sql.append(" INNER JOIN TB_ITEM i ON i.ID_ITEM = dml.ID_ITEM ");
 		sql.append(" WHERE 1 = 1 ");
 		if (Objects.nonNull(dataInicio) && Objects.nonNull(dataFim)) {
 			sql.append(" AND (vml.DATA_VENDA BETWEEN ? AND ?) ");
@@ -78,7 +78,7 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 			sql.append(" AND vml.STATUS = ? ");
 			params.add(status);
 		}
-		sql.append(" ORDER BY 2");
+		sql.append(" ORDER BY 2, 1");
 		try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
@@ -100,12 +100,13 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
         }
 	}
 	
-	private List<VendaGeralFormatadaEntity> resultSetToVenda(ResultSet resultSet) throws SQLException {
+	private List<VendaGeralDTO> resultSetToVenda(ResultSet resultSet) throws SQLException {
     	List<VendaGeralEntity> vendas = new ArrayList<>();
     	Long lastId = 0L;
     	String lastCanal = "";
 		while (resultSet.next()) {
 			ItemGeralEntity item = new ItemGeralEntity(
+					resultSet.getLong("ID_ITEM"),
 					resultSet.getString("COD_ITEM"),
 					resultSet.getInt("QTDE"),
 					resultSet.getDouble("VALOR_UNITARIO"),
@@ -127,13 +128,13 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
     	return buildVendaFormatada(vendas);
     }
 
-	private List<VendaGeralFormatadaEntity> buildVendaFormatada(List<VendaGeralEntity> vendas) {
-    	List<VendaGeralFormatadaEntity> list = new ArrayList<>();    	
+	private List<VendaGeralDTO> buildVendaFormatada(List<VendaGeralEntity> vendas) {
+    	List<VendaGeralDTO> list = new ArrayList<>();    	
     	for (VendaGeralEntity venda : vendas) {
     		for (int i = 0; i < venda.getItens().size(); i++) {
     			ItemGeralEntity item = venda.getItens().get(i);
 //    			if (i > 0) {
-//    	    		VendaGeralFormatadaEntity vendaItem = new VendaGeralFormatadaEntity(
+//    	    		VendaGeralDTO vendaItem = new VendaGeralFormatadaEntity(
 //		    				item.getCodItem(),
 //			    			item.getQtde(),
 //			    			item.getValorUnitario(),
@@ -142,7 +143,7 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 //    	    		list.add(vendaItem);
 //    	    		continue;
 //    	    	}
-    	    	VendaGeralFormatadaEntity vendaItem = new VendaGeralFormatadaEntity(
+    	    	VendaGeralDTO vendaItem = new VendaGeralDTO(
     	    			venda.getId(),
     	    			venda.getData(),
     	    			venda.getCliente(),

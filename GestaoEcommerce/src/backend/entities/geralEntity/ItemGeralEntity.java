@@ -4,8 +4,9 @@ import backend.entities.ItemEntity;
 
 public class ItemGeralEntity extends ItemEntity {
 
-	public ItemGeralEntity(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido) {
-		super(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+	public ItemGeralEntity(Long idItem, String codItem, Integer qtde, Double valorUnitario, Double valorTotal,
+			Double valorRecebido) {
+		super(idItem, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
 	}
 	
 }

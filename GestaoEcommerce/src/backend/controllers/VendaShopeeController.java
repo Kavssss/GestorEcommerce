@@ -4,8 +4,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import backend.dto.VendaShopeeDTO;
 import backend.entities.shopeeEntity.VendaShopeeEntity;
-import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
 import backend.services.VendaShopeeService;
 
 public class VendaShopeeController {
@@ -18,7 +18,7 @@ public class VendaShopeeController {
 	 * @return Todas as vendas
 	 * @throws SQLException
 	 */
-	public List<VendaShopeeFormatadaEntity> findVendas(Date dataInicio, Date dataFim, Integer qtde, String codItem,
+	public List<VendaShopeeDTO> findVendas(Date dataInicio, Date dataFim, Integer qtde, String codItem,
 			String cliente, String status) throws SQLException {
 		return service.findVendas(dataInicio, dataFim, qtde, codItem, cliente, status);
 	}

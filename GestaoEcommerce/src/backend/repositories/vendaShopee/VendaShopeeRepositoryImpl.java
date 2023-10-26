@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import backend.dto.VendaShopeeDTO;
 import backend.entities.shopeeEntity.ItemShopeeEntity;
 import backend.entities.shopeeEntity.VendaShopeeEntity;
-import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
 import frontend.utils.Constants;
 import frontend.views.utils.Alerts;
 import javafx.scene.control.Alert.AlertType;
@@ -23,13 +23,13 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     ResultSet resultSet;
 
     @Override
-	public List<VendaShopeeFormatadaEntity> findVendas(Date dataInicio, Date dataFim, Integer qtde, String codItem,
+	public List<VendaShopeeDTO> findVendas(Date dataInicio, Date dataFim, Integer qtde, String codItem,
 			String cliente, String status) throws SQLException {
     	List<Object> params = new ArrayList<>();
-    	StringBuilder sql = new StringBuilder("SELECT vs.*, ds.* ");
+    	StringBuilder sql = new StringBuilder("SELECT vs.*, i.COD_ITEM, ds.* ");
 		sql.append(" FROM TB_VENDA_SHOPEE vs ");
 		sql.append(" INNER JOIN TB_DADOS_VENDA_SHOPEE ds ON ds.ID_VENDA = vs.ID_VENDA ");
-		sql.append(" INNER JOIN TB_ITEM i ON i.COD_ITEM = ds.COD_ITEM ");
+		sql.append(" INNER JOIN TB_ITEM i ON i.ID_ITEM = ds.ID_ITEM ");
 		sql.append(" WHERE 1 = 1 ");
 		if (Objects.nonNull(dataInicio) && Objects.nonNull(dataFim)) {
 			sql.append(" AND (vs.DATA_VENDA BETWEEN ? AND ?) ");
@@ -52,7 +52,7 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 			sql.append(" AND vs.STATUS = ? ");
 			params.add(status);
 		}
-		sql.append(" ORDER BY 2");
+		sql.append(" ORDER BY 2, 1");
     	try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
@@ -140,8 +140,9 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     }
     
     private String insertTbDadosVenda() {
-    	StringBuilder sql = new StringBuilder("INSERT INTO TB_DADOS_VENDA_SHOPEE VALUES( ");
-		sql.append(" ?, ?, ?, ?, ?, ?)");
+    	StringBuilder sql = new StringBuilder("INSERT INTO TB_DADOS_VENDA_SHOPEE(ID_VENDA, ID_ITEM, QTDE, VALOR_UNITARIO, ");
+		sql.append(" VALOR_TOTAL, VALOR_RECEBIDO) VALUES( ");
+    	sql.append(" ?, ?, ?, ?, ?, ?)");
 		return sql.toString();
     }
     
@@ -161,11 +162,12 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
         }
     }
 
-    private List<VendaShopeeFormatadaEntity> resultSetToVenda(ResultSet resultSet) throws SQLException {
+    private List<VendaShopeeDTO> resultSetToVenda(ResultSet resultSet) throws SQLException {
     	List<VendaShopeeEntity> vendas = new ArrayList<>();
     	Long lastId = 0L;
 		while (resultSet.next()) {
 			ItemShopeeEntity item = new ItemShopeeEntity(
+					resultSet.getLong("ID_ITEM"),
 					resultSet.getString("COD_ITEM"),
 					resultSet.getInt("QTDE"),
 					resultSet.getDouble("VALOR_UNITARIO"),
@@ -186,14 +188,14 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     	return buildVendaFormatada(vendas);
     }
     
-    private List<VendaShopeeFormatadaEntity> buildVendaFormatada(List<VendaShopeeEntity> vendas) {
-    	List<VendaShopeeFormatadaEntity> list = new ArrayList<>();
+    private List<VendaShopeeDTO> buildVendaFormatada(List<VendaShopeeEntity> vendas) {
+    	List<VendaShopeeDTO> list = new ArrayList<>();
     	
     	for (VendaShopeeEntity venda : vendas) {
     		for (int i = 0; i < venda.getItens().size(); i++) {
     			ItemShopeeEntity item = venda.getItens().get(i);
 //    			if (i > 0) {
-//    	    		VendaShopeeFormatadaEntity vendaItem = new VendaShopeeFormatadaEntity(
+//    	    		VendaShopeeFormatadaEntity vendaItem = new VendaShopeeDTO(
 //		    				item.getCodItem(),
 //			    			item.getQtde(),
 //			    			item.getValorUnitario(),
@@ -202,7 +204,7 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 //    	    		list.add(vendaItem);
 //    	    		continue;
 //    	    	}
-    	    	VendaShopeeFormatadaEntity vendaItem = new VendaShopeeFormatadaEntity(
+    	    	VendaShopeeDTO vendaItem = new VendaShopeeDTO(
     	    			venda.getId(),
     	    			venda.getData(),
     	    			venda.getCliente(),
@@ -221,10 +223,10 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 
 	@Override
 	public VendaShopeeEntity findById(Long id) throws SQLException {
-		StringBuilder sql = new StringBuilder("SELECT vs.*, ds.* ");
+		StringBuilder sql = new StringBuilder("SELECT vs.*, i.COD_ITEM, ds.* ");
 		sql.append(" FROM TB_VENDA_SHOPEE vs ");
 		sql.append(" INNER JOIN TB_DADOS_VENDA_SHOPEE ds ON ds.ID_VENDA = vs.ID_VENDA ");
-		sql.append(" INNER JOIN TB_ITEM i ON i.COD_ITEM = ds.COD_ITEM ");
+		sql.append(" INNER JOIN TB_ITEM i ON i.ID_ITEM = ds.ID_ITEM ");
 		sql.append(" WHERE vs.ID_VENDA = ?");
 		try {
     		this.conectar();
@@ -247,6 +249,7 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 					resultSet.getString("STATUS"),
 					resultSet.getLong("ID_DADO"));
 		venda.addItem(new ItemShopeeEntity(
+				resultSet.getLong("ID_ITEM"),
 				resultSet.getString("COD_ITEM"),
 				resultSet.getInt("QTDE"),
 				resultSet.getDouble("VALOR_UNITARIO"),
@@ -254,6 +257,7 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 				resultSet.getDouble("VALOR_RECEBIDO")));
     	while (resultSet.next()) {
     		ItemShopeeEntity item = new ItemShopeeEntity(
+    				resultSet.getLong("ID_ITEM"),
     				resultSet.getString("COD_ITEM"),
     				resultSet.getInt("QTDE"),
     				resultSet.getDouble("VALOR_UNITARIO"),
@@ -278,9 +282,10 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
    		 	System.out.println(preparedStatement.toString());
    		 	preparedStatement.executeUpdate();
    		 	this.desconectar(this.conexao);
+   		 	Long idItem = findItemByCodItem(codItem);
    		 	this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(updateTbDadosVenda());
-	 		preparedStatement.setString(1, codItem);
+	 		preparedStatement.setLong(1, idItem);
 	 		preparedStatement.setInt(2, qtde);
 	 		preparedStatement.setDouble(3, valorUnitario);
 	 		preparedStatement.setDouble(4, valorTotal);
@@ -306,10 +311,27 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 	
     private String updateTbDadosVenda() {
     	StringBuilder sql = new StringBuilder("UPDATE TB_DADOS_VENDA_SHOPEE ");
-		sql.append(" SET COD_ITEM = ?, QTDE = ?, VALOR_UNITARIO = ?, VALOR_TOTAL = ?, VALOR_RECEBIDO = ? ");
+		sql.append(" SET ID_ITEM = ?, QTDE = ?, VALOR_UNITARIO = ?, VALOR_TOTAL = ?, VALOR_RECEBIDO = ? ");
 		sql.append(" WHERE ID_DADO = ? ");
 		return sql.toString();
     }
+    
+    private Long findItemByCodItem(String codItem) throws SQLException {
+		String sql = "SELECT ID_ITEM FROM TB_ITEM WHERE COD_ITEM = ?";
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql);
+   		 	preparedStatement.setString(1, codItem);
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	resultSet.next();
+   		 	Long value = resultSet.getLong("ID_ITEM");
+   		 	this.desconectar(this.conexao);
+   		 	return value;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
 
 	@Override
 	public void deleteVenda(Long idVenda, Long idDado) throws SQLException {		

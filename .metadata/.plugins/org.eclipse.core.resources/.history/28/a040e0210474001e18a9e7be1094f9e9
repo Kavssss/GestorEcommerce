@@ -1,0 +1,68 @@
+package frontend.controllers;
+
+import java.sql.SQLException;
+
+import backend.controllers.ItemController;
+import backend.entities.ItemEntity;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+
+public class ModalProdutoController {
+
+	ItemController itemController = new ItemController();
+	
+    @FXML
+    private Button btnCancelar;
+
+    @FXML
+    private Button btnExcluir;
+
+    @FXML
+    private Button btnSalvar;
+    
+    @FXML
+    private TextField txtIdItem;
+
+    @FXML
+    private TextField txtCodItem;
+
+    @FXML
+    private TextField txtDescricao;
+
+    @FXML
+    private TextField txtModelo;
+
+    @FXML
+    private TextField txtVariacao;
+
+    @FXML
+    void onCancelarAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onExcluirAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onSalvarAction(ActionEvent event) {
+
+    }
+    
+    public void updateFieldsEdit(Long id) {
+		try {
+			ItemEntity item = itemController.findById(id);
+			txtIdItem.setText(item.getIdItem().toString());
+			txtCodItem.setText(item.getCodItem());
+			txtModelo.setText(item.getCodItem().split("-")[0]);
+			txtVariacao.setText(item.getCodItem().split("-")[1]);
+			txtDescricao.setText(item.getDescricao());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

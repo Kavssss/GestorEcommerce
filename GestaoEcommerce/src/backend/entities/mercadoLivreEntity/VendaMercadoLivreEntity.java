@@ -34,9 +34,9 @@ public class VendaMercadoLivreEntity {
 		this.itens.add(item);
 	}
 	
-	public void addItens(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido,
+	public void addItens(Long idItem, String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido,
 			String tipoAnuncio, Boolean isFreteGratis, Double totalSemFrete) {
-		this.itens.add(new ItemMercadoLivreEntity(codItem, qtde, valorUnitario, valorTotal, valorRecebido, tipoAnuncio,
+		this.itens.add(new ItemMercadoLivreEntity(idItem, codItem, qtde, valorUnitario, valorTotal, valorRecebido, tipoAnuncio,
 				isFreteGratis, totalSemFrete));
 	}
 		

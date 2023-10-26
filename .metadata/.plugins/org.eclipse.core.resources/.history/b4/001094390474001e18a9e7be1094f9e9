@@ -1,0 +1,20 @@
+package backend.controllers;
+
+import java.sql.SQLException;
+
+import backend.entities.ItemEntity;
+import backend.services.ItemService;
+
+public class ItemController {
+
+	ItemService service = new ItemService();
+	
+	public void insertItem(String codItem, String descricao) throws SQLException {
+		service.insertItem(codItem, descricao);
+	}
+	
+	public ItemEntity findById(Long id) throws SQLException {
+		return service.findById(id);
+	}
+	
+}

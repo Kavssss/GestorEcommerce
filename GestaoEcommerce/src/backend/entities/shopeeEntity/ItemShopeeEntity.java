@@ -10,8 +10,9 @@ import lombok.Setter;
 @Setter
 public class ItemShopeeEntity extends ItemEntity {
 	
-	public ItemShopeeEntity(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido) {
-		super(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+	public ItemShopeeEntity(Long idItem, String codItem, Integer qtde, Double valorUnitario, Double valorTotal,
+			Double valorRecebido) {
+		super(idItem, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
 	}
 	
 }

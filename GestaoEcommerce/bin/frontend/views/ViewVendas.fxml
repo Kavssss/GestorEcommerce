@@ -34,7 +34,7 @@
             <Insets left="250.0" top="24.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="btnProdutos" alignment="CENTER" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="PRODUTOS" textAlignment="CENTER" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="btnProdutos" alignment="CENTER" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" onAction="#onProdutosAction" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="PRODUTOS" textAlignment="CENTER" textFill="#00003c" StackPane.alignment="TOP_LEFT">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

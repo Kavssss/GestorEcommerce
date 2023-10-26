@@ -4,8 +4,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import backend.dto.VendaMercadoLivreDTO;
 import backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity;
-import backend.entities.mercadoLivreEntity.VendaMercadoLivreFormatadaEntity;
 import backend.services.VendaMercadoLivreService;
 
 public class VendaMercadoLivreController {
@@ -18,7 +18,7 @@ public class VendaMercadoLivreController {
 	 * @return Todas as vendas
 	 * @throws SQLException
 	 */
-	public List<VendaMercadoLivreFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio,
+	public List<VendaMercadoLivreDTO> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio,
 			Integer qtde, String codItem, String cliente, String status) throws SQLException {
 		return service.findVendas(dataInicio, dataFim, tipoAnuncio, qtde, codItem, cliente, status);
 	}
@@ -53,6 +53,10 @@ public class VendaMercadoLivreController {
 			throws SQLException {
 		service.editVenda(idVenda, idDado, data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario, valorTotal,
 				valorRecebido);
+	}
+	
+	public void deleteVenda(Long idVenda, Long idDado) throws SQLException {
+		service.deleteVenda(idVenda, idDado);
 	}
 
 }

@@ -3,6 +3,7 @@ package frontend.utils;
 import java.io.IOException;
 
 import frontend.controllers.ModalInserirController;
+import frontend.controllers.ModalProdutoController;
 import frontend.views.utils.Alerts;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +19,7 @@ public class LoadScene {
 	private static Stage modalStage;
 	private static Scene indexScene;
 	private static Scene vendasScene;
+	private static Scene produtosScene;
 	
 	public static void load(Stage stage, Class<?> currentClass) throws IOException {
 		setStage(stage);
@@ -26,9 +28,11 @@ public class LoadScene {
 		
 		Parent indexFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.INDEX));
 		Parent vendasFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.VENDAS));
+		Parent produtosFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.PRODUTOS));
 		
 		indexScene = new Scene(indexFxml);
 		vendasScene = new Scene(vendasFxml);
+		produtosScene = new Scene(produtosFxml);
 					
 		stage.setScene(indexScene);
 		stage.show();
@@ -42,13 +46,16 @@ public class LoadScene {
 			case Constants.VIEWS.VENDAS:
 				getStage().setScene(vendasScene);
 				break;
+			case Constants.VIEWS.PRODUTOS:
+				getStage().setScene(produtosScene);
+				break;
 			default:
 				System.out.println("ERROR");
 				break;
 		}
 	}
 	
-	public static void callModal(Stage parentStage, Class<?> currentClass) {
+	public static void callInsertVendaModal(Stage parentStage, Class<?> currentClass) {
 		try {
 			FXMLLoader loader = new FXMLLoader(currentClass.getResource(Constants.MODAL.INSERIR_VENDA));
 			Pane pane = loader.load();
@@ -65,7 +72,7 @@ public class LoadScene {
 		}
 	}
 	
-	public static void callEditModal(Stage parentStage, Class<?> currentClass, Long id, String canal) {
+	public static void callEditVendaModal(Stage parentStage, Class<?> currentClass, Long id, String canal) {
 		try {
 			FXMLLoader loader = new FXMLLoader(currentClass.getResource(Constants.MODAL.INSERIR_VENDA));
 			Pane pane = loader.load();
@@ -73,6 +80,43 @@ public class LoadScene {
 			controller.updateFieldsEdit(id, canal);
 			Stage modalStage = new Stage();
 			modalStage.setTitle("Editar venda");
+			modalStage.setScene(new Scene(pane));
+			modalStage.setResizable(Boolean.FALSE);
+			modalStage.initOwner(parentStage);
+			modalStage.initModality(Modality.WINDOW_MODAL);
+			setModalStage(modalStage);
+			modalStage.showAndWait();
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
+		}
+	}
+	
+	public static void callInsertProdutoModal(Stage parentStage, Class<?> currentClass) {
+		try {
+			FXMLLoader loader = new FXMLLoader(currentClass.getResource(Constants.MODAL.INSERIR_PRODUTO));
+			Pane pane = loader.load();
+			Stage modalStage = new Stage();
+			modalStage.setTitle("Inserir produto");
+			modalStage.setScene(new Scene(pane));
+			modalStage.setResizable(Boolean.FALSE);
+			modalStage.initOwner(parentStage);
+			modalStage.initModality(Modality.WINDOW_MODAL);
+			setModalStage(modalStage);
+			modalStage.showAndWait();
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	public static void callEditProdutoModal(Stage parentStage, Class<?> currentClass, Long id) {
+		try {
+			FXMLLoader loader = new FXMLLoader(currentClass.getResource(Constants.MODAL.INSERIR_PRODUTO));
+			Pane pane = loader.load();
+			ModalProdutoController controller = loader.getController();
+			controller.updateFieldsEdit(id);
+			Stage modalStage = new Stage();
+			modalStage.setTitle("Editar produto");
 			modalStage.setScene(new Scene(pane));
 			modalStage.setResizable(Boolean.FALSE);
 			modalStage.initOwner(parentStage);

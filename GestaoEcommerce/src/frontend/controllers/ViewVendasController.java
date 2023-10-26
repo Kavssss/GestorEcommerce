@@ -10,9 +10,9 @@ import java.util.ResourceBundle;
 import backend.controllers.VendaGeralController;
 import backend.controllers.VendaMercadoLivreController;
 import backend.controllers.VendaShopeeController;
-import backend.entities.geralEntity.VendaGeralFormatadaEntity;
-import backend.entities.mercadoLivreEntity.VendaMercadoLivreFormatadaEntity;
-import backend.entities.shopeeEntity.VendaShopeeFormatadaEntity;
+import backend.dto.VendaGeralDTO;
+import backend.dto.VendaMercadoLivreDTO;
+import backend.dto.VendaShopeeDTO;
 import frontend.utils.Constants;
 import frontend.utils.DataUtils;
 import frontend.utils.LoadScene;
@@ -70,65 +70,65 @@ public class ViewVendasController implements Initializable {
 	private ComboBox<String> cbTipoAnuncio;
 
 	@FXML
-	private TableView<VendaGeralFormatadaEntity> tbGeral;	
+	private TableView<VendaGeralDTO> tbGeral;	
 	@FXML
-	private TableColumn<VendaGeralFormatadaEntity, String> columnDataTbGeral;
+	private TableColumn<VendaGeralDTO, String> columnDataTbGeral;
 	@FXML
-	private TableColumn<VendaGeralFormatadaEntity, Number> columnQtdTbGeral;
+	private TableColumn<VendaGeralDTO, Number> columnQtdTbGeral;
 	@FXML
-	private TableColumn<VendaGeralFormatadaEntity, String> columnItemTbGeral;
+	private TableColumn<VendaGeralDTO, String> columnItemTbGeral;
 	@FXML
-	private TableColumn<VendaGeralFormatadaEntity, String> columnClienteTbGeral;
+	private TableColumn<VendaGeralDTO, String> columnClienteTbGeral;
 	@FXML
-	private TableColumn<VendaGeralFormatadaEntity, Number> columnUnitTbGeral;
+	private TableColumn<VendaGeralDTO, Number> columnUnitTbGeral;
 	@FXML
-	private TableColumn<VendaGeralFormatadaEntity, Number> columnTotalTbGeral;
+	private TableColumn<VendaGeralDTO, Number> columnTotalTbGeral;
 	@FXML
-	private TableColumn<VendaGeralFormatadaEntity, Number> columnRecebidoTbGeral;
+	private TableColumn<VendaGeralDTO, Number> columnRecebidoTbGeral;
 	@FXML
-	private TableColumn<VendaGeralFormatadaEntity, String> columnStatusTbGeral;
+	private TableColumn<VendaGeralDTO, String> columnStatusTbGeral;
 	@FXML
-	private TableColumn<VendaGeralFormatadaEntity, String> columnCanalTbGeral;
+	private TableColumn<VendaGeralDTO, String> columnCanalTbGeral;
 
 	@FXML
-	private TableView<VendaMercadoLivreFormatadaEntity> tbMercadoLivre;
+	private TableView<VendaMercadoLivreDTO> tbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreFormatadaEntity, String> columnDataTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreDTO, String> columnDataTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreFormatadaEntity, String> columnAnuncioTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreDTO, String> columnAnuncioTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreFormatadaEntity, Number> columnQtdTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreDTO, Number> columnQtdTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreFormatadaEntity, String> columnItemTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreDTO, String> columnItemTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreFormatadaEntity, String> columnClienteTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreDTO, String> columnClienteTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreFormatadaEntity, Number> columnUnitTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreDTO, Number> columnUnitTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreFormatadaEntity, Number> columnTotalTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreDTO, Number> columnTotalTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreFormatadaEntity, Number> columnRecebidoTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreDTO, Number> columnRecebidoTbMercadoLivre;
 	@FXML
-	private TableColumn<VendaMercadoLivreFormatadaEntity, String> columnStatusTbMercadoLivre;
+	private TableColumn<VendaMercadoLivreDTO, String> columnStatusTbMercadoLivre;
 
 	@FXML
-	private TableView<VendaShopeeFormatadaEntity> tbShopee;
+	private TableView<VendaShopeeDTO> tbShopee;
 	@FXML
-	private TableColumn<VendaShopeeFormatadaEntity, String> columnDataTbShopee;
+	private TableColumn<VendaShopeeDTO, String> columnDataTbShopee;
 	@FXML
-	private TableColumn<VendaShopeeFormatadaEntity, Number> columnQtdTbShopee;
+	private TableColumn<VendaShopeeDTO, Number> columnQtdTbShopee;
 	@FXML
-	private TableColumn<VendaShopeeFormatadaEntity, String> columnItemTbShopee;
+	private TableColumn<VendaShopeeDTO, String> columnItemTbShopee;
 	@FXML
-	private TableColumn<VendaShopeeFormatadaEntity, String> columnClienteTbShopee;
+	private TableColumn<VendaShopeeDTO, String> columnClienteTbShopee;
 	@FXML
-	private TableColumn<VendaShopeeFormatadaEntity, Number> columnUnitTbShopee;
+	private TableColumn<VendaShopeeDTO, Number> columnUnitTbShopee;
 	@FXML
-	private TableColumn<VendaShopeeFormatadaEntity, Number> columnTotalTbShopee;
+	private TableColumn<VendaShopeeDTO, Number> columnTotalTbShopee;
 	@FXML
-	private TableColumn<VendaShopeeFormatadaEntity, Number> columnRecebidoTbShopee;
+	private TableColumn<VendaShopeeDTO, Number> columnRecebidoTbShopee;
 	@FXML
-	private TableColumn<VendaShopeeFormatadaEntity, String> columnStatusTbShopee;
+	private TableColumn<VendaShopeeDTO, String> columnStatusTbShopee;
 
 	@FXML
 	private TextField txtCliente;
@@ -188,7 +188,7 @@ public class ViewVendasController implements Initializable {
 	}
 
 	private void callModalInserirVenda(Stage parentStage) {
-		LoadScene.callModal(parentStage, getClass());
+		LoadScene.callInsertVendaModal(parentStage, getClass());
 	}
 	
 	@FXML
@@ -241,7 +241,7 @@ public class ViewVendasController implements Initializable {
 		}
 	}
 	
-	private void montaTabelaGeral(List<VendaGeralFormatadaEntity> vendas) {
+	private void montaTabelaGeral(List<VendaGeralDTO> vendas) {
 		columnDataTbGeral.setCellValueFactory(new PropertyValueFactory<>("data"));
 		columnClienteTbGeral.setCellValueFactory(new PropertyValueFactory<>("cliente"));
 		columnQtdTbGeral.setCellValueFactory(new PropertyValueFactory<>("qtde"));
@@ -256,7 +256,7 @@ public class ViewVendasController implements Initializable {
 		tbGeral.setItems(FXCollections.observableArrayList(vendas));
 	}
 	
-	private void montaTabelaShopee(List<VendaShopeeFormatadaEntity> vendas) {
+	private void montaTabelaShopee(List<VendaShopeeDTO> vendas) {
 		columnDataTbShopee.setCellValueFactory(new PropertyValueFactory<>("data"));
 		columnClienteTbShopee.setCellValueFactory(new PropertyValueFactory<>("cliente"));
 		columnQtdTbShopee.setCellValueFactory(new PropertyValueFactory<>("qtde"));
@@ -270,7 +270,7 @@ public class ViewVendasController implements Initializable {
 		tbShopee.setItems(FXCollections.observableArrayList(vendas));
 	}
 	
-	private void montaTabelaML(List<VendaMercadoLivreFormatadaEntity> vendas) {
+	private void montaTabelaML(List<VendaMercadoLivreDTO> vendas) {
 		columnDataTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("data"));
 		columnAnuncioTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("tipoAnuncio"));
 		columnQtdTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("qtde"));
@@ -304,7 +304,7 @@ public class ViewVendasController implements Initializable {
 	@FXML
     void onTbGeralMouseClicked(MouseEvent event) {
 		if (event.getClickCount() == 2) {
-            VendaGeralFormatadaEntity selectedItem = tbGeral.getSelectionModel().getSelectedItem();
+            VendaGeralDTO selectedItem = tbGeral.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
             	callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), selectedItem.getCanal());
             }
@@ -314,7 +314,7 @@ public class ViewVendasController implements Initializable {
 	@FXML
     void onTbMercadoLivreClicked(MouseEvent event) {
 		if (event.getClickCount() == 2) {
-            VendaMercadoLivreFormatadaEntity selectedItem = tbMercadoLivre.getSelectionModel().getSelectedItem();
+            VendaMercadoLivreDTO selectedItem = tbMercadoLivre.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
             	callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), "ML");
             }
@@ -324,7 +324,7 @@ public class ViewVendasController implements Initializable {
     @FXML
     void onTbShopeeClicked(MouseEvent event) {
     	if (event.getClickCount() == 2) {
-            VendaShopeeFormatadaEntity selectedItem = tbShopee.getSelectionModel().getSelectedItem();
+            VendaShopeeDTO selectedItem = tbShopee.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
             	callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), "S");
             }
@@ -332,7 +332,7 @@ public class ViewVendasController implements Initializable {
     }
 	
 	private void callModalEditarVenda(Stage parentStage, Long id, String canal) {
-		LoadScene.callEditModal(parentStage, getClass(), id, canal);
+		LoadScene.callEditVendaModal(parentStage, getClass(), id, canal);
 	}
 	
 	private void setNumberFields() {
@@ -363,5 +363,10 @@ public class ViewVendasController implements Initializable {
 		if (!ml)
 			tbMercadoLivre.getItems().clear();
 	}
+	
+	@FXML
+    void onProdutosAction(ActionEvent event) {
+		LoadScene.changeScene(Constants.VIEWS.PRODUTOS);
+    }
 	
 }

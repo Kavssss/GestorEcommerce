@@ -43,8 +43,8 @@ public class VendaGeralEntity {
 		this.itens.add(item);
 	}
 	
-	public void addItem(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido) {
-		this.itens.add(new ItemGeralEntity(codItem, qtde, valorUnitario, valorTotal, valorRecebido));
+	public void addItem(Long idItem, String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido) {
+		this.itens.add(new ItemGeralEntity(idItem, codItem, qtde, valorUnitario, valorTotal, valorRecebido));
 	}
 	
 }

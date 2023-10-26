@@ -2,7 +2,6 @@ package frontend.views.utils;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 
 public class Alerts {
 	
@@ -16,10 +15,9 @@ public class Alerts {
 		alert.show();
 	}
 	
-	public static Boolean confirmationAlert(String title, String header, String content) {
+	public static Boolean confirmationAlert(String title, String content) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(title);
-		alert.setHeaderText(header);
 		alert.setContentText(content);
         
         alert.showAndWait().ifPresent(response -> {

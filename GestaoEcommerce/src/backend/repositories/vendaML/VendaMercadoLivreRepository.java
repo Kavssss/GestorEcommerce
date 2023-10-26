@@ -4,12 +4,12 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import backend.dto.VendaMercadoLivreDTO;
 import backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity;
-import backend.entities.mercadoLivreEntity.VendaMercadoLivreFormatadaEntity;
 
 public interface VendaMercadoLivreRepository {
 
-	List<VendaMercadoLivreFormatadaEntity> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio, Integer qtde,
+	List<VendaMercadoLivreDTO> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio, Integer qtde,
 			String codItem, String cliente, String status) throws SQLException;
 
 	void insertVenda(Date data, String cliente, String status, String codItem, String tipoAnuncio, Integer qtde,
@@ -24,4 +24,6 @@ public interface VendaMercadoLivreRepository {
 			String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
 			throws SQLException;
 
+	void deleteVenda(Long idVenda, Long idDado) throws SQLException;
+	
 }

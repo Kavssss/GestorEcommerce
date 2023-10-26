@@ -33,7 +33,8 @@ public interface Constants {
 	}
 	
 	interface MODAL {
-		String INSERIR_VENDA = "/frontend/views/ModalInserir.fxml";		
+		String INSERIR_VENDA = "/frontend/views/ModalInserir.fxml";
+		String INSERIR_PRODUTO = "/frontend/views/ModalProduto.fxml";
 	}
 	
 	interface MESSAGE {
