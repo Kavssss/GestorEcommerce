@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="Ok"/>
+		<item key="selection" value=""/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="excluir"/>
+			<item value="exclui"/>
+			<item value="onapa"/>
+			<item value="onex"/>
+			<item value="oncancela"/>
+			<item value="FormatadaEntity"/>
+			<item value="busca"/>
+			<item value="produto"/>
+			<item value="montar"/>
+			<item value="salvar"/>
+			<item value="findById"/>
+			<item value="findItem"/>
+			<item value="COD_ITEM"/>
 			<item value="Sim"/>
 			<item value="apagar"/>
-			<item value="resultSet.getLong(1)"/>
-			<item value="id"/>
-			<item value="System"/>
-			<item value="ComboBox&lt;?&gt;"/>
-			<item value="salvar"/>
-			<item value="oncanal"/>
-			<item value="salva"/>
-			<item value="Shopee"/>
-			<item value="cancel"/>
-			<item value="cancelar"/>
-			<item value="inse"/>
-			<item value="onadd"/>
-			<item value="add"/>
 		</list>
 		<list key="replacehistory">
+			<item value="DTO"/>
+			<item value="ID_ITEM"/>
 			<item value="Ok"/>
 			<item value="resultSet.getLong(&quot;ID_VENDA&quot;)"/>
 			<item value="idVenda"/>
@@ -38,8 +40,6 @@
 			<item value="txtValorUnitario5"/>
 			<item value="txtValorUnitario4"/>
 			<item value="txtValorUnitario3"/>
-			<item value="txtValorUnitario2"/>
-			<item value="txtQtde5"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

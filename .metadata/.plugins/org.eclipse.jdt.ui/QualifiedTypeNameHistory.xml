@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="utils.StringConstants.STATUS"/>
     <fullyQualifiedTypeName name="views.utils.Alerts"/>
     <fullyQualifiedTypeName name="java.io.IOException"/>
     <fullyQualifiedTypeName name="frontend.utils.StatusVenda"/>
@@ -27,7 +26,6 @@
     <fullyQualifiedTypeName name="frontend.utils.Constants.TIPO_ANUNCIO"/>
     <fullyQualifiedTypeName name="backend.entities.shopeeEntity.ItemShopeeEntity"/>
     <fullyQualifiedTypeName name="backend.entities.mercadoLivreEntity.ItemMercadoLivreEntity"/>
-    <fullyQualifiedTypeName name="java.util.Objects"/>
     <fullyQualifiedTypeName name="javafx.scene.input.InputMethodEvent"/>
     <fullyQualifiedTypeName name="frontend.utils.DoubleUtils"/>
     <fullyQualifiedTypeName name="backend.utils.Constants"/>
@@ -60,4 +58,6 @@
     <fullyQualifiedTypeName name="javafx.scene.control.ButtonType"/>
     <fullyQualifiedTypeName name="javafx.scene.control.Button"/>
     <fullyQualifiedTypeName name="frontend.utils.Constants.MESSAGE"/>
+    <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
+    <fullyQualifiedTypeName name="java.util.Objects"/>
 </qualifiedTypeNameHistroy>
