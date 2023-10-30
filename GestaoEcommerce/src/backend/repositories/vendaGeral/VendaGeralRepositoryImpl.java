@@ -194,5 +194,90 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
        	 	throw new DbException(e.getMessage());
         }
     }
+
+	@Override
+	public Integer[] countVendas(Integer ano) {
+		StringBuilder sql = new StringBuilder("SELECT ");
+		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_SHOPEE WHERE YEAR(DATA_VENDA) = ?)  ");
+		sql.append(" + (SELECT COUNT(*) FROM TB_VENDA_ML WHERE YEAR(DATA_VENDA) = ?) AS TOTAL, ");
+		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_SHOPEE WHERE YEAR(DATA_VENDA) = ?) AS SHOPEE, ");
+		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_ML WHERE YEAR(DATA_VENDA) = ?) AS MERCADO_LIVRE");
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
+   		 	preparedStatement.setInt(1, ano);
+   		 	preparedStatement.setInt(2, ano);
+   		 	preparedStatement.setInt(3, ano);
+   		 	preparedStatement.setInt(4, ano);
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	resultSet.next();	
+   		 	Integer[] result = {resultSet.getInt("TOTAL"),
+	   		 		resultSet.getInt("SHOPEE"),
+	   		 		resultSet.getInt("MERCADO_LIVRE")};
+   		 	this.desconectar(this.conexao);
+   		 	return result;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+
+	@Override
+	public Double[] findValorTotal(Integer ano) {
+		StringBuilder sql = new StringBuilder("SELECT ");
+		sql.append(" (SELECT SUM(ds.VALOR_TOTAL) FROM TB_DADOS_VENDA_SHOPEE ds ");
+		sql.append(" INNER JOIN TB_VENDA_SHOPEE vs ON vs.ID_VENDA = ds.ID_VENDA WHERE YEAR(vs.DATA_VENDA) = ?) ");
+		sql.append(" + (SELECT SUM(dml.TOTAL_SEM_FRETE) FROM TB_DADOS_VENDA_ML dml ");
+		sql.append(" INNER JOIN TB_VENDA_ML vml ON vml.ID_VENDA = dml.ID_VENDA WHERE YEAR(vml.DATA_VENDA) = ?) AS VALOR_TOTAL, ");
+		sql.append(" (SELECT SUM(ds.VALOR_TOTAL) FROM TB_DADOS_VENDA_SHOPEE ds ");
+		sql.append(" INNER JOIN TB_VENDA_SHOPEE vs ON vs.ID_VENDA = ds.ID_VENDA WHERE YEAR(vs.DATA_VENDA) = ?) AS SHOPEE, ");
+		sql.append(" (SELECT SUM(dml.TOTAL_SEM_FRETE) FROM TB_DADOS_VENDA_ML dml ");
+		sql.append(" INNER JOIN TB_VENDA_ML vml ON vml.ID_VENDA = dml.ID_VENDA WHERE YEAR(vml.DATA_VENDA) = ?) AS MERCADO_LIVRE");
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
+   		 	preparedStatement.setInt(1, ano);
+   		 	preparedStatement.setInt(2, ano);
+   		 	preparedStatement.setInt(3, ano);
+   		 	preparedStatement.setInt(4, ano);
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	resultSet.next();	
+   		 	Double[] result = {resultSet.getDouble("VALOR_TOTAL"),
+	   		 		resultSet.getDouble("SHOPEE"),
+	   		 		resultSet.getDouble("MERCADO_LIVRE")};
+   		 	this.desconectar(this.conexao);
+   		 	return result;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+	
+	@Override
+	public Integer[] countByStatus(String status) {
+		StringBuilder sql = new StringBuilder("SELECT ");
+		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_SHOPEE WHERE STATUS = ?) ");
+		sql.append(" + (SELECT COUNT(*) FROM TB_VENDA_ML WHERE STATUS = ?) AS TOTAL, ");
+		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_SHOPEE WHERE STATUS = ?) AS SHOPEE, ");
+		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_ML WHERE STATUS = ?) AS MERCADO_LIVRE");
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
+   		 	preparedStatement.setString(1, status);
+   		 	preparedStatement.setString(2, status);
+   		 	preparedStatement.setString(3, status);
+   		 	preparedStatement.setString(4, status);
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	resultSet.next();	
+   		 	Integer[] result = {resultSet.getInt("TOTAL"),
+	   		 		resultSet.getInt("SHOPEE"),
+	   		 		resultSet.getInt("MERCADO_LIVRE")};
+   		 	this.desconectar(this.conexao);
+   		 	return result;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
 	
 }

@@ -20,6 +20,7 @@ public class LoadScene {
 	private static Scene indexScene;
 	private static Scene vendasScene;
 	private static Scene produtosScene;
+	private static Scene dashboardScene;
 	
 	public static void load(Stage stage, Class<?> currentClass) throws IOException {
 		setStage(stage);
@@ -29,10 +30,12 @@ public class LoadScene {
 		Parent indexFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.INDEX));
 		Parent vendasFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.VENDAS));
 		Parent produtosFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.PRODUTOS));
+		Parent dashboardFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.DASHBOARD));
 		
 		indexScene = new Scene(indexFxml);
 		vendasScene = new Scene(vendasFxml);
 		produtosScene = new Scene(produtosFxml);
+		dashboardScene = new Scene(dashboardFxml);
 					
 		stage.setScene(indexScene);
 		stage.show();
@@ -48,6 +51,9 @@ public class LoadScene {
 				break;
 			case Constants.VIEWS.PRODUTOS:
 				getStage().setScene(produtosScene);
+				break;
+			case Constants.VIEWS.DASHBOARD:
+				getStage().setScene(dashboardScene);
 				break;
 			default:
 				System.out.println("ERROR");

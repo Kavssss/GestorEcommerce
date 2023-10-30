@@ -7,12 +7,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 public class IndexController {
+
+	@FXML
+	private Button btnDashboard;
 	
     @FXML
     private Button btnProdutos;
-
-    @FXML
-    private Button btnRelatorios;
 
     @FXML
     private Button btnVendas;
@@ -28,8 +28,8 @@ public class IndexController {
     }
 
     @FXML
-    void onRelatoriosAction(ActionEvent event) {
-
+    void onDashboardAction(ActionEvent event) {
+    	LoadScene.changeScene(Constants.VIEWS.DASHBOARD);
     }
     
 }

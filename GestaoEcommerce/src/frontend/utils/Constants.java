@@ -29,7 +29,7 @@ public interface Constants {
 		String INDEX = "/frontend/views/Index.fxml";
 		String VENDAS = "/frontend/views/ViewVendas.fxml";
 		String PRODUTOS = "/frontend/views/ViewProdutos.fxml";
-		String RELATORIOS = "/frontend/views/ViewRelatorios.fxml";
+		String DASHBOARD = "/frontend/views/Dashboard.fxml";
 	}
 	
 	interface MODAL {

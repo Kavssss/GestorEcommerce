@@ -21,4 +21,16 @@ public class VendaGeralService {
 		return repository.findItens();
 	}
 	
+	public Integer[] countVendas(Integer ano) {
+		return repository.countVendas(ano);
+	}
+	
+	public Double[] findValorTotal(Integer ano) {
+		return repository.findValorTotal(ano);
+	}
+	
+	public Integer[] countByStatus(String status) {
+		return repository.countByStatus(status);
+	}
+	
 }

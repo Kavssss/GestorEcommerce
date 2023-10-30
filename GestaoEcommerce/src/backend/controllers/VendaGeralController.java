@@ -31,4 +31,16 @@ public class VendaGeralController {
 		return service.findItens();
 	}
 	
+	public Integer[] countVendas(Integer ano) {
+		return service.countVendas(ano);
+	}
+	
+	public Double[] findValorTotal(Integer ano) {
+		return service.findValorTotal(ano);
+	}
+	
+	public Integer[] countByStatus(String status) {
+		return service.countByStatus(status);
+	}
+	
 }

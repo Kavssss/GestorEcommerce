@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ViewVendasController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ViewVendasController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
          <image>
-            <Image url="@../images/telas/vendas.png" />
+            <Image url="@../images/telas/background_white.png" />
          </image>
       </ImageView>
       <Button fx:id="btnVendas" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="VENDAS" textFill="#00003c" StackPane.alignment="TOP_LEFT">

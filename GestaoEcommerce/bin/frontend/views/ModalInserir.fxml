@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="360.0" maxWidth="974.0" minHeight="360.0" minWidth="974.0" prefHeight="360.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ModalInserirController">
+<StackPane maxHeight="360.0" maxWidth="974.0" minHeight="360.0" minWidth="974.0" prefHeight="360.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ModalInserirController">
    <children>
       <ImageView fitHeight="360.0" fitWidth="974.0" pickOnBounds="true" preserveRatio="true">
          <image>

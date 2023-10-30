@@ -7,7 +7,6 @@
   <system systemId="http://maven.apache.org/xsd/archetype-1.0.0.xsd" uri="jar:file:/C:/sts-4.19.1.RELEASE/plugins/org.eclipse.m2e.model.edit_2.0.300.20230320-2130.jar!/xsd/archetype-1.0.0.xsd"/>
   <system systemId="http://maven.apache.org/xsd/archetype-catalog-1.0.0.xsd" uri="jar:file:/C:/sts-4.19.1.RELEASE/plugins/org.eclipse.m2e.model.edit_2.0.300.20230320-2130.jar!/xsd/archetype-catalog-1.0.0.xsd"/>
   <system systemId="http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd" uri="jar:file:/C:/sts-4.19.1.RELEASE/plugins/org.eclipse.m2e.model.edit_2.0.300.20230320-2130.jar!/xsd/archetype-descriptor-1.0.0.xsd"/>
-  <public publicId="-//LOG4J//DTD LOG4J//EN" uri="jar:file:/C:/sts-4.19.1.RELEASE/plugins/org.springsource.ide.eclipse.commons.ui_4.19.1.202308011907.jar!/dtd/log4j-1.2.dtd" webURL="https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd"/>
   <public publicId="-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN" uri="jar:file:/C:/sts-4.19.1.RELEASE/plugins/org.eclipse.jst.jsf.facelet.core_1.5.0.v202303190717.jar!/dtd/facelet-taglib_1_0.dtd" webURL="facelet-taglib_1_0.dtd"/>
   <public publicId="-//Sun Microsystems, Inc.//DTD J2EE Application 1.2//EN" uri="jar:file:/C:/sts-4.19.1.RELEASE/plugins/org.eclipse.jst.standard.schemas_1.2.500.v202302261818.jar!/dtdsAndSchemas/application_1_2.dtd" webURL="http://java.sun.com/j2ee/dtds/application_1_2.dtd"/>
   <public publicId="-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN" uri="jar:file:/C:/sts-4.19.1.RELEASE/plugins/org.eclipse.jst.standard.schemas_1.2.500.v202302261818.jar!/dtdsAndSchemas/application_1_3.dtd" webURL="http://java.sun.com/dtd/application_1_3.dtd"/>
@@ -723,4 +722,5 @@
   <uri name="javaee_5.xsd" uri="jar:file:/C:/sts-4.19.1.RELEASE/plugins/org.jboss.tools.jst.web_3.10.400.v20230525-1152.jar!/catalog/javaee_5.xsd"/>
   <uri name="http://java.sun.com/xml/ns/javaee/web-facelettaglibary_2_0.xsd" uri="jar:file:/C:/sts-4.19.1.RELEASE/plugins/org.jboss.tools.jst.web_3.10.400.v20230525-1152.jar!/catalog/web-facelettaglibrary_2_0.xsd"/>
   <uri name="http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd" uri="jar:file:/C:/sts-4.19.1.RELEASE/plugins/org.jboss.tools.jst.web_3.10.400.v20230525-1152.jar!/catalog/web-facelettaglibrary_2_0.xsd"/>
+  <public publicId="-//LOG4J//DTD LOG4J//EN" uri="jar:file:/C:/sts-4.19.1.RELEASE/plugins/org.springsource.ide.eclipse.commons.ui_4.20.0.202309081616.jar!/dtd/log4j-1.2.dtd" webURL="https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd"/>
 </catalog>

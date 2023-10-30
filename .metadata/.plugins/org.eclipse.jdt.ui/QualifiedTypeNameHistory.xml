@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="views.utils.Alerts"/>
-    <fullyQualifiedTypeName name="java.io.IOException"/>
-    <fullyQualifiedTypeName name="frontend.utils.StatusVenda"/>
-    <fullyQualifiedTypeName name="frontend.utils.TipoAnuncioMercadoLivre"/>
-    <fullyQualifiedTypeName name="frontend.utils.TipoContaShopee"/>
-    <fullyQualifiedTypeName name="models.DbException"/>
     <fullyQualifiedTypeName name="com.mysql.jdbc.PreparedStatement"/>
     <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
     <fullyQualifiedTypeName name="java.util.Date"/>
-    <fullyQualifiedTypeName name="javafx.scene.control.Label"/>
     <fullyQualifiedTypeName name="javafx.scene.layout.StackPane"/>
     <fullyQualifiedTypeName name="backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity"/>
     <fullyQualifiedTypeName name="backend.services.VendaMercadoLivreService"/>
@@ -31,12 +24,10 @@
     <fullyQualifiedTypeName name="backend.utils.Constants"/>
     <fullyQualifiedTypeName name="java.util.Locale"/>
     <fullyQualifiedTypeName name="javafx.scene.input.KeyEvent"/>
-    <fullyQualifiedTypeName name="javafx.fxml.Initializable"/>
     <fullyQualifiedTypeName name="javafx.geometry.Insets"/>
     <fullyQualifiedTypeName name="javafx.scene.Node"/>
     <fullyQualifiedTypeName name="frontend.utils.DataUtils"/>
     <fullyQualifiedTypeName name="frontend.views.utils.Constraints"/>
-    <fullyQualifiedTypeName name="frontend.utils.Constants.STATUS"/>
     <fullyQualifiedTypeName name="frontend.utils.Constants"/>
     <fullyQualifiedTypeName name="java.sql.Date"/>
     <fullyQualifiedTypeName name="frontend.views.utils.Alerts"/>
@@ -54,10 +45,19 @@
     <fullyQualifiedTypeName name="backend.entities.geralEntity.VendaGeralFormatadaEntity"/>
     <fullyQualifiedTypeName name="javafx.event.EventHandler"/>
     <fullyQualifiedTypeName name="javafx.scene.input.MouseEvent"/>
-    <fullyQualifiedTypeName name="frontend.utils.Constants.LOJA"/>
     <fullyQualifiedTypeName name="javafx.scene.control.ButtonType"/>
     <fullyQualifiedTypeName name="javafx.scene.control.Button"/>
     <fullyQualifiedTypeName name="frontend.utils.Constants.MESSAGE"/>
     <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
     <fullyQualifiedTypeName name="java.util.Objects"/>
+    <fullyQualifiedTypeName name="frontend.utils.Constants.VIEWS"/>
+    <fullyQualifiedTypeName name="javafx.fxml.Initializable"/>
+    <fullyQualifiedTypeName name="java.time.ZoneId"/>
+    <fullyQualifiedTypeName name="javafx.scene.chart.PieChart.Data"/>
+    <fullyQualifiedTypeName name="javafx.scene.Group"/>
+    <fullyQualifiedTypeName name="java.time.Year"/>
+    <fullyQualifiedTypeName name="backend.controllers.VendaGeralController"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.Label"/>
+    <fullyQualifiedTypeName name="frontend.utils.Constants.LOJA"/>
+    <fullyQualifiedTypeName name="frontend.utils.Constants.STATUS"/>
 </qualifiedTypeNameHistroy>
