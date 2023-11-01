@@ -41,4 +41,8 @@ public class VendaShopeeService {
 		repository.deleteVenda(idVenda, idDado);
 	}
 	
+	public List<Double> findValorTotalPorMes(Integer ano, Integer mes1, Integer mes2) {
+		return repository.findValorTotalPorMes(ano, mes1, mes2);
+	}
+	
 }

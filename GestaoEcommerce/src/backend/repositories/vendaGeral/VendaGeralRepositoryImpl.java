@@ -82,7 +82,6 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 		try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
-   		 	System.out.println(preparedStatement.toString());
    		 	if (params.size() != 0)
 	   		 	for (int i = 1; i <= params.size(); i++) {
 	   		 		Object param = params.get(i-1);	   		 		
@@ -93,6 +92,7 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 		   		    else if (param instanceof Date)
 		   		        preparedStatement.setDate(i, (java.sql.Date) param);
 		   		}
+   		 	System.out.println(preparedStatement.toString());
    		 	resultSet = preparedStatement.executeQuery();
    		 	return resultSetToVenda(resultSet);
         } catch (SQLException e) {
@@ -151,9 +151,9 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
     	    			venda.getCanal(),
     	    			item.getCodItem(),
     	    			item.getQtde(),
-    	    			item.getValorUnitario(),
-    	    			item.getValorTotal(),
-    	    			item.getValorRecebido());
+    	    			"R$ " + String.format("%.2f", item.getValorUnitario()),
+    	    			"R$ " + String.format("%.2f", item.getValorTotal()),
+    	    			"R$ " + String.format("%.2f", item.getValorRecebido()));
     	    	list.add(vendaItem);
     	    }
     	}
@@ -163,6 +163,24 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 	@Override
 	public List<String> findItens() throws SQLException {
 		String sql = "SELECT COD_ITEM from TB_ITEM";
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql);
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	List<String> result = new ArrayList<>();
+   		 	while (resultSet.next())
+   		 		result.add(resultSet.getString(1));
+   		 	this.desconectar(this.conexao);
+   		 	return result;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+	
+	@Override
+	public List<String> findItensAtivos() throws SQLException {
+		String sql = "SELECT COD_ITEM from TB_ITEM WHERE IS_ATIVO = 1";
 		try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(sql);
@@ -196,19 +214,28 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
     }
 
 	@Override
-	public Integer[] countVendas(Integer ano) {
+	public Integer[] countVendasPorAno(Integer ano, Integer mes1, Integer mes2) {
 		StringBuilder sql = new StringBuilder("SELECT ");
-		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_SHOPEE WHERE YEAR(DATA_VENDA) = ?)  ");
-		sql.append(" + (SELECT COUNT(*) FROM TB_VENDA_ML WHERE YEAR(DATA_VENDA) = ?) AS TOTAL, ");
-		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_SHOPEE WHERE YEAR(DATA_VENDA) = ?) AS SHOPEE, ");
-		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_ML WHERE YEAR(DATA_VENDA) = ?) AS MERCADO_LIVRE");
+		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_SHOPEE ");
+		sql.append(" WHERE YEAR(DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(DATA_VENDA) BETWEEN ? AND ?) ");
+		sql.append(" + (SELECT COUNT(*) FROM TB_VENDA_ML ");
+		sql.append(" WHERE YEAR(DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(DATA_VENDA) BETWEEN ? AND ?) AS TOTAL, ");
+		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_SHOPEE ");
+		sql.append(" WHERE YEAR(DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(DATA_VENDA) BETWEEN ? AND ?) AS SHOPEE, ");
+		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_ML ");
+		sql.append(" WHERE YEAR(DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(DATA_VENDA) BETWEEN ? AND ?) AS MERCADO_LIVRE");		
 		try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
-   		 	preparedStatement.setInt(1, ano);
-   		 	preparedStatement.setInt(2, ano);
-   		 	preparedStatement.setInt(3, ano);
-   		 	preparedStatement.setInt(4, ano);
+   		 	for (int i = 1; i < 13; i += 3) {
+	   		 	preparedStatement.setInt(i, ano);
+			 	preparedStatement.setInt(i+1, mes1);
+			 	preparedStatement.setInt(i+2, mes2);
+   		 	}
 		 	System.out.println(preparedStatement.toString());
    		 	resultSet = preparedStatement.executeQuery();
    		 	resultSet.next();	
@@ -223,23 +250,35 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 	}
 
 	@Override
-	public Double[] findValorTotal(Integer ano) {
+	public Double[] findValorTotalPorAno(Integer ano, Integer mes1, Integer mes2) {
 		StringBuilder sql = new StringBuilder("SELECT ");
 		sql.append(" (SELECT SUM(ds.VALOR_TOTAL) FROM TB_DADOS_VENDA_SHOPEE ds ");
-		sql.append(" INNER JOIN TB_VENDA_SHOPEE vs ON vs.ID_VENDA = ds.ID_VENDA WHERE YEAR(vs.DATA_VENDA) = ?) ");
+		sql.append(" INNER JOIN TB_VENDA_SHOPEE vs ON vs.ID_VENDA = ds.ID_VENDA ");
+		sql.append(" WHERE YEAR(vs.DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(vs.DATA_VENDA) BETWEEN ? AND ?) ");
 		sql.append(" + (SELECT SUM(dml.TOTAL_SEM_FRETE) FROM TB_DADOS_VENDA_ML dml ");
-		sql.append(" INNER JOIN TB_VENDA_ML vml ON vml.ID_VENDA = dml.ID_VENDA WHERE YEAR(vml.DATA_VENDA) = ?) AS VALOR_TOTAL, ");
+		sql.append(" INNER JOIN TB_VENDA_ML vml ON vml.ID_VENDA = dml.ID_VENDA ");
+		sql.append(" WHERE YEAR(vml.DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(vml.DATA_VENDA) BETWEEN ? AND ?) ");
+		sql.append(" AS VALOR_TOTAL, ");
 		sql.append(" (SELECT SUM(ds.VALOR_TOTAL) FROM TB_DADOS_VENDA_SHOPEE ds ");
-		sql.append(" INNER JOIN TB_VENDA_SHOPEE vs ON vs.ID_VENDA = ds.ID_VENDA WHERE YEAR(vs.DATA_VENDA) = ?) AS SHOPEE, ");
+		sql.append(" INNER JOIN TB_VENDA_SHOPEE vs ON vs.ID_VENDA = ds.ID_VENDA ");
+		sql.append(" WHERE YEAR(vs.DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(vs.DATA_VENDA) BETWEEN ? AND ?) ");
+		sql.append(" AS SHOPEE, ");
 		sql.append(" (SELECT SUM(dml.TOTAL_SEM_FRETE) FROM TB_DADOS_VENDA_ML dml ");
-		sql.append(" INNER JOIN TB_VENDA_ML vml ON vml.ID_VENDA = dml.ID_VENDA WHERE YEAR(vml.DATA_VENDA) = ?) AS MERCADO_LIVRE");
+		sql.append(" INNER JOIN TB_VENDA_ML vml ON vml.ID_VENDA = dml.ID_VENDA ");
+		sql.append(" WHERE YEAR(vml.DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(vml.DATA_VENDA) BETWEEN ? AND ?) ");
+		sql.append(" AS MERCADO_LIVRE");
 		try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
-   		 	preparedStatement.setInt(1, ano);
-   		 	preparedStatement.setInt(2, ano);
-   		 	preparedStatement.setInt(3, ano);
-   		 	preparedStatement.setInt(4, ano);
+   		 for (int i = 1; i < 13; i += 3) {
+	   		 	preparedStatement.setInt(i, ano);
+			 	preparedStatement.setInt(i+1, mes1);
+			 	preparedStatement.setInt(i+2, mes2);
+		 	}
 		 	System.out.println(preparedStatement.toString());
    		 	resultSet = preparedStatement.executeQuery();
    		 	resultSet.next();	
@@ -254,19 +293,33 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 	}
 	
 	@Override
-	public Integer[] countByStatus(String status) {
+	public Integer[] countByStatus(String status, Integer ano, Integer mes1, Integer mes2) {
 		StringBuilder sql = new StringBuilder("SELECT ");
-		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_SHOPEE WHERE STATUS = ?) ");
-		sql.append(" + (SELECT COUNT(*) FROM TB_VENDA_ML WHERE STATUS = ?) AS TOTAL, ");
-		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_SHOPEE WHERE STATUS = ?) AS SHOPEE, ");
-		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_ML WHERE STATUS = ?) AS MERCADO_LIVRE");
+		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_SHOPEE ");
+		sql.append(" WHERE STATUS = ?  ");
+		sql.append(" AND YEAR(DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(DATA_VENDA) BETWEEN ? AND ?) ");
+		sql.append(" + (SELECT COUNT(*) FROM TB_VENDA_ML ");
+		sql.append(" WHERE STATUS = ? ");
+		sql.append(" AND YEAR(DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(DATA_VENDA) BETWEEN ? AND ?) AS TOTAL, ");
+		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_SHOPEE ");
+		sql.append(" WHERE STATUS = ?  ");
+		sql.append(" AND YEAR(DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(DATA_VENDA) BETWEEN ? AND ?) AS SHOPEE, ");
+		sql.append(" (SELECT COUNT(*) FROM TB_VENDA_ML ");
+		sql.append(" WHERE STATUS = ? ");
+		sql.append(" AND YEAR(DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(DATA_VENDA) BETWEEN ? AND ?) AS MERCADO_LIVRE");
 		try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
-   		 	preparedStatement.setString(1, status);
-   		 	preparedStatement.setString(2, status);
-   		 	preparedStatement.setString(3, status);
-   		 	preparedStatement.setString(4, status);
+   		 	for (int i = 1; i < 17; i += 4) {
+	   		 	preparedStatement.setString(i, status);
+	   		 	preparedStatement.setInt(i+1, ano);
+			 	preparedStatement.setInt(i+2, mes1);
+			 	preparedStatement.setInt(i+3, mes2);
+		 	}
 		 	System.out.println(preparedStatement.toString());
    		 	resultSet = preparedStatement.executeQuery();
    		 	resultSet.next();	

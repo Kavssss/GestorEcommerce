@@ -43,5 +43,9 @@ public class VendaMercadoLivreService {
 	public void deleteVenda(Long idVenda, Long idDado) throws SQLException {
 		repository.deleteVenda(idVenda, idDado);
 	}
+	
+	public List<Double> findValorTotalPorMes(Integer ano, Integer mes1, Integer mes2) {
+		return repository.findValorTotalPorMes(ano, mes1, mes2);
+	}
 
 }

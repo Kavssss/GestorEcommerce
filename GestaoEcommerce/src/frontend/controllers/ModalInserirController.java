@@ -207,7 +207,7 @@ public class ModalInserirController implements Initializable {
 	
 	private List<String> cbItemSetItems() {
 		try {
-			return geralController.findItens();
+			return geralController.findItensAtivos();
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		}

@@ -25,4 +25,7 @@ public interface VendaShopeeRepository {
 			Double valorTotal, Double valorRecebido) throws SQLException;
 	
 	void deleteVenda(Long idVenda, Long idDado) throws SQLException;
+	
+	List<Double> findValorTotalPorMes(Integer ano, Integer mes1, Integer mes2);
+	
 }

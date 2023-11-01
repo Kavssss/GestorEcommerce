@@ -43,4 +43,43 @@ public interface Constants {
 		String IRREVERSIVEL = "Essa ação é irreversível";
 	}
 	
+	interface MES {
+		String JAN = "Jan";
+		String JANEIRO = "Janeiro";
+		String FEV = "Fev";
+		String FEVEREIRO = "Fevereiro";
+		String MAR = "Mar";
+		String MARCO = "Março";
+		String ABR = "Abr";
+		String ABRIL = "Abril";
+		String MAI = "Mai";
+		String MAIO = "Maio";
+		String JUN = "Jun";
+		String JUNHO = "Junho";
+		String JUL = "Jul";
+		String JULHO = "Julho";
+		String AGO = "Ago";
+		String AGOSTO = "Agosto";
+		String SET = "Set";
+		String SETEMBRO = "Setembro";
+		String OUT = "Out";
+		String OUTUBRO = "Outubro";
+		String NOV = "Nov";
+		String NOVEMBRO = "Novembro";
+		String DEZ = "Dez";
+		String DEZEMBRO = "Dezembro";
+	}
+	
+	interface SEMESTRE {
+		String PRIMEIRO = "1º Semestre";
+		String SEGUNDO = "2º Semestre";
+	}
+	
+	interface ANO {
+		Integer _2023 = 2023;
+		Integer _2022 = 2022;
+		Integer _2021 = 2021;
+		Integer _2020 = 2020;
+	}
+	
 }

@@ -8,9 +8,9 @@ import backend.entities.ItemEntity;
 
 public interface ItemRepository {
 
-	void insertItem(String codItem, String descricao) throws SQLException;
+	void insertItem(String codItem, String modelo, String variacao, String descricao) throws SQLException;
 	
-	void editItem(Long id, String codItem, String descricao) throws SQLException;
+	void editItem(Long id, String codItem, String modelo, String variacao, String descricao) throws SQLException;
 	
 	void disableProduto(Long id) throws SQLException;
 	

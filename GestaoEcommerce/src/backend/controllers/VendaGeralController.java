@@ -31,16 +31,20 @@ public class VendaGeralController {
 		return service.findItens();
 	}
 	
-	public Integer[] countVendas(Integer ano) {
-		return service.countVendas(ano);
+	public List<String> findItensAtivos() throws SQLException {
+		return service.findItensAtivos();
 	}
 	
-	public Double[] findValorTotal(Integer ano) {
-		return service.findValorTotal(ano);
+	public Integer[] countVendasPorAno(Integer ano, Integer mes1, Integer mes2) {
+		return service.countVendasPorAno(ano, mes1, mes2);
 	}
 	
-	public Integer[] countByStatus(String status) {
-		return service.countByStatus(status);
+	public Double[] findValorTotalPorAno(Integer ano, Integer mes1, Integer mes2) {
+		return service.findValorTotalPorAno(ano, mes1, mes2);
+	}
+	
+	public Integer[] countByStatus(String status, Integer ano, Integer mes1, Integer mes2) {
+		return service.countByStatus(status, ano, mes1, mes2);
 	}
 	
 }

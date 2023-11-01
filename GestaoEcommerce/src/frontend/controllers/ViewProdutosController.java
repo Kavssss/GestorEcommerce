@@ -1,11 +1,17 @@
 package frontend.controllers;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 import backend.controllers.ItemController;
 import backend.dto.ItemDTO;
 import frontend.utils.Constants;
+import frontend.utils.ExportPDF;
 import frontend.utils.LoadScene;
 import frontend.views.utils.Alerts;
 import frontend.views.utils.Constraints;
@@ -19,6 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ViewProdutosController {
@@ -33,6 +40,9 @@ public class ViewProdutosController {
 
     @FXML
     private Button btnInserir;
+    
+    @FXML
+    private Button btnInserirEmMassa;
 
     @FXML
     private Button btnLimpar;
@@ -41,7 +51,7 @@ public class ViewProdutosController {
     private Button btnProdutos;
 
     @FXML
-    private Button btnRelatorios;
+    private Button btnDashboard;
 
     @FXML
     private Button btnVendas;
@@ -79,6 +89,11 @@ public class ViewProdutosController {
     @FXML
     void onVendasAction(ActionEvent event) {
     	LoadScene.changeScene(Constants.VIEWS.VENDAS);
+    }
+    
+    @FXML
+    void onDashboardAction(ActionEvent event) {
+		LoadScene.changeScene(Constants.VIEWS.DASHBOARD);
     }
 
     @FXML
@@ -137,5 +152,56 @@ public class ViewProdutosController {
     private void callModalEditar(Stage parentStage, Long id) {
 		LoadScene.callEditProdutoModal(parentStage, getClass(), id);
 	}
+    
+    @FXML
+    void onInserirEmMassaAction(ActionEvent event) {
+    	Alerts.showAlert("Inserção em massa", null, "Selecione o arquivo do tipo CSV (Separado por vírgulas)", AlertType.INFORMATION);
+		FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Selecione um arquivo");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo Separado por Vírgulas(*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        File file = fileChooser.showOpenDialog(Constraints.currentStage(event));
+        
+        if (file == null)
+        	return;
+        
+        try {
+	        BufferedReader reader = new BufferedReader(new FileReader(file));
+	        
+	        String line;
+	        Boolean skip = Boolean.TRUE;
+	        
+	        while (Objects.nonNull((line = reader.readLine()))) {
+	        	if (skip) {
+	        		skip = !skip;
+	        		continue;
+	        	}
+	        	
+	        	String[] s = line.split(";");
+	            String codItem = s[0];
+	            String modelo = s[1];
+	            String variacao = s[2];
+	            String descricao = s[3];
+	            itemController.insertItem(codItem, modelo, variacao, descricao);
+	        }
+	        Alerts.showAlert("Sucesso", null, "Operação realizada com sucesso.", AlertType.INFORMATION);
+	        reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    @FXML
+    void onExportarAction(ActionEvent event) {
+    	try {
+			ExportPDF.exportPdf(Constraints.currentStage(event).getScene(), "TESTE");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
 }

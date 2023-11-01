@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,6 +26,8 @@ public class LoadScene {
 	public static void load(Stage stage, Class<?> currentClass) throws IOException {
 		setStage(stage);
 		stage.setTitle("Morais Couros");
+        Image icon = new Image(currentClass.getResourceAsStream("../images/logo.png"));
+        stage.getIcons().add(icon);
 		stage.setResizable(false);
 		
 		Parent indexFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.INDEX));

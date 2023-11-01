@@ -12,14 +12,16 @@ public interface VendaGeralRepository {
 	List<VendaGeralDTO> findVendas(Date dataInicio, Date dataFim, Integer qtde, String codItem, 
 			String cliente, String status) throws SQLException;
 	
-	Integer[] countVendas(Integer ano);
+	Integer[] countVendasPorAno(Integer ano, Integer mes1, Integer mes2);
 	
 	List<String> findItens() throws SQLException;
 	
+	List<String> findItensAtivos() throws SQLException;
+	
 	void insertTbItem(String codItem) throws SQLException;
 	
-	Double[] findValorTotal(Integer ano);
+	Double[] findValorTotalPorAno(Integer ano, Integer mes1, Integer mes2);
 	
-	Integer[] countByStatus(String status);
+	Integer[] countByStatus(String status, Integer ano, Integer mes1, Integer mes2);
 	
 }

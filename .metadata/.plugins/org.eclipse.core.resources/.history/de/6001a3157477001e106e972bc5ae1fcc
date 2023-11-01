@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.DashboardController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+         <image>
+            <Image url="@../images/telas/dashboard.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnVendas" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" onAction="#onVendasAction" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="VENDAS" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="250.0" top="24.0" />
+         </StackPane.margin>
+      </Button>
+      <Button fx:id="btnProdutos" alignment="CENTER" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" onAction="#onProdutosAction" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="PRODUTOS" textAlignment="CENTER" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="432.0" top="24.0" />
+         </StackPane.margin>
+      </Button>
+      <Button fx:id="btnDashboard" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="DASHBOARD" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="612.0" top="24.0" />
+         </StackPane.margin>
+      </Button>
+      <TextField fx:id="txtDataInicio" layoutX="619.0" layoutY="89.0" maxHeight="29.0" maxWidth="180.0" minHeight="29.0" minWidth="180.0" prefHeight="29.0" prefWidth="180.0" promptText="Data início (dd/mm/aaaa)" style="-fx-background-color: rgb(128,128,158); -fx-background-radius: 15;" text="AAAAAAA" visible="false" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="246.0" top="76.0" />
+         </StackPane.margin>
+      </TextField>
+      <ComboBox fx:id="cbAno" maxHeight="29.0" maxWidth="110.0" minHeight="29.0" minWidth="110.0" onAction="#onAnoAction" prefHeight="29.0" prefWidth="110.0" promptText="Ano" style="-fx-background-color: rgb(128,128,158); -fx-text-fill: rgb(0,0,0); -fx-background-radius: 15;" visibleRowCount="5" StackPane.alignment="TOP_LEFT">
+         <StackPane.margin>
+            <Insets left="866.0" top="110.0" />
+         </StackPane.margin>
+      </ComboBox>
+      <Label text="Por mês" textFill="#cccccc" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="575.0" top="110.0" />
+         </StackPane.margin>
+      </Label>
+      <PieChart fx:id="pieChart" maxHeight="315.0" maxWidth="500.0" minHeight="315.0" minWidth="500.0" prefHeight="315.0" prefWidth="500.0" StackPane.alignment="TOP_LEFT">
+         <StackPane.margin>
+            <Insets left="37.0" top="255.0" />
+         </StackPane.margin>
+      </PieChart>
+      <BarChart fx:id="barChart" maxHeight="170.0" maxWidth="430.0" minHeight="170.0" minWidth="430.0" prefHeight="170.0" prefWidth="430.0" StackPane.alignment="TOP_LEFT">
+        <xAxis>
+          <NumberAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <CategoryAxisNumberAxis side="LEFT" />
+        </yAxis>
+         <StackPane.margin>
+            <Insets left="557.0" top="400.0" />
+         </StackPane.margin>
+      </BarChart>
+      <Label alignment="CENTER" layoutX="645.0" layoutY="152.0" maxWidth="500.0" minWidth="500.0" prefWidth="500.0" text="Por canal" textFill="#cccccc" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="37.0" top="230.0" />
+         </StackPane.margin>
+      </Label>
+      <Label alignment="CENTER" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" text="Vendas" textFill="#cccccc" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="37.0" top="110.0" />
+         </StackPane.margin>
+      </Label>
+      <Label alignment="CENTER" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" text="Valor total" textFill="#cccccc" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="167.0" top="110.0" />
+         </StackPane.margin>
+      </Label>
+      <Label alignment="CENTER" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" text="Cancelamentos" textFill="#cccccc" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="427.0" top="110.0" />
+         </StackPane.margin>
+      </Label>
+      <Label alignment="CENTER" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" text="Devoluções" textFill="#cccccc" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="297.0" top="110.0" />
+         </StackPane.margin>
+      </Label>
+      <Label fx:id="txtVendas" alignment="CENTER" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" textFill="#cccccc" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="37.0" top="150.0" />
+         </StackPane.margin>
+      </Label>
+      <Label fx:id="txtValorTotal" alignment="CENTER" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" textFill="#cccccc" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="167.0" top="150.0" />
+         </StackPane.margin>
+      </Label>
+      <Label fx:id="txtCancelamentos" alignment="CENTER" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" textFill="#cccccc" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="427.0" top="150.0" />
+         </StackPane.margin>
+      </Label>
+      <Label fx:id="txtDevolucoes" alignment="CENTER" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" textFill="#cccccc" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="297.0" top="150.0" />
+         </StackPane.margin>
+      </Label>
+      <Button fx:id="btnPorMes" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="110.0" minHeight="24.0" minWidth="110.0" mnemonicParsing="false" onAction="#onPorMesAction" prefHeight="24.0" prefWidth="110.0" style="-fx-background-radius: 15;" text="Por mês" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="637.0" top="65.0" />
+         </StackPane.margin>
+      </Button>
+      <Button fx:id="btnPorSemestre" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="110.0" minHeight="24.0" minWidth="110.0" mnemonicParsing="false" onAction="#onPorSemestreAction" prefHeight="24.0" prefWidth="110.0" style="-fx-background-radius: 15;" text="Por semestre" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="757.0" top="65.0" />
+         </StackPane.margin>
+      </Button>
+      <Button fx:id="btnPorAno" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="110.0" minHeight="24.0" minWidth="110.0" mnemonicParsing="false" onAction="#onPorAnoAction" prefHeight="24.0" prefWidth="110.0" style="-fx-background-radius: 15;" text="Por ano" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="877.0" top="65.0" />
+         </StackPane.margin>
+      </Button>
+      <LineChart fx:id="lineChart" alternativeColumnFillVisible="true" createSymbols="false" maxHeight="225.0" maxWidth="430.0" minHeight="225.0" minWidth="430.0" prefHeight="225.0" prefWidth="430.0" StackPane.alignment="TOP_LEFT">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" tickLabelFill="#cccccc" tickMarkVisible="false" fx:id="xAxisLineChart" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxisLineChart" side="LEFT" tickLabelFill="#cccccc" />
+        </yAxis>
+         <StackPane.margin>
+            <Insets left="557.0" top="140.0" />
+         </StackPane.margin>
+      </LineChart>
+      <ComboBox fx:id="cbMes" maxHeight="29.0" maxWidth="110.0" minHeight="29.0" minWidth="110.0" onAction="#onMesAction" prefHeight="29.0" prefWidth="110.0" promptText="Mês" style="-fx-background-color: rgb(128,128,158); -fx-text-fill: rgb(0,0,0); -fx-background-radius: 15;" visible="false" visibleRowCount="5" StackPane.alignment="TOP_LEFT">
+         <StackPane.margin>
+            <Insets left="746.0" top="110.0" />
+         </StackPane.margin>
+      </ComboBox>
+      <ComboBox fx:id="cbSemestre" maxHeight="29.0" maxWidth="110.0" minHeight="29.0" minWidth="110.0" onAction="#onSemestreAction" prefHeight="29.0" prefWidth="110.0" promptText="Semestre" style="-fx-background-color: rgb(128,128,158); -fx-text-fill: rgb(0,0,0); -fx-background-radius: 15;" visible="false" visibleRowCount="5" StackPane.alignment="TOP_LEFT">
+         <StackPane.margin>
+            <Insets left="746.0" top="110.0" />
+         </StackPane.margin>
+      </ComboBox>
+   </children>
+</StackPane>

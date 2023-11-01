@@ -58,5 +58,9 @@ public class VendaMercadoLivreController {
 	public void deleteVenda(Long idVenda, Long idDado) throws SQLException {
 		service.deleteVenda(idVenda, idDado);
 	}
+	
+	public List<Double> findValorTotalPorMes(Integer ano, Integer mes1, Integer mes2) {
+		return service.findValorTotalPorMes(ano, mes1, mes2);
+	}
 
 }

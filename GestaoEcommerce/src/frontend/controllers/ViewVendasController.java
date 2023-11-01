@@ -1,10 +1,15 @@
 package frontend.controllers;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import backend.controllers.VendaGeralController;
@@ -13,6 +18,7 @@ import backend.controllers.VendaShopeeController;
 import backend.dto.VendaGeralDTO;
 import backend.dto.VendaMercadoLivreDTO;
 import backend.dto.VendaShopeeDTO;
+import backend.utils.CalculaTotalERecebido;
 import frontend.utils.Constants;
 import frontend.utils.DataUtils;
 import frontend.utils.LoadScene;
@@ -34,6 +40,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ViewVendasController implements Initializable {
@@ -50,6 +57,9 @@ public class ViewVendasController implements Initializable {
 
 	@FXML
 	private Button btnInserir;
+	
+	@FXML
+    private Button btnInserirEmMassa;
 
 	@FXML
 	private Button btnLimpar;
@@ -58,7 +68,7 @@ public class ViewVendasController implements Initializable {
 	private Button btnProdutos;
 
 	@FXML
-	private Button btnRelatorios;
+	private Button btnDashboard;
 
 	@FXML
 	private Button btnVendas;
@@ -242,7 +252,7 @@ public class ViewVendasController implements Initializable {
 	}
 	
 	private void montaTabelaGeral(List<VendaGeralDTO> vendas) {
-		columnDataTbGeral.setCellValueFactory(new PropertyValueFactory<>("data"));
+		columnDataTbGeral.setCellValueFactory(new PropertyValueFactory<>("fData"));
 		columnClienteTbGeral.setCellValueFactory(new PropertyValueFactory<>("cliente"));
 		columnQtdTbGeral.setCellValueFactory(new PropertyValueFactory<>("qtde"));
 		columnItemTbGeral.setCellValueFactory(new PropertyValueFactory<>("codItem"));
@@ -257,7 +267,7 @@ public class ViewVendasController implements Initializable {
 	}
 	
 	private void montaTabelaShopee(List<VendaShopeeDTO> vendas) {
-		columnDataTbShopee.setCellValueFactory(new PropertyValueFactory<>("data"));
+		columnDataTbShopee.setCellValueFactory(new PropertyValueFactory<>("fData"));
 		columnClienteTbShopee.setCellValueFactory(new PropertyValueFactory<>("cliente"));
 		columnQtdTbShopee.setCellValueFactory(new PropertyValueFactory<>("qtde"));
 		columnItemTbShopee.setCellValueFactory(new PropertyValueFactory<>("codItem"));
@@ -271,7 +281,7 @@ public class ViewVendasController implements Initializable {
 	}
 	
 	private void montaTabelaML(List<VendaMercadoLivreDTO> vendas) {
-		columnDataTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("data"));
+		columnDataTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("fData"));
 		columnAnuncioTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("tipoAnuncio"));
 		columnQtdTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("qtde"));
 		columnItemTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("codItem"));
@@ -365,8 +375,63 @@ public class ViewVendasController implements Initializable {
 	}
 	
 	@FXML
+    void onInserirEmMassaAction(ActionEvent event) {
+		Alerts.showAlert("Inserção em massa", null, "Selecione o arquivo do tipo CSV (Separado por vírgulas)", AlertType.INFORMATION);
+		FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Selecione um arquivo");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo Separado por Vírgulas(*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        File file = fileChooser.showOpenDialog(Constraints.currentStage(event));
+        
+        if (file == null)
+        	return;
+        
+        try {
+	        BufferedReader reader = new BufferedReader(new FileReader(file));
+	        
+	        String line;
+	        Boolean skip = Boolean.TRUE;
+	        
+	        while (Objects.nonNull((line = reader.readLine()))) {
+	        	if (skip) {
+	        		skip = !skip;
+	        		continue;
+	        	}
+	        	
+	        	String[] s = line.split(";");
+	        	if (s.length == 6) {
+		            Date data = DataUtils.stringToDate(s[0]);
+		            String cliente = s[1];
+		            Integer qtde = Integer.valueOf(s[2]);
+		            String coddItem = s[3];
+		            Double valorUnitario = Double.valueOf(s[4].replace("R$", "").replace(" ", "").replace(",", "."));
+		            Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+		            Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+		            String status = s[5];
+	            	if (data.equals("**"))
+	            		shopeeController.insertItemVenda(coddItem, qtde, valorUnitario, valorTotal, valorRecebido);
+	            	else
+	            		shopeeController.insertVenda(data, cliente, status, coddItem, qtde, valorUnitario, valorTotal, valorRecebido);
+	            }
+
+	        }
+	        reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+	
+	@FXML
     void onProdutosAction(ActionEvent event) {
 		LoadScene.changeScene(Constants.VIEWS.PRODUTOS);
+    }
+	
+	@FXML
+    void onDashboardAction(ActionEvent event) {
+		LoadScene.changeScene(Constants.VIEWS.DASHBOARD);
     }
 	
 }
