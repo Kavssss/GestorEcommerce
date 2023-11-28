@@ -46,7 +46,11 @@ public class ModalProdutoController implements Initializable {
     private TextField txtVariacao;
 
     @Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize(URL url, ResourceBundle rb) {
+    	if (txtCodItem.getText() == null)
+    		btnDesativar.setVisible(false);
+    	else
+    		btnDesativar.setVisible(true);
 	}
     
     @FXML
@@ -84,10 +88,11 @@ public class ModalProdutoController implements Initializable {
     	
     	try {
 			if (Objects.isNull(idItem)) {
-				itemController.insertItem(codItem, modelo, variacao, descricao);
-			}
-			else
+				itemController.insertItem(codItem, modelo, variacao, descricao, Boolean.FALSE);
+			} else {
 				itemController.editItem(idItem, codItem, modelo, variacao, descricao);
+			}
+			LoadScene.getModalStage().close();
 		} catch (SQLException e) {
 			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();

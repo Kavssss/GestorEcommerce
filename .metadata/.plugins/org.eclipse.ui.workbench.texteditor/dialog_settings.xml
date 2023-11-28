@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="cbItem"/>
+		<item key="selection" value="Line"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="line"/>
+			<item value="massa"/>
+			<item value="expor"/>
+			<item value="insert"/>
+			<item value="busca"/>
+			<item value="oncanal"/>
+			<item value="canal"/>
+			<item value="public "/>
+			<item value="onpor"/>
+			<item value="inserir"/>
+			<item value="limpar"/>
 			<item value="cbItem"/>
 			<item value="pie"/>
 			<item value="barch"/>
 			<item value="graficoLinha"/>
-			<item value="grPorCanal"/>
-			<item value="pieChart"/>
-			<item value="vs"/>
-			<item value="SHOPEE"/>
-			<item value="ds"/>
-			<item value="6"/>
-			<item value="1"/>
-			<item value="line1"/>
-			<item value="&lt;String, Number&gt;"/>
-			<item value="Long"/>
-			<item value="produ"/>
 		</list>
 		<list key="replacehistory">
+			<item value="private "/>
+			<item value=""/>
 			<item value="lineChart"/>
 			<item value="pieChart"/>
 			<item value="vml"/>
@@ -33,13 +35,11 @@
 			<item value="12"/>
 			<item value="7"/>
 			<item value="line"/>
-			<item value=""/>
 			<item value="Int"/>
 			<item value="Integer"/>
 			<item value="DTO"/>
 			<item value="ID_ITEM"/>
 			<item value="Ok"/>
-			<item value="resultSet.getLong(&quot;ID_VENDA&quot;)"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

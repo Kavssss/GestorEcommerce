@@ -11,11 +11,12 @@ public class CalculaTotalERecebido {
 	}
 	
 	public static Double calculaRecebidoShopee(Double total, Integer qtde) {
-		return (Double) total - total * Constants.TAXA_SHOPEE.TAXA - Constants.TAXA_SHOPEE.CUSTO_FIXO * qtde;
+		Double result = total - total * Taxas.getTaxaShopee() - Taxas.getCustoFixoShopee() * qtde;
+		return result < 0 ? 0D : result;
 	}
 	
 	public static Double calculaRecebidoShopee(Double total, String qtde) {
-		return (Double) total - total * Constants.TAXA_SHOPEE.TAXA - Constants.TAXA_SHOPEE.CUSTO_FIXO * Integer.valueOf(qtde);
+		return (Double) total - total * Taxas.getTaxaShopee() - Taxas.getCustoFixoShopee() * Integer.valueOf(qtde);
 	}
 	
 	public static Double calculaRecebidoML(Double unitario, Integer qtde, String tipoAnuncio) {
@@ -34,19 +35,19 @@ public class CalculaTotalERecebido {
 		
 		if (valorUnitario < 79)
 			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO_FG))
-				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_CLASSICO - Constants.TAXA_ML.CUSTO_FIXO;
+				return (Double) valorSemFrete - valorTotal * Taxas.getTaxaClassicoML() - Taxas.getCustoFixoML();
 		if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM_FG))
-				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_PREMIUM - Constants.TAXA_ML.CUSTO_FIXO;
+				return (Double) valorSemFrete - valorTotal * Taxas.getTaxaPremiumML() - Taxas.getCustoFixoML();
 		else
 			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO_FG))
-				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_CLASSICO;
+				return (Double) valorSemFrete - valorTotal * Taxas.getTaxaClassicoML();
 			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM_FG))
-				return (Double) valorSemFrete - valorTotal * Constants.TAXA_ML.TAXA_PREMIUM;
+				return (Double) valorSemFrete - valorTotal * Taxas.getTaxaPremiumML();
 		return null;
 	}
 	
 	public static Double valorSemFreteML(Double valorTotal, Integer qtde) {
-		return valorTotal - Constants.TAXA_ML.FRETE * qtde;
+		return valorTotal - Taxas.getFreteML() * qtde;
 	}
 	
 }

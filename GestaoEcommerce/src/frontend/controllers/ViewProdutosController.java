@@ -36,7 +36,7 @@ public class ViewProdutosController {
     private Button btnBuscar;
 
     @FXML
-    private Button btnExportar;
+    private Button btnBaixarModelo;
 
     @FXML
     private Button btnInserir;
@@ -183,7 +183,7 @@ public class ViewProdutosController {
 	            String modelo = s[1];
 	            String variacao = s[2];
 	            String descricao = s[3];
-	            itemController.insertItem(codItem, modelo, variacao, descricao);
+	            itemController.insertItem(codItem, modelo, variacao, descricao, Boolean.TRUE);
 	        }
 	        Alerts.showAlert("Sucesso", null, "Operação realizada com sucesso.", AlertType.INFORMATION);
 	        reader.close();
@@ -195,13 +195,8 @@ public class ViewProdutosController {
     }
     
     @FXML
-    void onExportarAction(ActionEvent event) {
-    	try {
-			ExportPDF.exportPdf(Constraints.currentStage(event).getScene(), "TESTE");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    void onBaixarModeloAction(ActionEvent event) {
+    	Alerts.modeloProdutoAlert();
     }
 
 }

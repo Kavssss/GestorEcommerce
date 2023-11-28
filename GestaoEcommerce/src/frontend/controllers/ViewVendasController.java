@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -53,7 +54,7 @@ public class ViewVendasController implements Initializable {
 	private Button btnBuscar;
 
 	@FXML
-	private Button btnExportar;
+	private Button btnBaixarModelo;
 
 	@FXML
 	private Button btnInserir;
@@ -69,9 +70,15 @@ public class ViewVendasController implements Initializable {
 
 	@FXML
 	private Button btnDashboard;
+	
+	@FXML
+	private Button btnOpcoes;
 
 	@FXML
 	private Button btnVendas;
+	
+	@FXML
+	private Label labelLegenda;
 
 	@FXML
 	private ComboBox<String> cbCanal;
@@ -163,6 +170,7 @@ public class ViewVendasController implements Initializable {
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		labelLegenda.setVisible(Boolean.FALSE);
 		setNumberFields();
 		setItensComboBox();
 	}
@@ -194,11 +202,7 @@ public class ViewVendasController implements Initializable {
 
 	@FXML
 	void onInserirAction(ActionEvent event) {
-		callModalInserirVenda(Constraints.currentStage(event));
-	}
-
-	private void callModalInserirVenda(Stage parentStage) {
-		LoadScene.callInsertVendaModal(parentStage, getClass());
+		LoadScene.callInsertVendaModal(Constraints.currentStage(event), getClass());
 	}
 	
 	@FXML
@@ -249,6 +253,10 @@ public class ViewVendasController implements Initializable {
 				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			}
 		}
+		if (tbGeral.isVisible())
+			labelLegenda.setVisible(Boolean.TRUE);
+		else
+			labelLegenda.setVisible(Boolean.FALSE);
 	}
 	
 	private void montaTabelaGeral(List<VendaGeralDTO> vendas) {
@@ -309,6 +317,7 @@ public class ViewVendasController implements Initializable {
 		cbStatus.setPromptText("Status");
 		setVisibilityTables(false, false, false);
 		txtErroData.setVisible(false);
+		labelLegenda.setVisible(Boolean.FALSE);
 	}
 	
 	@FXML
@@ -388,35 +397,69 @@ public class ViewVendasController implements Initializable {
         	return;
         
         try {
-	        BufferedReader reader = new BufferedReader(new FileReader(file));
+	        BufferedReader reader = new BufferedReader(new FileReader(file, Charset.forName("UTF-8")));
 	        
 	        String line;
-	        Boolean skip = Boolean.TRUE;
+	        int skip = 0;
+	        String canal = null;
 	        
 	        while (Objects.nonNull((line = reader.readLine()))) {
-	        	if (skip) {
-	        		skip = !skip;
+	        	if (skip < 3) {
+	        		if (skip == 2)
+	        			canal = line.split(";").length == 18 ? Constants.LOJA.SHOPEE : Constants.LOJA.MERCADO_LIVRE;
+	        		skip++;
 	        		continue;
 	        	}
 	        	
 	        	String[] s = line.split(";");
-	        	if (s.length == 6) {
+	        	if (canal.equals(Constants.LOJA.SHOPEE)) {
+
 		            Date data = DataUtils.stringToDate(s[0]);
 		            String cliente = s[1];
-		            Integer qtde = Integer.valueOf(s[2]);
-		            String coddItem = s[3];
-		            Double valorUnitario = Double.valueOf(s[4].replace("R$", "").replace(" ", "").replace(",", "."));
-		            Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
-		            Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
-		            String status = s[5];
-	            	if (data.equals("**"))
-	            		shopeeController.insertItemVenda(coddItem, qtde, valorUnitario, valorTotal, valorRecebido);
-	            	else
-	            		shopeeController.insertVenda(data, cliente, status, coddItem, qtde, valorUnitario, valorTotal, valorRecebido);
+		            String status = s[2];
+		            
+		            shopeeController.insertVenda(data, cliente, status);
+		            
+		            for (int i = 3; i < s.length; i += 3) {
+			            Integer qtde = Integer.valueOf(s[i]);
+			            String codItem = s[i + 1];
+			            Double valorUnitario = Double.valueOf(s[i + 2].replace("R$", "").replaceAll(" ", "").replace(",", "."));
+			            Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+			            Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+			            
+			            shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido, Boolean.TRUE);
+		            }
 	            }
+	        	else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
+
+		            Date data = DataUtils.stringToDate(s[0]);
+		            String cliente = s[1];
+		            String status = s[2];
+		            
+		            mercadoLivreController.insertVenda(data, cliente, status);
+		            
+		            for (int i = 3; i < s.length; i += 5) {
+		            	String tipoAnuncio = s[i];
+		            	Boolean isFreteGratis = s[i + 1].equals("S") ? Boolean.TRUE : Boolean.FALSE;
+			            Integer qtde = Integer.valueOf(s[i + 2]);
+			            String codItem = s[i + 3];
+			            Double valorUnitario = Double.valueOf(s[i + 4].replace("R$", "").replaceAll(" ", "").replace(",", "."));
+			            Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+			            Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+			            
+			            if (isFreteGratis)
+				            if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.CLASSICO))
+				            	tipoAnuncio = Constants.TIPO_ANUNCIO.CLASSICO_FG;
+				            else if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.PREMIUM))
+				            	tipoAnuncio = Constants.TIPO_ANUNCIO.PREMIUM_FG;
+			            
+			            mercadoLivreController.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal, valorRecebido); //, Boolean.TRUE);
+		            }
+	        	}
 
 	        }
 	        reader.close();
+	        Alerts.showAlert("Sucesso", "INSERÇÃO EM MASSA EXECUTADA COM SUCESSO", null, AlertType.INFORMATION);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -433,5 +476,15 @@ public class ViewVendasController implements Initializable {
     void onDashboardAction(ActionEvent event) {
 		LoadScene.changeScene(Constants.VIEWS.DASHBOARD);
     }
+	
+	@FXML
+    void onOpcoesAction(ActionEvent event) {
+		LoadScene.callOpcoesModal(Constraints.currentStage(event), getClass());
+    }
+	
+	@FXML
+	void onBaixarModeloAction(ActionEvent event) {
+		Alerts.tipoArquivoAlert();
+	}
 	
 }

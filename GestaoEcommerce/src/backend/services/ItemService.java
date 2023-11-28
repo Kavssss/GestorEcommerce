@@ -12,8 +12,8 @@ public class ItemService {
 
 	ItemRepository repository = new ItemRepositoryImpl();
 	
-	public void insertItem(String codItem, String modelo, String variacao, String descricao) throws SQLException {
-		repository.insertItem(codItem, modelo, variacao, descricao);
+	public void insertItem(String codItem, String modelo, String variacao, String descricao, Boolean isEmMassa) throws SQLException {
+		repository.insertItem(codItem, modelo, variacao, descricao, isEmMassa);
 	}
 	
 	public void editItem(Long id, String codItem, String modelo, String variacao, String descricao) throws SQLException {

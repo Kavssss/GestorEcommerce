@@ -14,6 +14,8 @@ public interface VendaMercadoLivreRepository {
 
 	void insertVenda(Date data, String cliente, String status, String codItem, String tipoAnuncio, Integer qtde,
 			Double valorUnitario, Double valorTotal, Double valorRecebido) throws SQLException;
+	
+	void insertVenda(Date data, String cliente, String status) throws SQLException;
 
 	void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal,
 			Double valorRecebido) throws SQLException;

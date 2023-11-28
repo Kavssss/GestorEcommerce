@@ -33,14 +33,18 @@ public class VendaShopeeController {
 		service.insertVenda(data, cliente, status, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
 	}
 	
+	public void insertVenda(Date data, String cliente, String status) throws SQLException {
+		service.insertVenda(data, cliente, status);
+	}
+	
 	/**
 	 * Insere item extra na última venda do banco de dados
 	 * 
 	 * @throws SQLException
 	 */
-	public void insertItemVenda(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
-			throws SQLException {
-		service.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+	public void insertItemVenda(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido,
+			Boolean isEmMassa) throws SQLException {
+		service.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido, isEmMassa);
 	}
 	
 	public VendaShopeeEntity findById(Long id) throws SQLException {

@@ -1,5 +1,0 @@
-package backend.repositories.item;
-
-public class ItemRepositoryImpl {
-
-}

@@ -1,6 +1,7 @@
 package frontend.controllers;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -30,6 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 
 public class DashboardController implements Initializable {
 
@@ -38,6 +40,9 @@ public class DashboardController implements Initializable {
 	VendaMercadoLivreController mercadoLivreController = new VendaMercadoLivreController();
 	
 	@FXML
+    private BarChart<Double, String> barChart;
+
+    @FXML
     private Button btnDashboard;
 
     @FXML
@@ -65,13 +70,16 @@ public class DashboardController implements Initializable {
     private ComboBox<String> cbSemestre;
 
     @FXML
-    private PieChart pieChart;
-    
+    private Label labelPieChart;
+
     @FXML
-    private BarChart<Double, String> barChart;
+    private Label labelPor;
 
     @FXML
     private LineChart<String, Double> lineChart;
+
+    @FXML
+    private PieChart pieChart;
 
     @FXML
     private Label txtCancelamentos;
@@ -100,6 +108,7 @@ public class DashboardController implements Initializable {
     	cbSemestre.setItems(FXCollections.observableArrayList(DataUtils.getListSemestres()));
     	cbMes.setItems(FXCollections.observableArrayList(DataUtils.getListMeses()));
     	cbAno.setValue(Constants.ANO._2023);
+    	labelPor.setText("Por Ano");
     	atualizaDados();
     }
     
@@ -134,7 +143,8 @@ public class DashboardController implements Initializable {
 		cbMes.setValue(null);
 	}
 
-	private void atualizaDados() {
+	@SuppressWarnings("unchecked")
+	public void atualizaDados() {
 		Integer ano = cbAno.getSelectionModel().getSelectedItem();
 		String semestre = cbSemestre.getSelectionModel().getSelectedItem();
 		Integer mes = DataUtils.converteMesToInt(cbMes.getSelectionModel().getSelectedItem());
@@ -191,30 +201,50 @@ public class DashboardController implements Initializable {
 		}
 		
 		txtVendas.setText(vendas[0].toString());
-		txtValorTotal.setText("R$ " + String.format("%.2f", valorVendas[0]));
+		
+		if (valorVendas[0] > 99999)
+			txtValorTotal.setFont(new Font(txtValorTotal.getFont().getName(), 16));
+		else
+			txtValorTotal.setFont(new Font(txtValorTotal.getFont().getName(), 17));
+		
+		txtValorTotal.setText("R$ " + formataReais(valorVendas[0]));
 		txtCancelamentos.setText(cancelados[0].toString());
-		txtDevolucoes.setText(devolvidos[0].toString());		
+		txtDevolucoes.setText(devolvidos[0].toString());
 		
 		ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList(
-    			new PieChart.Data(Constants.LOJA.SHOPEE + " (" + String.format("%.2f", calculaPercent(vendas[1], vendas[0])) + "%)", calculaPercent(vendas[1], vendas[0])),
-    			new PieChart.Data(Constants.LOJA.MERCADO_LIVRE + " (" + String.format("%.2f", calculaPercent(vendas[2], vendas[0])) + "%)", calculaPercent(vendas[2], vendas[0])));
+				new PieChart.Data(Constants.LOJA.SHOPEE + " (" + String.format("%.2f", calculaPercent(valorVendas[1], valorVendas[0])) + "%)", calculaPercent(valorVendas[1], valorVendas[0]))
+				, new PieChart.Data(Constants.LOJA.MERCADO_LIVRE + " (" + String.format("%.2f", calculaPercent(valorVendas[2], valorVendas[0])) + "%)", calculaPercent(valorVendas[2], valorVendas[0])));
     	pieChart.setData(pieData);
     	
+    	labelPieChart.setText(Constants.LOJA.SHOPEE
+    			+ "\nR$ " + formataReais(valorVendas[1])
+    			+ "\n" + vendas[1] + " vendas"
+    			+ "\n" + devolvidos[1] + " devoluções"
+    			+ "\n" + cancelados[1] + " cancelamentos\n\n"
+    			+ Constants.LOJA.MERCADO_LIVRE 
+    			+ "\nR$ " + formataReais(valorVendas[2])
+    			+ "\n" + vendas[2] + " vendas"
+    			+ "\n" + devolvidos[2] + " devoluções"
+    			+ "\n" + cancelados[2] + " cancelamentos");
     	
     	barChart.getData().clear();
 		XYChart.Series<Double, String> barShopee = new XYChart.Series<>();
 		barShopee.setName(Constants.LOJA.SHOPEE);
-		barShopee.getData().add(new XYChart.Data<>(calculaPercent(vendas[1], vendas[0]), Constants.LOJA.SHOPEE));
+		barShopee.getData().add(new XYChart.Data<>(calculaPercent(valorVendas[1], valorVendas[0])
+				, Constants.LOJA.SHOPEE + "\n" + vendas[1] + " vendas"));
 		
 		XYChart.Series<Double, String> barML = new XYChart.Series<>();
 		barML.setName(Constants.LOJA.MERCADO_LIVRE);
-		barML.getData().add(new XYChart.Data<>(calculaPercent(vendas[2], vendas[0]), Constants.LOJA.MERCADO_LIVRE));
+		barML.getData().add(new XYChart.Data<>(calculaPercent(valorVendas[2], valorVendas[0])
+				, Constants.LOJA.MERCADO_LIVRE + "\n" + vendas[2] + " vendas"));
 		
 		barChart.getData().addAll(barShopee, barML);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void prepareLineChart(List<Double> shopee, List<Double> mercadoLivre, TipoOperacao to) {
 		lineChart.getData().clear();
+		
 		XYChart.Series<String, Double> lineShopee = new XYChart.Series<>();
 		lineShopee.setName(Constants.LOJA.SHOPEE);
 		setLineChartValues(lineShopee, shopee, to);
@@ -262,7 +292,7 @@ public class DashboardController implements Initializable {
 		line.getData().add(new XYChart.Data<>(Constants.MES.DEZ, values.get(index + 5)));
 	}
 	
-	private Double calculaPercent(Integer divisor, Integer dividendo) {
+	private Double calculaPercent(Double divisor, Double dividendo) {
 		if (dividendo != 0)
 			return Double.valueOf(divisor) / Double.valueOf(dividendo) * 100;
 		return 0D;
@@ -274,6 +304,7 @@ public class DashboardController implements Initializable {
 		cbMes.setVisible(Boolean.FALSE);
 		zeraComboBoxes();
 		cbAno.setValue(Constants.ANO._2023);
+		labelPor.setText("Por Ano");
 		atualizaDados();
     }
 
@@ -284,6 +315,7 @@ public class DashboardController implements Initializable {
 		zeraComboBoxes();
 		cbMes.setValue(Constants.MES.JANEIRO);
 		cbAno.setValue(Constants.ANO._2023);
+		labelPor.setText("Por Mês");
 		atualizaDados();
     }
 
@@ -294,7 +326,12 @@ public class DashboardController implements Initializable {
 		zeraComboBoxes();
 		cbSemestre.setValue(Constants.SEMESTRE.PRIMEIRO);
 		cbAno.setValue(Constants.ANO._2023);
+		labelPor.setText("Por Semestre");
 		atualizaDados();
+    }
+    
+    private String formataReais(Double valor) {
+    	return new DecimalFormat("#,##0.00").format(valor);
     }
 
 }

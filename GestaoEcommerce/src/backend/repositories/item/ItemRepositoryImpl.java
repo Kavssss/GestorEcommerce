@@ -47,7 +47,7 @@ public class ItemRepositoryImpl extends DAO implements ItemRepository {
     }
 
 	@Override
-	public void insertItem(String codItem, String modelo, String variacao, String descricao) throws SQLException {
+	public void insertItem(String codItem, String modelo, String variacao, String descricao, Boolean isEmMassa) throws SQLException {
 		if (findProdutos("%"+codItem+"%", null, null, null).isEmpty()) {
 			StringBuilder sql = new StringBuilder("INSERT INTO TB_ITEM(COD_ITEM, MODELO, VARIACAO, DESCRICAO, IS_ATIVO) ");
 			sql.append(" VALUES(?, ?, ?, ?, 1)");
@@ -59,7 +59,9 @@ public class ItemRepositoryImpl extends DAO implements ItemRepository {
 				preparedStatement.setString(3, variacao);
 				preparedStatement.setString(4, descricao);
 				preparedStatement.executeUpdate();
-				Alerts.showAlert("Sucesso", null, "Produto cadastrado.", AlertType.INFORMATION);
+				
+				if (!isEmMassa)
+					Alerts.showAlert("Sucesso", null, "Produto cadastrado.", AlertType.INFORMATION);
 			} catch (SQLException e) {
 				throw new DbException(e.getMessage());
 			}
@@ -71,7 +73,7 @@ public class ItemRepositoryImpl extends DAO implements ItemRepository {
 	@Override
 	public void editItem(Long id, String codItem, String modelo, String variacao, String descricao) throws SQLException {
 		StringBuilder sql = new StringBuilder("UPDATE TB_ITEM SET COD_ITEM = ?, MODELO = ?, VARIACAO = ?, DESCRICAO = ?");
-		sql.append(" WHERE ID_VENDA = ?");
+		sql.append(" WHERE ID_ITEM = ?");
 		try {
 			this.conectar();
 			preparedStatement = this.conexao.prepareStatement(sql.toString());
@@ -82,6 +84,7 @@ public class ItemRepositoryImpl extends DAO implements ItemRepository {
 			preparedStatement.setLong(5, id);
 			System.out.println(preparedStatement.toString());
 			preparedStatement.executeUpdate();
+			Alerts.showAlert("Sucesso", "Produto salvo com sucesso.", null, AlertType.INFORMATION);
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		}

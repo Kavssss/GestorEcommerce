@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.IndexController">
+<StackPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.IndexController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -56,6 +56,23 @@
          <font>
             <Font name="Arial Bold" size="14.0" />
          </font>
+      </Button>
+      <Button fx:id="btnOpcoes" maxHeight="26.0" maxWidth="90.0" minHeight="26.0" minWidth="90.0" mnemonicParsing="false" onAction="#onOpcoesAction" prefHeight="26.0" prefWidth="90.0" style="-fx-background-radius: 30;" text="OPÇÕES" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="910.0" top="23.0" />
+         </StackPane.margin>
+         <padding>
+            <Insets top="-1.0" />
+         </padding>
       </Button>
    </children>
 </StackPane>

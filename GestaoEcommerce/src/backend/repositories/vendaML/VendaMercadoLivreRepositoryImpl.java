@@ -9,12 +9,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import backend.controllers.ItemController;
 import backend.dto.VendaMercadoLivreDTO;
 import backend.entities.mercadoLivreEntity.ItemMercadoLivreEntity;
 import backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity;
 import backend.utils.CalculaTotalERecebido;
 import backend.utils.Constants;
-import backend.utils.TextUtils;
 import frontend.utils.DataUtils;
 import frontend.views.utils.Alerts;
 import javafx.scene.control.Alert.AlertType;
@@ -23,6 +23,8 @@ import models.DbException;
 
 public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercadoLivreRepository {
 
+	ItemController itemController = new ItemController();
+	
 	PreparedStatement preparedStatement;
     ResultSet resultSet;
 
@@ -191,14 +193,38 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     }
     
     @Override
+    public void insertVenda(Date data, String cliente, String status) throws SQLException {
+		try {
+			this.conectar();
+		 	preparedStatement = this.conexao.prepareStatement(insertTbVenda());
+		 	preparedStatement.setDate(1, data);
+		 	preparedStatement.setString(2, cliente);
+		 	preparedStatement.setString(3, status);
+		 	System.out.println(preparedStatement.toString());
+		 	preparedStatement.executeUpdate();
+		 	this.desconectar(this.conexao);
+	    } catch (SQLException e) {
+	    	Alerts.showAlert("Erro", "ERRO", "Não foi possível cadastrar a venda.", AlertType.ERROR);
+	   	 	throw new DbException(e.getMessage());
+	    }
+    }
+    
+    @Override
     public void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal,
     		Double valorRecebido) throws SQLException {
     	Long lastId = findLastId();
+    	Long idItem = findItemByCodItem(codItem);
+    	
+    	if (Objects.isNull(idItem)) {
+    		itemController.insertItem(codItem, codItem.split("-")[0], codItem.split("-")[1], "-", Boolean.TRUE);
+    		idItem = findItemByCodItem(codItem);
+    	}
+    	
     	try {
     		this.conectar();
 		 	preparedStatement = this.conexao.prepareStatement(insertTbDadosVenda());
 		 	preparedStatement.setLong(1, lastId);
-	 		preparedStatement.setLong(2, findItemByCodItem(codItem));
+	 		preparedStatement.setLong(2, idItem);
 	 		preparedStatement.setString(3, (String) tipoAndFrete(tipoAnuncio).get(0));
 	 		preparedStatement.setBoolean(4, (Boolean) tipoAndFrete(tipoAnuncio).get(1));
 	 		preparedStatement.setInt(5, qtde);
@@ -210,7 +236,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 	 		preparedStatement.executeUpdate();
 		 	this.desconectar(this.conexao);  		 	
    		 	
-	 		Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", "Venda cadastrada.", AlertType.INFORMATION);
+//	 		Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", "Venda cadastrada.", AlertType.INFORMATION);
     	} catch (SQLException e) {
     		Alerts.showAlert("Erro", "ERRO", "Não foi possível cadastrar a venda.", AlertType.ERROR);
        	 	throw new DbException(e.getMessage());
@@ -232,7 +258,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     }
     
     private Long findLastId() {
-    	String sql = "SELECT MAX(ID_VENDA) FROM TB_VENDA_ML";
+    	String sql = "SELECT MAX(ID_VENDA) ID_VENDA FROM TB_VENDA_ML";
     	try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(sql);
@@ -248,7 +274,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
     }
     
     private List<Object> tipoAndFrete(String tipoAnuncio) {
-    	tipoAnuncio = TextUtils.removeSpaces(tipoAnuncio);
+//    	tipoAnuncio = TextUtils.removeSpaces(tipoAnuncio);
     	if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM))
     		return Arrays.asList(tipoAnuncio, Boolean.FALSE);
     	if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO_FG) || tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM_FG))
@@ -370,8 +396,11 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
    		 	preparedStatement.setString(1, codItem);
 		 	System.out.println(preparedStatement.toString());
    		 	resultSet = preparedStatement.executeQuery();
-   		 	resultSet.next();
-   		 	Long value = resultSet.getLong(1);
+			Long value;
+		 		if (resultSet.next())
+			 		value = resultSet.getLong(1);
+			 	else
+			 		value = null;
    		 	this.desconectar(this.conexao);
    		 	return value;
         } catch (SQLException e) {

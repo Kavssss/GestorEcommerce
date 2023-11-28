@@ -23,6 +23,10 @@ public class VendaMercadoLivreService {
 		repository.insertVenda(data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario, valorTotal,
 				valorRecebido);
 	}
+	
+	public void insertVenda(Date data, String cliente, String status) throws SQLException {
+		repository.insertVenda(data, cliente, status);
+	}
 
 	public void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario,
 			Double valorTotal, Double valorRecebido) throws SQLException {

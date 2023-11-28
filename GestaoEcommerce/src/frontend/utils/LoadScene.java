@@ -25,7 +25,7 @@ public class LoadScene {
 	
 	public static void load(Stage stage, Class<?> currentClass) throws IOException {
 		setStage(stage);
-		stage.setTitle("Morais Couros");
+		stage.setTitle("Gestor Eccomerce");
         Image icon = new Image(currentClass.getResourceAsStream("../images/logo.png"));
         stage.getIcons().add(icon);
 		stage.setResizable(false);
@@ -66,19 +66,25 @@ public class LoadScene {
 	
 	public static void callInsertVendaModal(Stage parentStage, Class<?> currentClass) {
 		try {
-			FXMLLoader loader = new FXMLLoader(currentClass.getResource(Constants.MODAL.INSERIR_VENDA));
-			Pane pane = loader.load();
-			Stage modalStage = new Stage();
-			modalStage.setTitle("Inserir venda");
-			modalStage.setScene(new Scene(pane));
-			modalStage.setResizable(Boolean.FALSE);
-			modalStage.initOwner(parentStage);
-			modalStage.initModality(Modality.WINDOW_MODAL);
-			setModalStage(modalStage);
-			modalStage.showAndWait();
+			buildModal(parentStage, currentClass, Constants.MODAL.INSERIR_VENDA, "Inserir venda");
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
 		}
+	}
+	
+	private static void buildModal(Stage parentStage, Class<?> currentClass, String pathModal, String title) throws IOException {
+		FXMLLoader loader = new FXMLLoader(currentClass.getResource(pathModal));
+		Pane pane = loader.load();
+		Stage modalStage = new Stage();
+		Image icon = new Image(currentClass.getResourceAsStream("../images/logo.png"));
+		modalStage.getIcons().add(icon);
+		modalStage.setTitle(title);
+		modalStage.setScene(new Scene(pane));
+		modalStage.setResizable(Boolean.FALSE);
+		modalStage.initOwner(parentStage);
+		modalStage.initModality(Modality.WINDOW_MODAL);
+		setModalStage(modalStage);
+		modalStage.showAndWait();
 	}
 	
 	public static void callEditVendaModal(Stage parentStage, Class<?> currentClass, Long id, String canal) {
@@ -88,6 +94,8 @@ public class LoadScene {
 			ModalInserirController controller = loader.getController();
 			controller.updateFieldsEdit(id, canal);
 			Stage modalStage = new Stage();
+			Image icon = new Image(currentClass.getResourceAsStream("../images/logo.png"));
+			modalStage.getIcons().add(icon);
 			modalStage.setTitle("Editar venda");
 			modalStage.setScene(new Scene(pane));
 			modalStage.setResizable(Boolean.FALSE);
@@ -103,16 +111,7 @@ public class LoadScene {
 	
 	public static void callInsertProdutoModal(Stage parentStage, Class<?> currentClass) {
 		try {
-			FXMLLoader loader = new FXMLLoader(currentClass.getResource(Constants.MODAL.INSERIR_PRODUTO));
-			Pane pane = loader.load();
-			Stage modalStage = new Stage();
-			modalStage.setTitle("Inserir produto");
-			modalStage.setScene(new Scene(pane));
-			modalStage.setResizable(Boolean.FALSE);
-			modalStage.initOwner(parentStage);
-			modalStage.initModality(Modality.WINDOW_MODAL);
-			setModalStage(modalStage);
-			modalStage.showAndWait();
+			buildModal(parentStage, currentClass, Constants.MODAL.INSERIR_PRODUTO, "Inserir produto");
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
 		}
@@ -125,6 +124,8 @@ public class LoadScene {
 			ModalProdutoController controller = loader.getController();
 			controller.updateFieldsEdit(id);
 			Stage modalStage = new Stage();
+			Image icon = new Image(currentClass.getResourceAsStream("../images/logo.png"));
+			modalStage.getIcons().add(icon);
 			modalStage.setTitle("Editar produto");
 			modalStage.setScene(new Scene(pane));
 			modalStage.setResizable(Boolean.FALSE);
@@ -135,6 +136,14 @@ public class LoadScene {
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
+		}
+	}
+	
+	public static void callOpcoesModal(Stage parentStage, Class<?> currentClass) {
+		try {
+			buildModal(parentStage, currentClass, Constants.MODAL.OPCOES, "Opções");
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
 		}
 	}
 

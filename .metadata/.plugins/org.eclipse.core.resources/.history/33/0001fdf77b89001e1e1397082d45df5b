@@ -1,0 +1,57 @@
+package frontend.views.utils;
+
+import java.io.File;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+
+public class Alerts {
+	
+	private static Boolean isConfirmed = Boolean.FALSE;
+	
+	public static void showAlert(String title, String header, String content, AlertType type) {
+		Alert alert = new Alert(type);
+		alert.setTitle(title);
+		alert.setHeaderText(header);
+		alert.setContentText(content);
+		alert.showAndWait();
+	}
+	
+	public static Boolean confirmationAlert(String title, String content) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle(title);
+		alert.setContentText(content);
+        
+        alert.showAndWait().ifPresent(response -> {
+			if (response == alert.getButtonTypes().get(0))
+				isConfirmed = Boolean.TRUE;
+			else if (response == alert.getButtonTypes().get(1))
+				isConfirmed = Boolean.FALSE;
+        });
+        return isConfirmed;
+	}
+	
+	public static void tipoArquivoAlert() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Escolha o tipo de arquivo");
+		alert.setContentText("Deseja baixar o arquivo CSV de modelo?");
+		
+		ButtonType btnShopee = new ButtonType("Shopee");
+        ButtonType btnMercadoLivre = new ButtonType("Mercado Livre");
+        ButtonType btnCancel = new ButtonType("Cancelar");
+
+        alert.getButtonTypes().setAll(btnShopee, btnMercadoLivre, btnCancel);
+        File file;
+        
+        alert.showAndWait().ifPresent(response -> {
+			if (response == alert.getButtonTypes().get(0)) {
+				file = 
+			} else if (response == alert.getButtonTypes().get(1)) {
+				isConfirmed = Boolean.FALSE;
+			} else
+				return;
+        });
+	}
+	
+}

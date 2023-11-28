@@ -5,6 +5,8 @@ public interface Constants {
 	interface LOJA {
 		String SHOPEE = "Shopee";
 		String MERCADO_LIVRE = "Mercado Livre";
+		String MERCADO_LIVRE_CLASSICO = "Mercado Livre - Clássico";
+		String MERCADO_LIVRE_PREMIUM = "Mercado Livre - Premium";
 		String GERAL = "Geral";
 	}
 	
@@ -35,6 +37,7 @@ public interface Constants {
 	interface MODAL {
 		String INSERIR_VENDA = "/frontend/views/ModalInserir.fxml";
 		String INSERIR_PRODUTO = "/frontend/views/ModalProduto.fxml";
+		String OPCOES = "/frontend/views/Opcoes.fxml";
 	}
 	
 	interface MESSAGE {
