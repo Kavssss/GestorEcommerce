@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="Ok"/>
+		<item key="selection" value="Line"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="Sim"/>
-			<item value="apagar"/>
-			<item value="resultSet.getLong(1)"/>
-			<item value="id"/>
-			<item value="System"/>
-			<item value="ComboBox&lt;?&gt;"/>
-			<item value="salvar"/>
+			<item value="line"/>
+			<item value="massa"/>
+			<item value="expor"/>
+			<item value="insert"/>
+			<item value="busca"/>
 			<item value="oncanal"/>
-			<item value="salva"/>
-			<item value="Shopee"/>
-			<item value="cancel"/>
-			<item value="cancelar"/>
-			<item value="inse"/>
-			<item value="onadd"/>
-			<item value="add"/>
+			<item value="canal"/>
+			<item value="public "/>
+			<item value="onpor"/>
+			<item value="inserir"/>
+			<item value="limpar"/>
+			<item value="cbItem"/>
+			<item value="pie"/>
+			<item value="barch"/>
+			<item value="graficoLinha"/>
 		</list>
 		<list key="replacehistory">
-			<item value="Ok"/>
-			<item value="resultSet.getLong(&quot;ID_VENDA&quot;)"/>
-			<item value="idVenda"/>
-			<item value="ComboBox&lt;String&gt;"/>
+			<item value="private "/>
+			<item value=""/>
+			<item value="lineChart"/>
+			<item value="pieChart"/>
+			<item value="vml"/>
 			<item value="ML"/>
-			<item value="5"/>
-			<item value="4"/>
-			<item value="3"/>
-			<item value="2"/>
-			<item value="txtValorTotal2"/>
-			<item value="txtValorUnitario5"/>
-			<item value="txtValorUnitario4"/>
-			<item value="txtValorUnitario3"/>
-			<item value="txtValorUnitario2"/>
-			<item value="txtQtde5"/>
+			<item value="dml"/>
+			<item value="12"/>
+			<item value="7"/>
+			<item value="line"/>
+			<item value="Int"/>
+			<item value="Integer"/>
+			<item value="DTO"/>
+			<item value="ID_ITEM"/>
+			<item value="Ok"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="102"/>
-		<item key="DIALOG_Y_ORIGIN" value="97"/>
+		<item key="DIALOG_X_ORIGIN" value="962"/>
+		<item key="DIALOG_Y_ORIGIN" value="93"/>
 		<item key="DIALOG_WIDTH" value="322"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

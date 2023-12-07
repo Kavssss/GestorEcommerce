@@ -23,6 +23,10 @@ public class VendaMercadoLivreService {
 		repository.insertVenda(data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario, valorTotal,
 				valorRecebido);
 	}
+	
+	public void insertVenda(Date data, String cliente, String status) throws SQLException {
+		repository.insertVenda(data, cliente, status);
+	}
 
 	public void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario,
 			Double valorTotal, Double valorRecebido) throws SQLException {
@@ -42,6 +46,10 @@ public class VendaMercadoLivreService {
 	
 	public void deleteVenda(Long idVenda, Long idDado) throws SQLException {
 		repository.deleteVenda(idVenda, idDado);
+	}
+	
+	public List<Double> findValorTotalPorMes(Integer ano, Integer mes1, Integer mes2) {
+		return repository.findValorTotalPorMes(ano, mes1, mes2);
 	}
 
 }

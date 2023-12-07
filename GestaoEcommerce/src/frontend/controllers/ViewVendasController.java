@@ -1,10 +1,16 @@
 package frontend.controllers;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import backend.controllers.VendaGeralController;
@@ -13,6 +19,7 @@ import backend.controllers.VendaShopeeController;
 import backend.dto.VendaGeralDTO;
 import backend.dto.VendaMercadoLivreDTO;
 import backend.dto.VendaShopeeDTO;
+import backend.utils.CalculaTotalERecebido;
 import frontend.utils.Constants;
 import frontend.utils.DataUtils;
 import frontend.utils.LoadScene;
@@ -34,6 +41,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ViewVendasController implements Initializable {
@@ -46,10 +54,13 @@ public class ViewVendasController implements Initializable {
 	private Button btnBuscar;
 
 	@FXML
-	private Button btnExportar;
+	private Button btnBaixarModelo;
 
 	@FXML
 	private Button btnInserir;
+	
+	@FXML
+    private Button btnInserirEmMassa;
 
 	@FXML
 	private Button btnLimpar;
@@ -58,10 +69,16 @@ public class ViewVendasController implements Initializable {
 	private Button btnProdutos;
 
 	@FXML
-	private Button btnRelatorios;
+	private Button btnDashboard;
+	
+	@FXML
+	private Button btnOpcoes;
 
 	@FXML
 	private Button btnVendas;
+	
+	@FXML
+	private Label labelLegenda;
 
 	@FXML
 	private ComboBox<String> cbCanal;
@@ -153,6 +170,7 @@ public class ViewVendasController implements Initializable {
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		labelLegenda.setVisible(Boolean.FALSE);
 		setNumberFields();
 		setItensComboBox();
 	}
@@ -184,11 +202,7 @@ public class ViewVendasController implements Initializable {
 
 	@FXML
 	void onInserirAction(ActionEvent event) {
-		callModalInserirVenda(Constraints.currentStage(event));
-	}
-
-	private void callModalInserirVenda(Stage parentStage) {
-		LoadScene.callInsertVendaModal(parentStage, getClass());
+		LoadScene.callInsertVendaModal(Constraints.currentStage(event), getClass());
 	}
 	
 	@FXML
@@ -239,10 +253,14 @@ public class ViewVendasController implements Initializable {
 				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			}
 		}
+		if (tbGeral.isVisible())
+			labelLegenda.setVisible(Boolean.TRUE);
+		else
+			labelLegenda.setVisible(Boolean.FALSE);
 	}
 	
 	private void montaTabelaGeral(List<VendaGeralDTO> vendas) {
-		columnDataTbGeral.setCellValueFactory(new PropertyValueFactory<>("data"));
+		columnDataTbGeral.setCellValueFactory(new PropertyValueFactory<>("fData"));
 		columnClienteTbGeral.setCellValueFactory(new PropertyValueFactory<>("cliente"));
 		columnQtdTbGeral.setCellValueFactory(new PropertyValueFactory<>("qtde"));
 		columnItemTbGeral.setCellValueFactory(new PropertyValueFactory<>("codItem"));
@@ -257,7 +275,7 @@ public class ViewVendasController implements Initializable {
 	}
 	
 	private void montaTabelaShopee(List<VendaShopeeDTO> vendas) {
-		columnDataTbShopee.setCellValueFactory(new PropertyValueFactory<>("data"));
+		columnDataTbShopee.setCellValueFactory(new PropertyValueFactory<>("fData"));
 		columnClienteTbShopee.setCellValueFactory(new PropertyValueFactory<>("cliente"));
 		columnQtdTbShopee.setCellValueFactory(new PropertyValueFactory<>("qtde"));
 		columnItemTbShopee.setCellValueFactory(new PropertyValueFactory<>("codItem"));
@@ -271,7 +289,7 @@ public class ViewVendasController implements Initializable {
 	}
 	
 	private void montaTabelaML(List<VendaMercadoLivreDTO> vendas) {
-		columnDataTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("data"));
+		columnDataTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("fData"));
 		columnAnuncioTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("tipoAnuncio"));
 		columnQtdTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("qtde"));
 		columnItemTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("codItem"));
@@ -299,6 +317,7 @@ public class ViewVendasController implements Initializable {
 		cbStatus.setPromptText("Status");
 		setVisibilityTables(false, false, false);
 		txtErroData.setVisible(false);
+		labelLegenda.setVisible(Boolean.FALSE);
 	}
 	
 	@FXML
@@ -364,9 +383,112 @@ public class ViewVendasController implements Initializable {
 			tbMercadoLivre.getItems().clear();
 	}
 	
+	@SuppressWarnings("resource")
+	@FXML
+    void onInserirEmMassaAction(ActionEvent event) {
+		Alerts.showAlert("Inserção em massa", null, "Selecione o arquivo do tipo CSV (Separado por vírgulas)", AlertType.INFORMATION);
+		FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Selecione um arquivo");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo Separado por Vírgulas(*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        File file = fileChooser.showOpenDialog(Constraints.currentStage(event));
+        
+        if (file == null)
+        	return;
+        
+        try {
+			BufferedReader reader = new BufferedReader(new FileReader(file, Charset.forName("UTF-8")));
+	        
+	        String line;
+	        int skip = 0;
+	        String canal = null;
+	        
+	        while (Objects.nonNull((line = reader.readLine()))) {
+	        	if (skip < 3) {
+	        		if (skip == 2)
+	        			canal = line.split(";").length == 18 ? Constants.LOJA.SHOPEE : Constants.LOJA.MERCADO_LIVRE;
+	        		skip++;
+	        		continue;
+	        	}
+	        	
+	        	String[] s = line.split(";");
+	        	if (s.length != 0) {
+		        	if (canal.equals(Constants.LOJA.SHOPEE)) {
+			            Date data = DataUtils.stringToDate(s[0]);
+			            String cliente = s[1];
+			            String status = s[2];
+			            
+			            shopeeController.insertVenda(data, cliente, status);
+			            
+			            for (int i = 3; i < s.length; i += 3) {
+				            Integer qtde = Integer.valueOf(s[i]);
+				            String codItem = s[i + 1];
+				            Double valorUnitario = Double.valueOf(s[i + 2].replace("R$", "").replaceAll(" ", "").replace(",", "."));
+				            Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+				            Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+				            
+				            shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido, Boolean.TRUE);
+			            }
+		            }
+		        	else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
+	
+			            Date data = DataUtils.stringToDate(s[0]);
+			            String cliente = s[1];
+			            String status = s[2];
+			            
+			            mercadoLivreController.insertVenda(data, cliente, status);
+			            
+			            for (int i = 3; i < s.length; i += 5) {
+			            	String tipoAnuncio = s[i];
+			            	Boolean isFreteGratis = s[i + 1].equals("S") ? Boolean.TRUE : Boolean.FALSE;
+				            Integer qtde = Integer.valueOf(s[i + 2]);
+				            String codItem = s[i + 3];
+				            Double valorUnitario = Double.valueOf(s[i + 4].replace("R$", "").replaceAll(" ", "").replace(",", "."));
+				            Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+				            Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+				            
+				            if (isFreteGratis)
+					            if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.CLASSICO))
+					            	tipoAnuncio = Constants.TIPO_ANUNCIO.CLASSICO_FG;
+					            else if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.PREMIUM))
+					            	tipoAnuncio = Constants.TIPO_ANUNCIO.PREMIUM_FG;
+				            
+				            mercadoLivreController.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal, valorRecebido); //, Boolean.TRUE);
+			            }
+		        	}
+	        	} else {
+	        		Alerts.showAlert("ERRO", "Arquivo vazio!", null, AlertType.INFORMATION);
+	        		return;
+	        	}
+	        }
+	        reader.close();
+	        Alerts.showAlert("Sucesso", "INSERÇÃO EM MASSA EXECUTADA COM SUCESSO", null, AlertType.INFORMATION);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+	
 	@FXML
     void onProdutosAction(ActionEvent event) {
 		LoadScene.changeScene(Constants.VIEWS.PRODUTOS);
     }
+	
+	@FXML
+    void onDashboardAction(ActionEvent event) {
+		LoadScene.changeScene(Constants.VIEWS.DASHBOARD);
+    }
+	
+	@FXML
+    void onOpcoesAction(ActionEvent event) {
+		LoadScene.callOpcoesModal(Constraints.currentStage(event), getClass());
+    }
+	
+	@FXML
+	void onBaixarModeloAction(ActionEvent event) {
+		Alerts.tipoArquivoAlert();
+	}
 	
 }

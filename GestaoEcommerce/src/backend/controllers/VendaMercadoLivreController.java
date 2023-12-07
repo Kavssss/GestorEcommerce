@@ -33,6 +33,10 @@ public class VendaMercadoLivreController {
 		service.insertVenda(data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario, valorTotal,
 				valorRecebido);
 	}
+	
+	public void insertVenda(Date data, String cliente, String status) throws SQLException {
+		service.insertVenda(data, cliente, status);
+	}
 
 	/**
 	 * Insere item extra na última venda do banco de dados
@@ -57,6 +61,10 @@ public class VendaMercadoLivreController {
 	
 	public void deleteVenda(Long idVenda, Long idDado) throws SQLException {
 		service.deleteVenda(idVenda, idDado);
+	}
+	
+	public List<Double> findValorTotalPorMes(Integer ano, Integer mes1, Integer mes2) {
+		return service.findValorTotalPorMes(ano, mes1, mes2);
 	}
 
 }

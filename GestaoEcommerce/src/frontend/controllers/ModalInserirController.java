@@ -39,6 +39,8 @@ public class ModalInserirController implements Initializable {
 	VendaShopeeController shopeeController = new VendaShopeeController();
 	VendaMercadoLivreController mercadoLivreController = new VendaMercadoLivreController();
 	VendaGeralController geralController = new VendaGeralController();
+	
+	ViewVendasController viewVendasController = new ViewVendasController();
 
 	private Integer linhasVisiveis = 1;
 
@@ -207,7 +209,7 @@ public class ModalInserirController implements Initializable {
 	
 	private List<String> cbItemSetItems() {
 		try {
-			return geralController.findItens();
+			return geralController.findItensAtivos();
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		}
@@ -379,6 +381,8 @@ public class ModalInserirController implements Initializable {
 			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
+		LoadScene.getModalStage().close();
+		buscaAutomatica();
     }
 	
 	@FXML
@@ -407,9 +411,9 @@ public class ModalInserirController implements Initializable {
 		
 		if (canal.equals(Constants.LOJA.SHOPEE)) {
 			try {
-				if (Objects.isNull(idVenda))
+				if (Objects.isNull(idVenda)) {
 					shopeeController.insertVenda(data, cliente, status, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
-				else {
+				} else {
 					shopeeController.editVenda(idVenda, idDado, data, cliente, status, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
 					return;
 				}
@@ -449,6 +453,8 @@ public class ModalInserirController implements Initializable {
 			if (linhasVisiveis > 4)
 				inserirOutrosItensML(cbItem5, cbTipoAnuncio5, txtQtde5, txtValorUnitario5);
 		}
+		LoadScene.getModalStage().close();
+		buscaAutomatica();
 	}
 	
 	private void inserirOutrosItensShopee(ComboBox<String> cbItem, TextField txtQtde, TextField txtValorUnitario) {
@@ -458,7 +464,7 @@ public class ModalInserirController implements Initializable {
 		Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
 		Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
 		try {
-			shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+			shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido, Boolean.FALSE);
 		} catch (SQLException e) {
 			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
@@ -675,6 +681,10 @@ public class ModalInserirController implements Initializable {
 
 	private void setLinhasVisiveis(Integer linhasVisiveis) {
 		this.linhasVisiveis = linhasVisiveis;
+	}
+	
+	private void buscaAutomatica() {
+//		viewVendasController.buscaAutomatica();
 	}
 
 }

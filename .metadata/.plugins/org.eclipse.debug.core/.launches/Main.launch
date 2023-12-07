@@ -14,5 +14,5 @@
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="frontend.application.Main"/>
     <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="GestaoEcommerce"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="GestaoEcommerce"/>
-    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="--module-path &quot;C:\Users\Flavio Morais\Documents\GitHub\GestorEcommerce\javafx-sdk-17.0.8\lib&quot; --add-modules=javafx.fxml,javafx.controls"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="--module-path &quot;C:\Users\Flavio Morais\Documents\GitHub\GestorEcommerce\javafx-sdk-17.0.8\lib&quot; --add-modules=javafx.fxml,javafx.controls,javafx.swing"/>
 </launchConfiguration>

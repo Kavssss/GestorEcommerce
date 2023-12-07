@@ -47,37 +47,44 @@ public class ItemRepositoryImpl extends DAO implements ItemRepository {
     }
 
 	@Override
-	public void insertItem(String codItem, String descricao) throws SQLException {
-		StringBuilder sql = new StringBuilder("INSERT INTO TB_ITEM(COD_ITEM, MODELO, VARIACAO, DESCRICAO) ");
-		sql.append(" VALUES(?, ?, ?, ?)");
-		try {
-			this.conectar();
-			preparedStatement = this.conexao.prepareStatement(sql.toString());
-			preparedStatement.setString(1, codItem);
-			preparedStatement.setString(2, codItem.split("-")[0]);
-			preparedStatement.setString(3, codItem.split("-")[1]);
-			preparedStatement.setString(4, descricao);
-			System.out.println(preparedStatement.toString());
-			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			throw new DbException(e.getMessage());
+	public void insertItem(String codItem, String modelo, String variacao, String descricao, Boolean isEmMassa) throws SQLException {
+		if (findProdutos("%"+codItem+"%", null, null, null).isEmpty()) {
+			StringBuilder sql = new StringBuilder("INSERT INTO TB_ITEM(COD_ITEM, MODELO, VARIACAO, DESCRICAO, IS_ATIVO) ");
+			sql.append(" VALUES(?, ?, ?, ?, 1)");
+			try {
+				this.conectar();
+				preparedStatement = this.conexao.prepareStatement(sql.toString());
+				preparedStatement.setString(1, codItem);
+				preparedStatement.setString(2, modelo);
+				preparedStatement.setString(3, variacao);
+				preparedStatement.setString(4, descricao);
+				preparedStatement.executeUpdate();
+				
+				if (!isEmMassa)
+					Alerts.showAlert("Sucesso", null, "Produto cadastrado.", AlertType.INFORMATION);
+			} catch (SQLException e) {
+				throw new DbException(e.getMessage());
+			}
+		} else {
+			Alerts.showAlert("Produto duplicado", null, "O código "+ codItem +" já está cadastrado.", AlertType.INFORMATION);
 		}
 	}
 
 	@Override
-	public void editItem(Long id, String codItem, String descricao) throws SQLException {
+	public void editItem(Long id, String codItem, String modelo, String variacao, String descricao) throws SQLException {
 		StringBuilder sql = new StringBuilder("UPDATE TB_ITEM SET COD_ITEM = ?, MODELO = ?, VARIACAO = ?, DESCRICAO = ?");
-		sql.append(" WHERE ID_VENDA = ?");
+		sql.append(" WHERE ID_ITEM = ?");
 		try {
 			this.conectar();
 			preparedStatement = this.conexao.prepareStatement(sql.toString());
 			preparedStatement.setString(1, codItem);
-			preparedStatement.setString(2, codItem.split("-")[0]);
-			preparedStatement.setString(3, codItem.split("-")[1]);
+			preparedStatement.setString(2, modelo);
+			preparedStatement.setString(3, variacao);
 			preparedStatement.setString(4, descricao);
 			preparedStatement.setLong(5, id);
 			System.out.println(preparedStatement.toString());
 			preparedStatement.executeUpdate();
+			Alerts.showAlert("Sucesso", "Produto salvo com sucesso.", null, AlertType.INFORMATION);
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		}
@@ -90,27 +97,28 @@ public class ItemRepositoryImpl extends DAO implements ItemRepository {
 		StringBuilder sql = new StringBuilder("SELECT * FROM TB_ITEM ");
 		sql.append(" WHERE 1 = 1 ");
 		if(Objects.nonNull(codItem)) {
-			sql.append(" COD_ITEM LIKE ? ");
+			sql.append(" AND COD_ITEM LIKE ? ");
 			params.add(codItem);
 		}
 		if(Objects.nonNull(modelo)) {
-			sql.append(" MODELO LIKE ? ");
+			sql.append(" AND MODELO LIKE ? ");
 			params.add(modelo);
 		}
 		if(Objects.nonNull(variacao)) {
-			sql.append(" VARIACAO LIKE ? ");
+			sql.append(" AND VARIACAO LIKE ? ");
 			params.add(variacao);
 		}
 		if(Objects.nonNull(descricao)) {
-			sql.append(" DESCRICAO LIKE ? ");
+			sql.append(" AND DESCRICAO LIKE ? ");
 			params.add(descricao);
 		}
+		sql.append(" ORDER BY COD_ITEM");
 		try {
 			this.conectar();
 			preparedStatement = this.conexao.prepareStatement(sql.toString());
 			if (params.size() != 0)
 	   		 	for (int i = 1; i <= params.size(); i++)
-	   		 		preparedStatement.setString(i, params.get(i));
+	   		 		preparedStatement.setString(i, params.get(i-1));
 		 	System.out.println(preparedStatement.toString());
 		 	resultSet = preparedStatement.executeQuery();
 			return resultSetToVenda(resultSet);

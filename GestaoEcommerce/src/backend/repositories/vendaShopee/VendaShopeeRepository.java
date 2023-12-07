@@ -15,8 +15,8 @@ public interface VendaShopeeRepository {
 	void insertVenda(Date data, String cliente, String status, String codItem, Integer qtde, Double valorUnitario, Double valorTotal,
 			Double valorRecebido) throws SQLException;
 
-	void insertItemVenda(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
-			throws SQLException;
+	void insertItemVenda(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido,
+			Boolean isEmMassa) throws SQLException;
 
 	VendaShopeeEntity findById(Long id) throws SQLException;
 	
@@ -25,4 +25,9 @@ public interface VendaShopeeRepository {
 			Double valorTotal, Double valorRecebido) throws SQLException;
 	
 	void deleteVenda(Long idVenda, Long idDado) throws SQLException;
+	
+	List<Double> findValorTotalPorMes(Integer ano, Integer mes1, Integer mes2);
+
+	void insertVenda(Date data, String cliente, String status) throws SQLException;
+	
 }

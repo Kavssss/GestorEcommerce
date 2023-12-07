@@ -82,7 +82,6 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 		try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
-   		 	System.out.println(preparedStatement.toString());
    		 	if (params.size() != 0)
 	   		 	for (int i = 1; i <= params.size(); i++) {
 	   		 		Object param = params.get(i-1);	   		 		
@@ -93,6 +92,7 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 		   		    else if (param instanceof Date)
 		   		        preparedStatement.setDate(i, (java.sql.Date) param);
 		   		}
+   		 	System.out.println(preparedStatement.toString());
    		 	resultSet = preparedStatement.executeQuery();
    		 	return resultSetToVenda(resultSet);
         } catch (SQLException e) {
@@ -151,9 +151,9 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
     	    			venda.getCanal(),
     	    			item.getCodItem(),
     	    			item.getQtde(),
-    	    			item.getValorUnitario(),
-    	    			item.getValorTotal(),
-    	    			item.getValorRecebido());
+    	    			"R$ " + String.format("%.2f", item.getValorUnitario()),
+    	    			"R$ " + String.format("%.2f", item.getValorTotal()),
+    	    			"R$ " + String.format("%.2f", item.getValorRecebido()));
     	    	list.add(vendaItem);
     	    }
     	}
@@ -163,6 +163,24 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 	@Override
 	public List<String> findItens() throws SQLException {
 		String sql = "SELECT COD_ITEM from TB_ITEM";
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql);
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	List<String> result = new ArrayList<>();
+   		 	while (resultSet.next())
+   		 		result.add(resultSet.getString(1));
+   		 	this.desconectar(this.conexao);
+   		 	return result;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+	
+	@Override
+	public List<String> findItensAtivos() throws SQLException {
+		String sql = "SELECT COD_ITEM from TB_ITEM WHERE IS_ATIVO = 1";
 		try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(sql);
@@ -194,5 +212,75 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
        	 	throw new DbException(e.getMessage());
         }
     }
+
+	@Override
+	public Integer[] countVendasPorAno(Integer ano, Integer mes1, Integer mes2) {
+		String sql = "CALL SP_QTDE_TOTAL(?, ?, ?)";
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql);
+   		 	preparedStatement.setInt(1, ano);
+		 	preparedStatement.setInt(2, mes1);
+		 	preparedStatement.setInt(3, mes2);
+   		 	
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	resultSet.next();	
+   		 	Integer[] result = {resultSet.getInt("TOTAL"),
+	   		 		resultSet.getInt("SHOPEE"),
+	   		 		resultSet.getInt("MERCADO_LIVRE")};
+   		 	this.desconectar(this.conexao);
+   		 	return result;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+
+	@Override
+	public Double[] findValorTotalPorAno(Integer ano, Integer mes1, Integer mes2) {
+		String sql = "CALL SP_VALOR_TOTAL(?, ?, ?)";
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql);
+   		 	preparedStatement.setInt(1, ano);
+		 	preparedStatement.setInt(2, mes1);
+		 	preparedStatement.setInt(3, mes2);
+		 	
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	resultSet.next();	
+   		 	Double[] result = {resultSet.getDouble("VALOR_TOTAL"),
+	   		 		resultSet.getDouble("SHOPEE"),
+	   		 		resultSet.getDouble("MERCADO_LIVRE")};
+   		 	this.desconectar(this.conexao);
+   		 	return result;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+	
+	@Override
+	public Integer[] countByStatus(String status, Integer ano, Integer mes1, Integer mes2) {
+		String sql = "CALL SP_QTDE_POR_STATUS(?, ?, ?, ?)";
+		try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql);
+			preparedStatement.setString(1, status);
+			preparedStatement.setInt(2, ano);
+			preparedStatement.setInt(3, mes1);
+			preparedStatement.setInt(4, mes2);
+			
+		 	System.out.println(preparedStatement.toString());
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	resultSet.next();	
+   		 	Integer[] result = {resultSet.getInt("TOTAL"),
+	   		 		resultSet.getInt("SHOPEE"),
+	   		 		resultSet.getInt("MERCADO_LIVRE")};
+   		 	this.desconectar(this.conexao);
+   		 	return result;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
 	
 }

@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import backend.controllers.ItemController;
 import backend.dto.VendaShopeeDTO;
 import backend.entities.shopeeEntity.ItemShopeeEntity;
 import backend.entities.shopeeEntity.VendaShopeeEntity;
 import frontend.utils.Constants;
+import frontend.utils.DataUtils;
 import frontend.views.utils.Alerts;
 import javafx.scene.control.Alert.AlertType;
 import models.DAO;
@@ -19,6 +21,8 @@ import models.DbException;
 
 public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeRepository {
 
+	ItemController itemController = new ItemController();
+	
 	PreparedStatement preparedStatement;
     ResultSet resultSet;
 
@@ -88,11 +92,12 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
    		 	this.desconectar(this.conexao);
    		 	
    		 	Long lastId = findLastId();
+   		 	Long idItem = findIdItem(codItem);
    		 	
    		 	this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(insertTbDadosVenda());
    		 	preparedStatement.setLong(1, lastId);
-	 		preparedStatement.setString(2, codItem);
+	 		preparedStatement.setLong(2, idItem);
 	 		preparedStatement.setInt(3, qtde);
 	 		preparedStatement.setDouble(4, valorUnitario);
 	 		preparedStatement.setDouble(5, valorTotal);
@@ -101,22 +106,46 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 	 		preparedStatement.executeUpdate();
    		 	this.desconectar(this.conexao);   		 	
    		 	
-	 		Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", "Venda cadastrada.", AlertType.INFORMATION);
+	 		Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", null, AlertType.INFORMATION);
         } catch (SQLException e) {
-        	Alerts.showAlert("Erro", "ERRO", "Não foi possível cadastrar a venda.", AlertType.ERROR);
+        	Alerts.showAlert("Erro", null, "Não foi possível cadastrar a venda.", AlertType.ERROR);
        	 	throw new DbException(e.getMessage());
         }
 	}
     
     @Override
-    public void insertItemVenda(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
-			throws SQLException {
+    public void insertVenda(Date data, String cliente, String status) throws SQLException {
+    	try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(insertTbVenda());
+   		 	preparedStatement.setDate(1, data);
+   		 	preparedStatement.setString(2, cliente);
+   		 	preparedStatement.setString(3, status);
+   		 	System.out.println(preparedStatement.toString());
+   		 	preparedStatement.executeUpdate();
+   		 	this.desconectar(this.conexao);
+        } catch (SQLException e) {
+        	Alerts.showAlert("Erro", null, "Não foi possível cadastrar a venda.", AlertType.ERROR);
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+    
+    @Override
+    public void insertItemVenda(String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido,
+    		Boolean isEmMassa) throws SQLException {
     	Long lastId = findLastId();
+    	Long idItem = findIdItem(codItem);
+    	
+    	if (Objects.isNull(idItem)) {
+    		itemController.insertItem(codItem, codItem.split("-")[0], codItem.split("-")[1], "-", Boolean.TRUE);
+    		idItem = findIdItem(codItem);
+    	}
+    	
     	try {
     		this.conectar();
    		 	preparedStatement = this.conexao.prepareStatement(insertTbDadosVenda());
    		 	preparedStatement.setLong(1, lastId);
-	 		preparedStatement.setString(2, codItem);
+	 		preparedStatement.setLong(2, idItem);
 	 		preparedStatement.setInt(3, qtde);
 	 		preparedStatement.setDouble(4, valorUnitario);
 	 		preparedStatement.setDouble(5, valorTotal);
@@ -125,9 +154,10 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 	 		preparedStatement.executeUpdate();
    		 	this.desconectar(this.conexao);   		 	
    		 	
-	 		Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", "Venda cadastrada.", AlertType.INFORMATION);
+   		 	if (!isEmMassa)
+   		 		Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", null, AlertType.INFORMATION);
     	} catch (SQLException e) {
-    		Alerts.showAlert("Erro", "ERRO", "Não foi possível cadastrar a venda.", AlertType.ERROR);
+    		Alerts.showAlert("Erro", null, "Não foi possível cadastrar a venda.", AlertType.ERROR);
        	 	throw new DbException(e.getMessage());
     	}
     }
@@ -155,6 +185,25 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
    		 	resultSet = preparedStatement.executeQuery();
    		 	resultSet.next();
    		 	Long value = resultSet.getLong(1);
+   		 	this.desconectar(this.conexao);
+   		 	return value;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+    }
+    
+    private Long findIdItem(String codItem) {
+    	String sql = "SELECT ID_ITEM FROM TB_ITEM WHERE COD_ITEM = ?";
+    	try {
+    		this.conectar();
+   		 	preparedStatement = this.conexao.prepareStatement(sql);
+   		 	preparedStatement.setString(1, codItem);
+   		 	resultSet = preparedStatement.executeQuery();
+   		 	Long value;
+   		 	if (resultSet.next())
+   		 		value = resultSet.getLong(1);
+   		 	else
+   		 		value = null;
    		 	this.desconectar(this.conexao);
    		 	return value;
         } catch (SQLException e) {
@@ -212,9 +261,9 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
     	    			venda.getIdDado(),
     	    			item.getCodItem(),
     	    			item.getQtde(),
-    	    			item.getValorUnitario(),
-    	    			item.getValorTotal(),
-    	    			item.getValorRecebido());
+    	    			"R$ " + String.format("%.2f", item.getValorUnitario()),
+    					"R$ " + String.format("%.2f", item.getValorTotal()),
+						"R$ " + String.format("%.2f", item.getValorRecebido()));
     	    	list.add(vendaItem);
     	    }
     	}
@@ -362,6 +411,62 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 	
 	private String deleteTbDadosVenda() {
 		return "DELETE FROM TB_DADOS_VENDA_SHOPEE WHERE ID_DADO = ?";
+	}
+	
+	@Override
+	public List<Double> findValorTotalPorMes(Integer ano, Integer mes1, Integer mes2) {
+		if (mes1.equals(mes2))
+			return valorTotalPorDia(ano, mes1);
+		List<Double> values = new ArrayList<>();
+		StringBuilder sql = new StringBuilder("SELECT SUM(ds.VALOR_TOTAL) AS VALOR ");
+		sql.append(" FROM TB_DADOS_VENDA_SHOPEE ds ");
+		sql.append(" INNER JOIN TB_VENDA_SHOPEE vs ON vs.ID_VENDA = ds.ID_VENDA ");
+		sql.append(" WHERE YEAR(vs.DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(vs.DATA_VENDA) = ? ");
+		try {
+			for (int i = mes1; i <= mes2; i++) {
+				this.conectar();
+	   		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
+	   		 	preparedStatement.setInt(1, ano);
+	   		 	preparedStatement.setInt(2, i);
+	   		 	resultSet = preparedStatement.executeQuery();
+	   		 	resultSet.next();
+	   		 	Double value = resultSet.getDouble("VALOR");
+	   		 	values.add(Objects.nonNull(value) ? value : 0D);
+	   		 	this.desconectar(this.conexao);
+			}
+   		 	return values;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
+	}
+	
+	private List<Double> valorTotalPorDia(Integer ano, Integer mes) {
+		List<Double> values = new ArrayList<>();
+		StringBuilder sql = new StringBuilder("SELECT SUM(ds.VALOR_TOTAL) AS VALOR ");
+		sql.append(" FROM TB_DADOS_VENDA_SHOPEE ds ");
+		sql.append(" INNER JOIN TB_VENDA_SHOPEE vs ON vs.ID_VENDA = ds.ID_VENDA ");
+		sql.append(" WHERE YEAR(vs.DATA_VENDA) = ? ");
+		sql.append(" AND MONTH(vs.DATA_VENDA) = ? ");
+		sql.append(" AND DAY(vs.DATA_VENDA) = ?");
+		Integer qtdeDias = DataUtils.getListDias(mes).size();
+		try {
+			for (int i = 1; i <= qtdeDias; i++) {
+				this.conectar();
+	   		 	preparedStatement = this.conexao.prepareStatement(sql.toString());
+	   		 	preparedStatement.setInt(1, ano);
+	   		 	preparedStatement.setInt(2, mes);
+	   		 	preparedStatement.setInt(3, i);
+	   		 	resultSet = preparedStatement.executeQuery();
+	   		 	resultSet.next();
+	   		 	Double value = resultSet.getDouble("VALOR");
+	   		 	values.add(Objects.nonNull(value) ? value : 0D);
+	   		 	this.desconectar(this.conexao);
+			}
+   		 	return values;
+        } catch (SQLException e) {
+       	 	throw new DbException(e.getMessage());
+        }
 	}
   
 }

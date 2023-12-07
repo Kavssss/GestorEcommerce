@@ -21,4 +21,20 @@ public class VendaGeralService {
 		return repository.findItens();
 	}
 	
+	public List<String> findItensAtivos() throws SQLException {
+		return repository.findItensAtivos();
+	}
+	
+	public Integer[] countVendasPorAno(Integer ano, Integer mes1, Integer mes2) {
+		return repository.countVendasPorAno(ano, mes1, mes2);
+	}
+	
+	public Double[] findValorTotalPorAno(Integer ano, Integer mes1, Integer mes2) {
+		return repository.findValorTotalPorAno(ano, mes1, mes2);
+	}
+	
+	public Integer[] countByStatus(String status, Integer ano, Integer mes1, Integer mes2) {
+		return repository.countByStatus(status, ano, mes1, mes2);
+	}
+	
 }

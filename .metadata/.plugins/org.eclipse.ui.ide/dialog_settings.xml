@@ -4,8 +4,8 @@
 		<item value="org.eclipse.buildship:3.1.7.v20230428-1350"/>
 		<item value="org.eclipse.egit.gitflow.feature:6.6.0.202305301015-r"/>
 		<item value="org.eclipse.egit:6.6.0.202305301015-r"/>
-		<item value="org.eclipse.emf.common:2.29.0.v20230315-1321"/>
-		<item value="org.eclipse.emf.ecore:2.32.0.v20230406-1203"/>
+		<item value="org.eclipse.emf.common:2.30.0.v20230810-0713"/>
+		<item value="org.eclipse.emf.ecore:2.35.0.v20230829-0934"/>
 		<item value="org.eclipse.epp.mpc:1.10.1.v20221110-1841"/>
 		<item value="org.eclipse.fx.ide.css.feature:3.8.0.202204150904"/>
 		<item value="org.eclipse.help:2.3.1400.v20230605-0440"/>
@@ -23,27 +23,27 @@
 		<item value="org.eclipse.m2e.wtp.jaxrs.feature:1.6.0.20230118-0812"/>
 		<item value="org.eclipse.m2e.wtp.jpa.feature:1.6.0.20230118-0812"/>
 		<item value="org.eclipse.m2e.wtp.jsf.feature:1.6.0.20230118-0812"/>
-		<item value="org.eclipse.mylyn.wikitext.editors_feature:3.0.46.202301111837"/>
+		<item value="org.eclipse.mylyn.wikitext.editors_feature:3.0.48.202308291007"/>
 		<item value="org.eclipse.pde:3.15.0.v20230605-0440"/>
 		<item value="org.eclipse.platform:4.28.0.v20230605-0440"/>
 		<item value="org.eclipse.rcp:4.28.0.v20230605-0440"/>
-		<item value="org.eclipse.tm.terminal.connector.ssh.feature:11.2.0.202303140100"/>
-		<item value="org.eclipse.tm.terminal.control.feature:11.2.0.202303140100"/>
-		<item value="org.eclipse.tm.terminal.feature:11.2.0.202303131754"/>
-		<item value="org.eclipse.tm.terminal.view.feature:11.2.0.202304132101"/>
+		<item value="org.eclipse.tm.terminal.connector.ssh.feature:11.3.0.202307110141"/>
+		<item value="org.eclipse.tm.terminal.control.feature:11.3.0.202308191743"/>
+		<item value="org.eclipse.tm.terminal.feature:11.3.0.202307110141"/>
+		<item value="org.eclipse.tm.terminal.view.feature:11.3.0.202308190036"/>
 		<item value="org.eclipse.userstorage:1.2.0.v20210517-0327"/>
 		<item value="org.eclipse.wst.common.fproj:3.7.4.v202303031844"/>
 		<item value="org.eclipse.wst.jsdt.chromium.debug.feature:0.6.300.v202205232338"/>
 		<item value="org.eclipse.wst.json_ui.feature:1.1.10.v202305221615"/>
 		<item value="org.eclipse.wst.xml_ui.feature:3.30.0.v202305230750"/>
-		<item value="org.eclipse.xtend.lib:2.31.0.v20230529-0659"/>
-		<item value="org.eclipse.xtend.sdk:2.31.0.v20230529-0659"/>
-		<item value="org.eclipse.xtext.sdk:2.31.0.v20230529-0659"/>
-		<item value="org.eclipse.xtext.ui:2.31.0.v20230529-0659"/>
-		<item value="org.eclipse.xtext.xbase.lib:2.31.0.v20230529-0659"/>
-		<item value="org.eclipse.xtext.xbase:2.31.0.v20230529-0659"/>
-		<item value="org.eclipse.xtext.xtext.ui.graph:2.31.0.v20230529-0659"/>
-		<item value="org.eclipse.xtext.xtext.ui:2.31.0.v20230529-0659"/>
+		<item value="org.eclipse.xtend.lib:2.32.0.v20230827-1315"/>
+		<item value="org.eclipse.xtend.sdk:2.32.0.v20230827-1315"/>
+		<item value="org.eclipse.xtext.sdk:2.32.0.v20230827-1315"/>
+		<item value="org.eclipse.xtext.ui:2.32.0.v20230827-1315"/>
+		<item value="org.eclipse.xtext.xbase.lib:2.32.0.v20230827-1315"/>
+		<item value="org.eclipse.xtext.xbase:2.32.0.v20230827-1315"/>
+		<item value="org.eclipse.xtext.xtext.ui.graph:2.32.0.v20230827-1315"/>
+		<item value="org.eclipse.xtext.xtext.ui:2.32.0.v20230827-1315"/>
 		<item value="org.hibernate.eclipse.feature:5.4.21.v20230620-1558"/>
 		<item value="org.jboss.ide.eclipse.archives.feature:3.6.400.v20220914-1109"/>
 		<item value="org.jboss.ide.eclipse.as.archives.integration.feature:3.10.2.v20230622-1443"/>
@@ -89,6 +89,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\Flavio Morais\Downloads\DashboardFx-master\DashboardFx-master"/>
 			<item value="C:\Users\Flavio Morais\Documents\ProgramaExcel"/>
 			<item value="C:\Users\Flavio Morais\Documents\GitHub\GestorEcommerce"/>
 		</list>
@@ -127,7 +128,7 @@
 	</section>
 	<section name="org.eclipse.ui.dialogs.FilteredResourcesSelectionDialog">
 		<item key="ShowStatusLine" value="true"/>
-		<item key="History" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0D;&#x0A;&lt;History&gt;&#x0D;&#x0A;&lt;historyRootNode&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/GestaoEcommerce/src/frontend/views/utils/Alerts.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/GestaoEcommerce/src/backend/repositories/vendaShopee/VendaShopeeRepository.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/GestaoEcommerce/src/backend/repositories/vendaML/VendaMercadoLivreRepositoryImpl.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;/historyRootNode&gt;&#x0D;&#x0A;&lt;/History&gt;"/>
+		<item key="History" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0D;&#x0A;&lt;History&gt;&#x0D;&#x0A;&lt;historyRootNode&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/GestaoEcommerce/src/frontend/views/utils/Alerts.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/GestaoEcommerce/src/backend/repositories/vendaShopee/VendaShopeeRepository.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/GestaoEcommerce/src/backend/repositories/vendaML/VendaMercadoLivreRepositoryImpl.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/GestaoEcommerce/src/backend/entities/geralEntity/VendaGeralFormatadaEntity.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;/historyRootNode&gt;&#x0D;&#x0A;&lt;/History&gt;"/>
 		<item key="ShowDerived" value="false"/>
 		<item key="FilterByLocation" value="false"/>
 		<item key="WorkingSet" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0D;&#x0A;&lt;workingSet workingSetName=&quot;&quot;/&gt;"/>
@@ -138,5 +139,9 @@
 			<item key="DIALOG_Y_ORIGIN" value="44"/>
 			<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
 		</section>
+	</section>
+	<section name="WORKBENCH_SETTINGS">
+		<list key="ENABLED_TRANSFERS">
+		</list>
 	</section>
 </section>

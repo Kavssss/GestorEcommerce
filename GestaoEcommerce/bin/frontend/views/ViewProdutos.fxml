@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ViewProdutosController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ViewProdutosController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
          <image>
-            <Image url="@../images/telas/vendas.png" />
+            <Image url="@../images/telas/background_white.png" />
          </image>
       </ImageView>
       <Button fx:id="btnVendas" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" onAction="#onVendasAction" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="VENDAS" textFill="#00003c" StackPane.alignment="TOP_LEFT">
@@ -46,7 +46,7 @@
             <Insets left="432.0" top="24.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="btnRelatorios" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="RELATÓRIOS" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="btnDashboard" maxHeight="24.0" maxWidth="160.0" minHeight="24.0" minWidth="160.0" mnemonicParsing="false" onAction="#onDashboardAction" prefHeight="24.0" prefWidth="160.0" style="-fx-background-radius: 15;" text="DASHBOARD" textFill="#00003c" StackPane.alignment="TOP_LEFT">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -137,7 +137,7 @@
             <Insets left="880.0" top="165.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="btnExportar" alignment="CENTER" contentDisplay="CENTER" maxHeight="23.0" maxWidth="100.0" minHeight="23.0" minWidth="100.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="100.0" style="-fx-background-radius: 15;" text="EXPORTAR" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="btnBaixarModelo" alignment="CENTER" contentDisplay="CENTER" maxHeight="23.0" maxWidth="130.0" minHeight="23.0" minWidth="130.0" mnemonicParsing="false" onAction="#onBaixarModeloAction" prefHeight="23.0" prefWidth="130.0" style="-fx-background-radius: 15;" text="BAIXAR MODELO" textFill="#00003c" StackPane.alignment="TOP_LEFT">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -145,10 +145,10 @@
             <Insets />
          </opaqueInsets>
          <font>
-            <Font name="Arial Bold" size="12.0" />
+            <Font name="Arial Bold" size="11.0" />
          </font>
          <StackPane.margin>
-            <Insets left="462.0" top="559.0" />
+            <Insets left="200.0" top="165.0" />
          </StackPane.margin>
       </Button>
       <TableView fx:id="tbProduto" maxHeight="345.0" maxWidth="924.0" minHeight="345.0" minWidth="924.0" onMouseClicked="#onTbProdutoMouseClicked" prefHeight="345.0" prefWidth="924.0" style="-fx-background-radius: 7; -fx-background-color: transparent;" StackPane.alignment="TOP_LEFT">
@@ -156,12 +156,26 @@
           <TableColumn fx:id="columnCodItem" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="COD. ITEM" />
             <TableColumn fx:id="columnModelo" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" style="-fx-alignment: CENTER;" text="MODELO" />
             <TableColumn fx:id="columnVariacao" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="VARIAÇÃO" />
-            <TableColumn fx:id="columnDescricao" editable="false" maxWidth="550.0" minWidth="550.0" prefWidth="550.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="DESCRIÇÃO" />
+            <TableColumn fx:id="columnDescricao" editable="false" maxWidth="539.0" minWidth="539.0" prefWidth="539.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="DESCRIÇÃO" />
             <TableColumn fx:id="columnSituacao" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" sortable="false" style="-fx-alignment: CENTER;" text="SITUAÇÂO" />
         </columns>
          <StackPane.margin>
             <Insets left="50.0" top="202.0" />
          </StackPane.margin>
       </TableView>
+      <Button fx:id="btnInserirEmMassa" alignment="CENTER" contentDisplay="CENTER" maxHeight="23.0" maxWidth="130.0" minHeight="23.0" minWidth="130.0" mnemonicParsing="false" onAction="#onInserirEmMassaAction" prefHeight="23.0" prefWidth="130.0" style="-fx-background-radius: 15;" text="INSERIR EM LOTE" textFill="#00003c" StackPane.alignment="TOP_LEFT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="11.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="50.0" top="165.0" />
+         </StackPane.margin>
+      </Button>
    </children>
 </StackPane>

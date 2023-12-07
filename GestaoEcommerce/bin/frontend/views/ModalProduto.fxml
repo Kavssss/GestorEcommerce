@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="225.0" maxWidth="974.0" minHeight="225.0" minWidth="974.0" prefHeight="225.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ModalProdutoController">
+<StackPane maxHeight="225.0" maxWidth="974.0" minHeight="225.0" minWidth="974.0" prefHeight="225.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ModalProdutoController">
    <children>
       <TextField fx:id="txtIdItem" maxHeight="29.0" maxWidth="29.0" minHeight="29.0" minWidth="29.0" prefHeight="29.0" prefWidth="29.0" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" visible="false" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>

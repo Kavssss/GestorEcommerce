@@ -1,8 +1,9 @@
 package backend.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 import backend.entities.geralEntity.VendaGeralEntity;
+import frontend.utils.DataUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,12 +17,13 @@ public class VendaGeralDTO extends VendaGeralEntity {
 
 	private String codItem;
 	private Integer qtde;
-	private Double valorUnitario;
-	private Double valorTotal;
-	private Double valorRecebido;
+	private String valorUnitario;
+	private String valorTotal;
+	private String valorRecebido;
+	private String fData = DataUtils.dateToString(this.getData());
 	
 	public VendaGeralDTO(Long id, Date data, String cliente, String status, String canal, String codItem,
-			Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido) {
+			Integer qtde, String valorUnitario, String valorTotal, String valorRecebido) {
 		super(id, data, cliente, status, canal);
 		this.codItem = codItem;
 		this.qtde = qtde;

@@ -46,7 +46,11 @@ public class ModalProdutoController implements Initializable {
     private TextField txtVariacao;
 
     @Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize(URL url, ResourceBundle rb) {
+    	if (txtCodItem.getText() == null)
+    		btnDesativar.setVisible(false);
+    	else
+    		btnDesativar.setVisible(true);
 	}
     
     @FXML
@@ -73,6 +77,8 @@ public class ModalProdutoController implements Initializable {
     void onSalvarAction(ActionEvent event) {
     	Long idItem = !txtIdItem.getText().isBlank() ? Long.valueOf(txtIdItem.getText()) : null;
     	String codItem = !txtCodItem.getText().isBlank() ? txtCodItem.getText() : null;
+    	String modelo = !txtModelo.getText().isBlank() ? txtModelo.getText() : null;
+    	String variacao = !txtVariacao.getText().isBlank() ? txtVariacao.getText() : null;
     	String descricao = !txtDescricao.getText().isBlank() ? txtDescricao.getText() : null;
     	
     	if (Objects.isNull(codItem) || Objects.isNull(descricao)) {
@@ -81,10 +87,12 @@ public class ModalProdutoController implements Initializable {
 		}
     	
     	try {
-			if (Objects.isNull(idItem))
-				itemController.insertItem(codItem, descricao);
-			else
-				itemController.editItem(idItem, codItem, descricao);
+			if (Objects.isNull(idItem)) {
+				itemController.insertItem(codItem, modelo, variacao, descricao, Boolean.FALSE);
+			} else {
+				itemController.editItem(idItem, codItem, modelo, variacao, descricao);
+			}
+			LoadScene.getModalStage().close();
 		} catch (SQLException e) {
 			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
