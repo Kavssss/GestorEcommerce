@@ -1,10 +1,6 @@
 package frontend.utils;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
-
-import javafx.scene.control.TextField;
 
 public class DoubleUtils {
 

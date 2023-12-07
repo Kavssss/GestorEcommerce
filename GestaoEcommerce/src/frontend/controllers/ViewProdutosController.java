@@ -11,7 +11,6 @@ import java.util.Objects;
 import backend.controllers.ItemController;
 import backend.dto.ItemDTO;
 import frontend.utils.Constants;
-import frontend.utils.ExportPDF;
 import frontend.utils.LoadScene;
 import frontend.views.utils.Alerts;
 import frontend.views.utils.Constraints;

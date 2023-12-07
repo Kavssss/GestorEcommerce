@@ -230,13 +230,13 @@ public class DashboardController implements Initializable {
     	barChart.getData().clear();
 		XYChart.Series<Double, String> barShopee = new XYChart.Series<>();
 		barShopee.setName(Constants.LOJA.SHOPEE);
-		barShopee.getData().add(new XYChart.Data<>(calculaPercent(valorVendas[1], valorVendas[0])
-				, Constants.LOJA.SHOPEE + "\n" + vendas[1] + " vendas"));
+		barShopee.getData().add(new XYChart.Data<>(calculaPercent(valorVendas[1], valorVendas[0]),
+				Constants.LOJA.SHOPEE + "\n" + vendas[1] + " vendas"));
 		
 		XYChart.Series<Double, String> barML = new XYChart.Series<>();
 		barML.setName(Constants.LOJA.MERCADO_LIVRE);
-		barML.getData().add(new XYChart.Data<>(calculaPercent(valorVendas[2], valorVendas[0])
-				, Constants.LOJA.MERCADO_LIVRE + "\n" + vendas[2] + " vendas"));
+		barML.getData().add(new XYChart.Data<>(calculaPercent(valorVendas[2], valorVendas[0]),
+				Constants.LOJA.MERCADO_LIVRE + "\n" + vendas[2] + " vendas"));
 		
 		barChart.getData().addAll(barShopee, barML);
 	}

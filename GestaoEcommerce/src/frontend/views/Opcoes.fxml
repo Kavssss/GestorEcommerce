@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="225.0" maxWidth="400.0" minHeight="225.0" minWidth="400.0" prefHeight="225.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ModalOpcoesController">
+<StackPane maxHeight="225.0" maxWidth="400.0" minHeight="225.0" minWidth="400.0" prefHeight="225.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ModalOpcoesController">
    <children>
       <ImageView fitHeight="225.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" scaleY="2.5">
          <image>

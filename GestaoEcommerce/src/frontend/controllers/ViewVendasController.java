@@ -383,6 +383,7 @@ public class ViewVendasController implements Initializable {
 			tbMercadoLivre.getItems().clear();
 	}
 	
+	@SuppressWarnings("resource")
 	@FXML
     void onInserirEmMassaAction(ActionEvent event) {
 		Alerts.showAlert("Inserção em massa", null, "Selecione o arquivo do tipo CSV (Separado por vírgulas)", AlertType.INFORMATION);
@@ -397,7 +398,7 @@ public class ViewVendasController implements Initializable {
         	return;
         
         try {
-	        BufferedReader reader = new BufferedReader(new FileReader(file, Charset.forName("UTF-8")));
+			BufferedReader reader = new BufferedReader(new FileReader(file, Charset.forName("UTF-8")));
 	        
 	        String line;
 	        int skip = 0;
@@ -412,51 +413,54 @@ public class ViewVendasController implements Initializable {
 	        	}
 	        	
 	        	String[] s = line.split(";");
-	        	if (canal.equals(Constants.LOJA.SHOPEE)) {
-
-		            Date data = DataUtils.stringToDate(s[0]);
-		            String cliente = s[1];
-		            String status = s[2];
-		            
-		            shopeeController.insertVenda(data, cliente, status);
-		            
-		            for (int i = 3; i < s.length; i += 3) {
-			            Integer qtde = Integer.valueOf(s[i]);
-			            String codItem = s[i + 1];
-			            Double valorUnitario = Double.valueOf(s[i + 2].replace("R$", "").replaceAll(" ", "").replace(",", "."));
-			            Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
-			            Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+	        	if (s.length != 0) {
+		        	if (canal.equals(Constants.LOJA.SHOPEE)) {
+			            Date data = DataUtils.stringToDate(s[0]);
+			            String cliente = s[1];
+			            String status = s[2];
 			            
-			            shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido, Boolean.TRUE);
+			            shopeeController.insertVenda(data, cliente, status);
+			            
+			            for (int i = 3; i < s.length; i += 3) {
+				            Integer qtde = Integer.valueOf(s[i]);
+				            String codItem = s[i + 1];
+				            Double valorUnitario = Double.valueOf(s[i + 2].replace("R$", "").replaceAll(" ", "").replace(",", "."));
+				            Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+				            Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+				            
+				            shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido, Boolean.TRUE);
+			            }
 		            }
-	            }
-	        	else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
-
-		            Date data = DataUtils.stringToDate(s[0]);
-		            String cliente = s[1];
-		            String status = s[2];
-		            
-		            mercadoLivreController.insertVenda(data, cliente, status);
-		            
-		            for (int i = 3; i < s.length; i += 5) {
-		            	String tipoAnuncio = s[i];
-		            	Boolean isFreteGratis = s[i + 1].equals("S") ? Boolean.TRUE : Boolean.FALSE;
-			            Integer qtde = Integer.valueOf(s[i + 2]);
-			            String codItem = s[i + 3];
-			            Double valorUnitario = Double.valueOf(s[i + 4].replace("R$", "").replaceAll(" ", "").replace(",", "."));
-			            Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
-			            Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+		        	else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
+	
+			            Date data = DataUtils.stringToDate(s[0]);
+			            String cliente = s[1];
+			            String status = s[2];
 			            
-			            if (isFreteGratis)
-				            if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.CLASSICO))
-				            	tipoAnuncio = Constants.TIPO_ANUNCIO.CLASSICO_FG;
-				            else if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.PREMIUM))
-				            	tipoAnuncio = Constants.TIPO_ANUNCIO.PREMIUM_FG;
+			            mercadoLivreController.insertVenda(data, cliente, status);
 			            
-			            mercadoLivreController.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal, valorRecebido); //, Boolean.TRUE);
-		            }
+			            for (int i = 3; i < s.length; i += 5) {
+			            	String tipoAnuncio = s[i];
+			            	Boolean isFreteGratis = s[i + 1].equals("S") ? Boolean.TRUE : Boolean.FALSE;
+				            Integer qtde = Integer.valueOf(s[i + 2]);
+				            String codItem = s[i + 3];
+				            Double valorUnitario = Double.valueOf(s[i + 4].replace("R$", "").replaceAll(" ", "").replace(",", "."));
+				            Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+				            Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+				            
+				            if (isFreteGratis)
+					            if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.CLASSICO))
+					            	tipoAnuncio = Constants.TIPO_ANUNCIO.CLASSICO_FG;
+					            else if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.PREMIUM))
+					            	tipoAnuncio = Constants.TIPO_ANUNCIO.PREMIUM_FG;
+				            
+				            mercadoLivreController.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal, valorRecebido); //, Boolean.TRUE);
+			            }
+		        	}
+	        	} else {
+	        		Alerts.showAlert("ERRO", "Arquivo vazio!", null, AlertType.INFORMATION);
+	        		return;
 	        	}
-
 	        }
 	        reader.close();
 	        Alerts.showAlert("Sucesso", "INSERÇÃO EM MASSA EXECUTADA COM SUCESSO", null, AlertType.INFORMATION);

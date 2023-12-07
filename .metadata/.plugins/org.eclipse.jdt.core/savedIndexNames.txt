@@ -4,9 +4,9 @@ INDEX VERSION 1.134+C:\Users\Flavio Morais\Documents\GitHub\GestorEcommerce\.met
 608526758.index
 1333199366.index
 1364078381.index
-1986858068.index
-22158790.index
 4087116079.index
+22158790.index
+1986858068.index
 2419484788.index
 20645612.index
 3662013614.index
