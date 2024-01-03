@@ -9,10 +9,9 @@ public class DoubleUtils {
 //		Locale ptBr = new Locale("pt", "BR");
 //		return NumberFormat.getCurrencyInstance(ptBr).format(d);
 //	}
-	
-	
+
 	public static String formataDouble(Double value) {
-        return new DecimalFormat("#.00").format(value);
+		return new DecimalFormat("#.00").format(value);
 	}
-	
+
 }

@@ -6,5 +6,5 @@ public interface CanalVenda {
 	String ML = "ML";
 	String SHOPEE = "Shopee";
 	String MERCADO_LIVRE = "Mercado Livre";
-	
+
 }

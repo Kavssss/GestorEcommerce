@@ -20,73 +20,74 @@ import javafx.scene.control.TextField;
 public class ModalProdutoController implements Initializable {
 
 	ItemController itemController = new ItemController();
-	
-    @FXML
-    private Button btnCancelar;
 
-    @FXML
-    private Button btnDesativar;
+	@FXML
+	private Button btnCancelar;
 
-    @FXML
-    private Button btnSalvar;
-    
-    @FXML
-    private TextField txtIdItem;
+	@FXML
+	private Button btnDesativar;
 
-    @FXML
-    private TextField txtCodItem;
+	@FXML
+	private Button btnSalvar;
 
-    @FXML
-    private TextField txtDescricao;
+	@FXML
+	private TextField txtIdItem;
 
-    @FXML
-    private TextField txtModelo;
+	@FXML
+	private TextField txtCodItem;
 
-    @FXML
-    private TextField txtVariacao;
+	@FXML
+	private TextField txtDescricao;
 
-    @Override
+	@FXML
+	private TextField txtModelo;
+
+	@FXML
+	private TextField txtVariacao;
+
+	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-    	if (txtCodItem.getText() == null)
-    		btnDesativar.setVisible(false);
-    	else
-    		btnDesativar.setVisible(true);
+		if (txtCodItem.getText() == null)
+			btnDesativar.setVisible(false);
+		else
+			btnDesativar.setVisible(true);
 	}
-    
-    @FXML
-    void onCancelarAction(ActionEvent event) {
-    	LoadScene.getModalStage().close();
-    }
 
-    @FXML
-    void onDesativarAction(ActionEvent event) {
-    	Long idItem = !txtIdItem.getText().isBlank() ? Long.valueOf(txtIdItem.getText()) : null;
-    	
+	@FXML
+	void onCancelarAction(ActionEvent event) {
+		LoadScene.getModalStage().close();
+	}
+
+	@FXML
+	void onDesativarAction(ActionEvent event) {
+		Long idItem = !txtIdItem.getText().isBlank() ? Long.valueOf(txtIdItem.getText()) : null;
+
 		try {
-			if (btnDesativar.getText().equals("ATIVAR")) 
+			if (btnDesativar.getText().equals("ATIVAR"))
 				itemController.enableProduto(idItem);
-			else if (btnDesativar.getText().equals("DESATIVAR")) 
+			else if (btnDesativar.getText().equals("DESATIVAR"))
 				itemController.disableProduto(idItem);
 		} catch (SQLException e) {
 			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
-    }
+	}
 
-    @FXML
-    void onSalvarAction(ActionEvent event) {
-    	Long idItem = !txtIdItem.getText().isBlank() ? Long.valueOf(txtIdItem.getText()) : null;
-    	String codItem = !txtCodItem.getText().isBlank() ? txtCodItem.getText() : null;
-    	String modelo = !txtModelo.getText().isBlank() ? txtModelo.getText() : null;
-    	String variacao = !txtVariacao.getText().isBlank() ? txtVariacao.getText() : null;
-    	String descricao = !txtDescricao.getText().isBlank() ? txtDescricao.getText() : null;
-    	
-    	if (Objects.isNull(codItem) || Objects.isNull(descricao)) {
-			Alerts.showAlert("Campos não preenchidos", "ERRO", Constants.MESSAGE.CAMPOS_NAO_PREENCHIDOS, AlertType.INFORMATION);
+	@FXML
+	void onSalvarAction(ActionEvent event) {
+		Long idItem = !txtIdItem.getText().isBlank() ? Long.valueOf(txtIdItem.getText()) : null;
+		String codItem = !txtCodItem.getText().isBlank() ? txtCodItem.getText() : null;
+		String modelo = !txtModelo.getText().isBlank() ? txtModelo.getText() : null;
+		String variacao = !txtVariacao.getText().isBlank() ? txtVariacao.getText() : null;
+		String descricao = !txtDescricao.getText().isBlank() ? txtDescricao.getText() : null;
+
+		if (Objects.isNull(codItem) || Objects.isNull(descricao)) {
+			Alerts.showAlert("Campos não preenchidos", "ERRO", Constants.MESSAGE.CAMPOS_NAO_PREENCHIDOS,
+					AlertType.INFORMATION);
 			return;
 		}
-    	
-    	try {
+
+		try {
 			if (Objects.isNull(idItem)) {
 				itemController.insertItem(codItem, modelo, variacao, descricao, Boolean.FALSE);
 			} else {
@@ -97,10 +98,10 @@ public class ModalProdutoController implements Initializable {
 			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
-    }
-    
-    public void updateFieldsEdit(Long id) {
-    	try {
+	}
+
+	public void updateFieldsEdit(Long id) {
+		try {
 			ItemEntity item = itemController.findById(id);
 			txtIdItem.setText(item.getId().toString());
 			txtCodItem.setText(item.getCodItem());

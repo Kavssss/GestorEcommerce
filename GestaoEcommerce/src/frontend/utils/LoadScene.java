@@ -15,55 +15,56 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class LoadScene {
-	
+
 	private static Stage stage;
 	private static Stage modalStage;
+	
 	private static Scene indexScene;
 	private static Scene vendasScene;
 	private static Scene produtosScene;
 	private static Scene dashboardScene;
-	
+
 	public static void load(Stage stage, Class<?> currentClass) throws IOException {
 		setStage(stage);
 		stage.setTitle("Gestor Eccomerce");
-        Image icon = new Image(currentClass.getResourceAsStream("../images/logo.png"));
-        stage.getIcons().add(icon);
+		Image icon = new Image(currentClass.getResourceAsStream("../images/logo.png"));
+		stage.getIcons().add(icon);
 		stage.setResizable(false);
-		
+
 		Parent indexFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.INDEX));
 		Parent vendasFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.VENDAS));
 		Parent produtosFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.PRODUTOS));
 		Parent dashboardFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.DASHBOARD));
-		
+
 		indexScene = new Scene(indexFxml);
 		vendasScene = new Scene(vendasFxml);
 		produtosScene = new Scene(produtosFxml);
 		dashboardScene = new Scene(dashboardFxml);
-					
+
 		stage.setScene(indexScene);
 		stage.show();
-    }
-	
+	}
+
 	public static void changeScene(String newScene) {
-		switch(newScene) {
-			case Constants.VIEWS.INDEX:
-				getStage().setScene(indexScene);
-				break;
-			case Constants.VIEWS.VENDAS:
-				getStage().setScene(vendasScene);
-				break;
-			case Constants.VIEWS.PRODUTOS:
-				getStage().setScene(produtosScene);
-				break;
-			case Constants.VIEWS.DASHBOARD:
-				getStage().setScene(dashboardScene);
-				break;
-			default:
-				System.out.println("ERROR");
-				break;
+		switch (newScene) {
+		case Constants.VIEWS.INDEX:
+			getStage().setScene(indexScene);
+			break;
+		case Constants.VIEWS.VENDAS:
+			getStage().setScene(vendasScene);
+			break;
+		case Constants.VIEWS.PRODUTOS:
+			getStage().setScene(produtosScene);
+			break;
+		case Constants.VIEWS.DASHBOARD:
+			getStage().setScene(dashboardScene);
+			break;
+		default:
+			System.out.println("ERROR");
+			break;
 		}
 	}
-	
+
 	public static void callInsertVendaModal(Stage parentStage, Class<?> currentClass) {
 		try {
 			buildModal(parentStage, currentClass, Constants.MODAL.INSERIR_VENDA, "Inserir venda");
@@ -72,7 +73,24 @@ public class LoadScene {
 		}
 	}
 	
-	private static void buildModal(Stage parentStage, Class<?> currentClass, String pathModal, String title) throws IOException {
+	public static void callLoginModal(Stage parentStage, Class<?> currentClass) {
+		try {
+			buildModal(parentStage, currentClass, Constants.MODAL.LOGIN, "Login");
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	public static void callCadastroModal(Stage parentStage, Class<?> currentClass) {
+		try {
+			buildModal(parentStage, currentClass, Constants.MODAL.CADASTRO, "Cadastrar");
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+		}
+	}
+
+	private static void buildModal(Stage parentStage, Class<?> currentClass, String pathModal, String title)
+			throws IOException {
 		FXMLLoader loader = new FXMLLoader(currentClass.getResource(pathModal));
 		Pane pane = loader.load();
 		Stage modalStage = new Stage();
@@ -86,7 +104,7 @@ public class LoadScene {
 		setModalStage(modalStage);
 		modalStage.showAndWait();
 	}
-	
+
 	public static void callEditVendaModal(Stage parentStage, Class<?> currentClass, Long id, String canal) {
 		try {
 			FXMLLoader loader = new FXMLLoader(currentClass.getResource(Constants.MODAL.INSERIR_VENDA));
@@ -108,7 +126,7 @@ public class LoadScene {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void callInsertProdutoModal(Stage parentStage, Class<?> currentClass) {
 		try {
 			buildModal(parentStage, currentClass, Constants.MODAL.INSERIR_PRODUTO, "Inserir produto");
@@ -116,7 +134,7 @@ public class LoadScene {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
 		}
 	}
-	
+
 	public static void callEditProdutoModal(Stage parentStage, Class<?> currentClass, Long id) {
 		try {
 			FXMLLoader loader = new FXMLLoader(currentClass.getResource(Constants.MODAL.INSERIR_PRODUTO));
@@ -138,7 +156,7 @@ public class LoadScene {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void callOpcoesModal(Stage parentStage, Class<?> currentClass) {
 		try {
 			buildModal(parentStage, currentClass, Constants.MODAL.OPCOES, "Opções");
@@ -162,5 +180,5 @@ public class LoadScene {
 	public static void setModalStage(Stage modalStage) {
 		LoadScene.modalStage = modalStage;
 	}
-	
+
 }

@@ -9,10 +9,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ItemShopeeEntity extends ItemEntity {
-	
+
 	public ItemShopeeEntity(Long idItem, String codItem, Integer qtde, Double valorUnitario, Double valorTotal,
 			Double valorRecebido) {
 		super(idItem, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
 	}
-	
+
 }

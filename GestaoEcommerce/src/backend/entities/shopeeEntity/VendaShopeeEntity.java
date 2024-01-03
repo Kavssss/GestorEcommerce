@@ -21,7 +21,7 @@ public class VendaShopeeEntity {
 	private List<ItemShopeeEntity> itens = new ArrayList<>();
 	private String status;
 	private Long idDado;
-	
+
 	public VendaShopeeEntity(Long id, Date data, String cliente, String status, Long idDado) {
 		this.id = id;
 		this.data = data;
@@ -33,8 +33,9 @@ public class VendaShopeeEntity {
 	public void addItem(ItemShopeeEntity item) {
 		this.itens.add(item);
 	}
-	
-	public void addItem(Long idItem, String codItem, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido) {
+
+	public void addItem(Long idItem, String codItem, Integer qtde, Double valorUnitario, Double valorTotal,
+			Double valorRecebido) {
 		this.itens.add(new ItemShopeeEntity(idItem, codItem, qtde, valorUnitario, valorTotal, valorRecebido));
 	}
 

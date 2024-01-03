@@ -89,6 +89,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\Flavio Morais\Documents\GitHub\GestorEcommerce\GestaoEcommerce"/>
 			<item value="C:\Users\Flavio Morais\Downloads\DashboardFx-master\DashboardFx-master"/>
 			<item value="C:\Users\Flavio Morais\Documents\ProgramaExcel"/>
 			<item value="C:\Users\Flavio Morais\Documents\GitHub\GestorEcommerce"/>

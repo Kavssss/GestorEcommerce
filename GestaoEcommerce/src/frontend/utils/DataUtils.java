@@ -21,8 +21,8 @@ public class DataUtils {
 			return data.concat("/");
 		return data;
 	}
-	
-	public static Date stringToDate(String in) {  // entrada no formato dd/MM/yyyy
+
+	public static Date stringToDate(String in) { // entrada no formato dd/MM/yyyy
 		if (in.isBlank())
 			return null;
 
@@ -31,17 +31,17 @@ public class DataUtils {
 			return new java.sql.Date(formato.parse(in).getTime());
 		} catch (ParseException e) {
 			return null;
-		}		
+		}
 	}
-	
-	public static String dateToString(Date in) {  // saída no formato dd/MM/yyyy
+
+	public static String dateToString(Date in) { // saída no formato dd/MM/yyyy
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		return formato.format(in);
 	}
-	
+
 	public static void formataData(TextField textField, KeyEvent event) {
 		String text = textField.getText();
-		
+
 		if (text.contains("//"))
 			textField.setText(text.replace("//", "/"));
 
@@ -60,35 +60,25 @@ public class DataUtils {
 			textField.positionCaret(textField.getLength());
 		}
 	}
-	
+
 	public static List<String> getListMeses() {
-		return Arrays.asList(
-				Constants.MES.JANEIRO,
-				Constants.MES.FEVEREIRO,
-				Constants.MES.MARCO,
-				Constants.MES.ABRIL,
-				Constants.MES.MAIO,
-				Constants.MES.JUNHO,
-				Constants.MES.JULHO,
-				Constants.MES.AGOSTO,
-				Constants.MES.SETEMBRO,
-				Constants.MES.OUTUBRO,
-				Constants.MES.NOVEMBRO,
-				Constants.MES.DEZEMBRO);
+		return Arrays.asList(Constants.MES.JANEIRO, Constants.MES.FEVEREIRO, Constants.MES.MARCO, Constants.MES.ABRIL,
+				Constants.MES.MAIO, Constants.MES.JUNHO, Constants.MES.JULHO, Constants.MES.AGOSTO,
+				Constants.MES.SETEMBRO, Constants.MES.OUTUBRO, Constants.MES.NOVEMBRO, Constants.MES.DEZEMBRO);
 	}
-	
+
 	public static List<String> getListSemestres() {
 		return Arrays.asList(Constants.SEMESTRE.PRIMEIRO, Constants.SEMESTRE.SEGUNDO);
 	}
-	
+
 	public static List<String> getListDias(Integer mes) {
 		List<String> dias = new ArrayList<>();
 		for (int i = 1; i <= 28; i++)
 			dias.add(String.valueOf(i));
-		
+
 		if ((mes >= 1 || mes <= 12) && !mes.equals(2)) {
 			dias.addAll(Arrays.asList("29", "30"));
-			switch(mes) {
+			switch (mes) {
 			case 1:
 			case 3:
 			case 5:
@@ -102,12 +92,12 @@ public class DataUtils {
 		}
 		return dias;
 	}
-	
+
 	public static Integer converteMesToInt(String mes) {
 		if (Objects.isNull(mes))
 			return null;
-		
-		switch(mes) {
+
+		switch (mes) {
 		case Constants.MES.JANEIRO:
 			return 1;
 		case Constants.MES.FEVEREIRO:
@@ -132,8 +122,8 @@ public class DataUtils {
 			return 11;
 		case Constants.MES.DEZEMBRO:
 			return 12;
-			default:
-				return null;
+		default:
+			return null;
 		}
 	}
 

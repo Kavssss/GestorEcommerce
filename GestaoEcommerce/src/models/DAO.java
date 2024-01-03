@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DAO {
-	
+
 	protected Connection conexao = null;
 	private String url;
 	private String user;
@@ -20,34 +20,34 @@ public class DAO {
 			throw new DbException(e.getMessage());
 		}
 	}
-	
-	
+
 	/**
-     * Faz conexão ao Banco de Dados
-     * @return Connection
-     */
-    public Connection conectar() {
-        try {
-            conexao = DriverManager.getConnection(url, user, password);
-            return conexao;
-        }
-        catch (SQLException e) {
-        	throw new DbException(e.getMessage());
-        }
-    }
-    
-    /**
-     * Desconecta com o Banco de Dados
-     * @param c - Connection
+	 * Faz conexão ao Banco de Dados
+	 * 
+	 * @return Connection
+	 */
+	public Connection conectar() {
+		try {
+			conexao = DriverManager.getConnection(url, user, password);
+			return conexao;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+	}
+
+	/**
+	 * Desconecta com o Banco de Dados
+	 * 
+	 * @param c - Connection
 	 * @return void
-     */
-    public void desconectar(Connection conexao) {
-    	if (conexao != null) {
-    		try {
-        		conexao.close();
-    		} catch (SQLException e) {
-    			throw new DbException(e.getMessage());
-    		}
-    	}
-    } 
+	 */
+	public void desconectar(Connection conexao) {
+		if (conexao != null) {
+			try {
+				conexao.close();
+			} catch (SQLException e) {
+				throw new DbException(e.getMessage());
+			}
+		}
+	}
 }

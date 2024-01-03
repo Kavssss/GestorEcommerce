@@ -58,9 +58,9 @@ public class ViewVendasController implements Initializable {
 
 	@FXML
 	private Button btnInserir;
-	
+
 	@FXML
-    private Button btnInserirEmMassa;
+	private Button btnInserirEmMassa;
 
 	@FXML
 	private Button btnLimpar;
@@ -70,13 +70,13 @@ public class ViewVendasController implements Initializable {
 
 	@FXML
 	private Button btnDashboard;
-	
+
 	@FXML
 	private Button btnOpcoes;
 
 	@FXML
 	private Button btnVendas;
-	
+
 	@FXML
 	private Label labelLegenda;
 
@@ -87,7 +87,7 @@ public class ViewVendasController implements Initializable {
 	private ComboBox<String> cbTipoAnuncio;
 
 	@FXML
-	private TableView<VendaGeralDTO> tbGeral;	
+	private TableView<VendaGeralDTO> tbGeral;
 	@FXML
 	private TableColumn<VendaGeralDTO, String> columnDataTbGeral;
 	@FXML
@@ -164,10 +164,10 @@ public class ViewVendasController implements Initializable {
 
 	@FXML
 	private ComboBox<String> cbStatus;
-	
+
 	@FXML
 	private Label txtErroData;
-	
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		labelLegenda.setVisible(Boolean.FALSE);
@@ -204,7 +204,7 @@ public class ViewVendasController implements Initializable {
 	void onInserirAction(ActionEvent event) {
 		LoadScene.callInsertVendaModal(Constraints.currentStage(event), getClass());
 	}
-	
+
 	@FXML
 	void onBuscarAction() {
 		String canal = cbCanal.getSelectionModel().getSelectedItem();
@@ -212,28 +212,30 @@ public class ViewVendasController implements Initializable {
 		Date dataFim = !txtDataFim.getText().isBlank() ? DataUtils.stringToDate(txtDataFim.getText()) : null;
 		String tipoAnuncio = cbTipoAnuncio.getSelectionModel().getSelectedItem();
 		Integer qtde = !txtQtde.getText().isBlank() ? Integer.parseInt(txtQtde.getText()) : null;
-		String codItem = !txtCodItem.getText().isBlank() ? "%"+txtCodItem.getText()+"%" : null; 
-		String cliente = !txtCliente.getText().isBlank() ? "%"+txtCliente.getText()+"%" : null;
+		String codItem = !txtCodItem.getText().isBlank() ? "%" + txtCodItem.getText() + "%" : null;
+		String cliente = !txtCliente.getText().isBlank() ? "%" + txtCliente.getText() + "%" : null;
 		String status = cbStatus.getSelectionModel().getSelectedItem();
-		
+
 		if (dataInicio == null && dataFim != null) {
 			Insets curMargins = StackPane.getMargin(txtErroData);
-			StackPane.setMargin(txtErroData, new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), 260));
+			StackPane.setMargin(txtErroData,
+					new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), 260));
 			txtErroData.setVisible(true);
 			return;
 		}
-		
+
 		if (dataInicio != null && dataFim == null) {
 			Insets curMargins = StackPane.getMargin(txtErroData);
-			StackPane.setMargin(txtErroData, new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), 458));
+			StackPane.setMargin(txtErroData,
+					new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), 458));
 			txtErroData.setVisible(true);
 			return;
 		}
-		
+
 		if ((dataInicio == null && dataFim == null) || (dataInicio != null && dataFim != null)) {
 			txtErroData.setVisible(false);
 		}
-		
+
 		if (canal == null || canal.equals(Constants.LOJA.GERAL)) {
 			try {
 				montaTabelaGeral(geralController.findVendas(dataInicio, dataFim, qtde, codItem, cliente, status));
@@ -245,10 +247,11 @@ public class ViewVendasController implements Initializable {
 				montaTabelaShopee(shopeeController.findVendas(dataInicio, dataFim, qtde, codItem, cliente, status));
 			} catch (SQLException e) {
 				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
-			}			
+			}
 		} else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
 			try {
-				montaTabelaML(mercadoLivreController.findVendas(dataInicio, dataFim, tipoAnuncio, qtde, codItem, cliente, status));
+				montaTabelaML(mercadoLivreController.findVendas(dataInicio, dataFim, tipoAnuncio, qtde, codItem,
+						cliente, status));
 			} catch (SQLException e) {
 				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			}
@@ -258,7 +261,7 @@ public class ViewVendasController implements Initializable {
 		else
 			labelLegenda.setVisible(Boolean.FALSE);
 	}
-	
+
 	private void montaTabelaGeral(List<VendaGeralDTO> vendas) {
 		columnDataTbGeral.setCellValueFactory(new PropertyValueFactory<>("fData"));
 		columnClienteTbGeral.setCellValueFactory(new PropertyValueFactory<>("cliente"));
@@ -270,10 +273,10 @@ public class ViewVendasController implements Initializable {
 		columnStatusTbGeral.setCellValueFactory(new PropertyValueFactory<>("status"));
 		columnCanalTbGeral.setCellValueFactory(new PropertyValueFactory<>("canal"));
 		setVisibilityTables(true, false, false);
-		
+
 		tbGeral.setItems(FXCollections.observableArrayList(vendas));
 	}
-	
+
 	private void montaTabelaShopee(List<VendaShopeeDTO> vendas) {
 		columnDataTbShopee.setCellValueFactory(new PropertyValueFactory<>("fData"));
 		columnClienteTbShopee.setCellValueFactory(new PropertyValueFactory<>("cliente"));
@@ -284,10 +287,10 @@ public class ViewVendasController implements Initializable {
 		columnRecebidoTbShopee.setCellValueFactory(new PropertyValueFactory<>("valorRecebido"));
 		columnStatusTbShopee.setCellValueFactory(new PropertyValueFactory<>("status"));
 		setVisibilityTables(false, true, false);
-		
+
 		tbShopee.setItems(FXCollections.observableArrayList(vendas));
 	}
-	
+
 	private void montaTabelaML(List<VendaMercadoLivreDTO> vendas) {
 		columnDataTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("fData"));
 		columnAnuncioTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("tipoAnuncio"));
@@ -299,10 +302,10 @@ public class ViewVendasController implements Initializable {
 		columnRecebidoTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("valorRecebido"));
 		columnStatusTbMercadoLivre.setCellValueFactory(new PropertyValueFactory<>("status"));
 		setVisibilityTables(false, false, true);
-		
+
 		tbMercadoLivre.setItems(FXCollections.observableArrayList(vendas));
 	}
-	
+
 	@FXML
 	void onLimparAction() {
 		cbCanal.getSelectionModel().clearSelection();
@@ -319,41 +322,41 @@ public class ViewVendasController implements Initializable {
 		txtErroData.setVisible(false);
 		labelLegenda.setVisible(Boolean.FALSE);
 	}
-	
-	@FXML
-    void onTbGeralMouseClicked(MouseEvent event) {
-		if (event.getClickCount() == 2) {
-            VendaGeralDTO selectedItem = tbGeral.getSelectionModel().getSelectedItem();
-            if (selectedItem != null) {
-            	callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), selectedItem.getCanal());
-            }
-        }
-    }
-	
-	@FXML
-    void onTbMercadoLivreClicked(MouseEvent event) {
-		if (event.getClickCount() == 2) {
-            VendaMercadoLivreDTO selectedItem = tbMercadoLivre.getSelectionModel().getSelectedItem();
-            if (selectedItem != null) {
-            	callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), "ML");
-            }
-        }
-    }
 
-    @FXML
-    void onTbShopeeClicked(MouseEvent event) {
-    	if (event.getClickCount() == 2) {
-            VendaShopeeDTO selectedItem = tbShopee.getSelectionModel().getSelectedItem();
-            if (selectedItem != null) {
-            	callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), "S");
-            }
-        }
-    }
-	
+	@FXML
+	void onTbGeralMouseClicked(MouseEvent event) {
+		if (event.getClickCount() == 2) {
+			VendaGeralDTO selectedItem = tbGeral.getSelectionModel().getSelectedItem();
+			if (selectedItem != null) {
+				callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), selectedItem.getCanal());
+			}
+		}
+	}
+
+	@FXML
+	void onTbMercadoLivreClicked(MouseEvent event) {
+		if (event.getClickCount() == 2) {
+			VendaMercadoLivreDTO selectedItem = tbMercadoLivre.getSelectionModel().getSelectedItem();
+			if (selectedItem != null) {
+				callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), "ML");
+			}
+		}
+	}
+
+	@FXML
+	void onTbShopeeClicked(MouseEvent event) {
+		if (event.getClickCount() == 2) {
+			VendaShopeeDTO selectedItem = tbShopee.getSelectionModel().getSelectedItem();
+			if (selectedItem != null) {
+				callModalEditarVenda(Constraints.currentStage(event), selectedItem.getId(), "S");
+			}
+		}
+	}
+
 	private void callModalEditarVenda(Stage parentStage, Long id, String canal) {
 		LoadScene.callEditVendaModal(parentStage, getClass(), id, canal);
 	}
-	
+
 	private void setNumberFields() {
 		Constraints.setTextFieldNumber(txtQtde);
 		Constraints.setTextFieldNumberBar(txtDataInicio);
@@ -361,16 +364,16 @@ public class ViewVendasController implements Initializable {
 		Constraints.setTextFieldNumberBar(txtDataFim);
 		Constraints.setTextFieldMaxLength(txtDataFim, 10);
 	}
-	
+
 	private void setItensComboBox() {
 		List<String> options = Arrays.asList(Constants.LOJA.SHOPEE, Constants.LOJA.MERCADO_LIVRE, Constants.LOJA.GERAL);
 		cbCanal.setItems(FXCollections.observableArrayList(options));
 		cbTipoAnuncio.setPromptText("-");
-		options = Arrays.asList(Constants.STATUS.TODOS, Constants.STATUS.PENDENTE, Constants.STATUS.CONCLUIDO, Constants.STATUS.DEVOLUCAO,
-				Constants.STATUS.CANCELADO);
+		options = Arrays.asList(Constants.STATUS.TODOS, Constants.STATUS.PENDENTE, Constants.STATUS.CONCLUIDO,
+				Constants.STATUS.DEVOLUCAO, Constants.STATUS.CANCELADO);
 		cbStatus.setItems(FXCollections.observableArrayList(options));
 	}
-	
+
 	private void setVisibilityTables(Boolean g, Boolean s, Boolean ml) {
 		tbGeral.setVisible(g);
 		tbShopee.setVisible(s);
@@ -382,113 +385,118 @@ public class ViewVendasController implements Initializable {
 		if (!ml)
 			tbMercadoLivre.getItems().clear();
 	}
-	
+
 	@SuppressWarnings("resource")
 	@FXML
-    void onInserirEmMassaAction(ActionEvent event) {
-		Alerts.showAlert("Inserção em massa", null, "Selecione o arquivo do tipo CSV (Separado por vírgulas)", AlertType.INFORMATION);
+	void onInserirEmMassaAction(ActionEvent event) {
+		Alerts.showAlert("Inserção em massa", null, "Selecione o arquivo do tipo CSV (Separado por vírgulas)",
+				AlertType.INFORMATION);
 		FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Selecione um arquivo");
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo Separado por Vírgulas(*.csv)", "*.csv");
-        fileChooser.getExtensionFilters().add(extFilter);
+		fileChooser.setTitle("Selecione um arquivo");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo Separado por Vírgulas(*.csv)",
+				"*.csv");
+		fileChooser.getExtensionFilters().add(extFilter);
 
-        File file = fileChooser.showOpenDialog(Constraints.currentStage(event));
-        
-        if (file == null)
-        	return;
-        
-        try {
+		File file = fileChooser.showOpenDialog(Constraints.currentStage(event));
+
+		if (file == null)
+			return;
+
+		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file, Charset.forName("UTF-8")));
-	        
-	        String line;
-	        int skip = 0;
-	        String canal = null;
-	        
-	        while (Objects.nonNull((line = reader.readLine()))) {
-	        	if (skip < 3) {
-	        		if (skip == 2)
-	        			canal = line.split(";").length == 18 ? Constants.LOJA.SHOPEE : Constants.LOJA.MERCADO_LIVRE;
-	        		skip++;
-	        		continue;
-	        	}
-	        	
-	        	String[] s = line.split(";");
-	        	if (s.length != 0) {
-		        	if (canal.equals(Constants.LOJA.SHOPEE)) {
-			            Date data = DataUtils.stringToDate(s[0]);
-			            String cliente = s[1];
-			            String status = s[2];
-			            
-			            shopeeController.insertVenda(data, cliente, status);
-			            
-			            for (int i = 3; i < s.length; i += 3) {
-				            Integer qtde = Integer.valueOf(s[i]);
-				            String codItem = s[i + 1];
-				            Double valorUnitario = Double.valueOf(s[i + 2].replace("R$", "").replaceAll(" ", "").replace(",", "."));
-				            Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
-				            Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
-				            
-				            shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido, Boolean.TRUE);
-			            }
-		            }
-		        	else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
-	
-			            Date data = DataUtils.stringToDate(s[0]);
-			            String cliente = s[1];
-			            String status = s[2];
-			            
-			            mercadoLivreController.insertVenda(data, cliente, status);
-			            
-			            for (int i = 3; i < s.length; i += 5) {
-			            	String tipoAnuncio = s[i];
-			            	Boolean isFreteGratis = s[i + 1].equals("S") ? Boolean.TRUE : Boolean.FALSE;
-				            Integer qtde = Integer.valueOf(s[i + 2]);
-				            String codItem = s[i + 3];
-				            Double valorUnitario = Double.valueOf(s[i + 4].replace("R$", "").replaceAll(" ", "").replace(",", "."));
-				            Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
-				            Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
-				            
-				            if (isFreteGratis)
-					            if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.CLASSICO))
-					            	tipoAnuncio = Constants.TIPO_ANUNCIO.CLASSICO_FG;
-					            else if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.PREMIUM))
-					            	tipoAnuncio = Constants.TIPO_ANUNCIO.PREMIUM_FG;
-				            
-				            mercadoLivreController.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal, valorRecebido); //, Boolean.TRUE);
-			            }
-		        	}
-	        	} else {
-	        		Alerts.showAlert("ERRO", "Arquivo vazio!", null, AlertType.INFORMATION);
-	        		return;
-	        	}
-	        }
-	        reader.close();
-	        Alerts.showAlert("Sucesso", "INSERÇÃO EM MASSA EXECUTADA COM SUCESSO", null, AlertType.INFORMATION);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+
+			String line;
+			int skip = 0;
+			String canal = null;
+
+			while (Objects.nonNull((line = reader.readLine()))) {
+				if (skip < 3) {
+					if (skip == 2)
+						canal = line.split(";").length == 18 ? Constants.LOJA.SHOPEE : Constants.LOJA.MERCADO_LIVRE;
+					skip++;
+					continue;
+				}
+
+				String[] s = line.split(";");
+				if (s.length != 0) {
+					if (canal.equals(Constants.LOJA.SHOPEE)) {
+						Date data = DataUtils.stringToDate(s[0]);
+						String cliente = s[1];
+						String status = s[2];
+
+						shopeeController.insertVenda(data, cliente, status);
+
+						for (int i = 3; i < s.length; i += 3) {
+							Integer qtde = Integer.valueOf(s[i]);
+							String codItem = s[i + 1];
+							Double valorUnitario = Double
+									.valueOf(s[i + 2].replace("R$", "").replaceAll(" ", "").replace(",", "."));
+							Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+							Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+
+							shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido,
+									Boolean.TRUE);
+						}
+					} else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
+
+						Date data = DataUtils.stringToDate(s[0]);
+						String cliente = s[1];
+						String status = s[2];
+
+						mercadoLivreController.insertVenda(data, cliente, status);
+
+						for (int i = 3; i < s.length; i += 5) {
+							String tipoAnuncio = s[i];
+							Boolean isFreteGratis = s[i + 1].equals("S") ? Boolean.TRUE : Boolean.FALSE;
+							Integer qtde = Integer.valueOf(s[i + 2]);
+							String codItem = s[i + 3];
+							Double valorUnitario = Double
+									.valueOf(s[i + 4].replace("R$", "").replaceAll(" ", "").replace(",", "."));
+							Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+							Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
+
+							if (isFreteGratis)
+								if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.CLASSICO))
+									tipoAnuncio = Constants.TIPO_ANUNCIO.CLASSICO_FG;
+								else if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.PREMIUM))
+									tipoAnuncio = Constants.TIPO_ANUNCIO.PREMIUM_FG;
+
+							mercadoLivreController.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario,
+									valorTotal, valorRecebido); // , Boolean.TRUE);
+						}
+					}
+				} else {
+					Alerts.showAlert("ERRO", "Arquivo vazio!", null, AlertType.INFORMATION);
+					return;
+				}
+			}
+			reader.close();
+			Alerts.showAlert("Sucesso", "INSERÇÃO EM MASSA EXECUTADA COM SUCESSO", null, AlertType.INFORMATION);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-    }
-	
+	}
+
 	@FXML
-    void onProdutosAction(ActionEvent event) {
+	void onProdutosAction(ActionEvent event) {
 		LoadScene.changeScene(Constants.VIEWS.PRODUTOS);
-    }
-	
+	}
+
 	@FXML
-    void onDashboardAction(ActionEvent event) {
+	void onDashboardAction(ActionEvent event) {
 		LoadScene.changeScene(Constants.VIEWS.DASHBOARD);
-    }
-	
+	}
+
 	@FXML
-    void onOpcoesAction(ActionEvent event) {
+	void onOpcoesAction(ActionEvent event) {
 		LoadScene.callOpcoesModal(Constraints.currentStage(event), getClass());
-    }
-	
+	}
+
 	@FXML
 	void onBaixarModeloAction(ActionEvent event) {
 		Alerts.tipoArquivoAlert();
 	}
-	
+
 }

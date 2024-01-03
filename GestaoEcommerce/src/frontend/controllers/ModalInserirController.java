@@ -39,143 +39,143 @@ public class ModalInserirController implements Initializable {
 	VendaShopeeController shopeeController = new VendaShopeeController();
 	VendaMercadoLivreController mercadoLivreController = new VendaMercadoLivreController();
 	VendaGeralController geralController = new VendaGeralController();
-	
+
 	ViewVendasController viewVendasController = new ViewVendasController();
 
 	private Integer linhasVisiveis = 1;
 
 	@FXML
-    private Button btnAddItem;
+	private Button btnAddItem;
 
-    @FXML
-    private Button btnApagar;
+	@FXML
+	private Button btnApagar;
 
-    @FXML
-    private Button btnCancelar;
+	@FXML
+	private Button btnCancelar;
 
-    @FXML
-    private Button btnSalvar;
+	@FXML
+	private Button btnSalvar;
 
-    @FXML
-    private Button btnX2;
+	@FXML
+	private Button btnX2;
 
-    @FXML
-    private Button btnX3;
+	@FXML
+	private Button btnX3;
 
-    @FXML
-    private Button btnX4;
+	@FXML
+	private Button btnX4;
 
-    @FXML
-    private Button btnX5;
+	@FXML
+	private Button btnX5;
 
-    @FXML
-    private ComboBox<String> cbCanal;
+	@FXML
+	private ComboBox<String> cbCanal;
 
-    @FXML
-    private ComboBox<String> cbItem1;
+	@FXML
+	private ComboBox<String> cbItem1;
 
-    @FXML
-    private ComboBox<String> cbItem2;
+	@FXML
+	private ComboBox<String> cbItem2;
 
-    @FXML
-    private ComboBox<String> cbItem3;
+	@FXML
+	private ComboBox<String> cbItem3;
 
-    @FXML
-    private ComboBox<String> cbItem4;
+	@FXML
+	private ComboBox<String> cbItem4;
 
-    @FXML
-    private ComboBox<String> cbItem5;
+	@FXML
+	private ComboBox<String> cbItem5;
 
-    @FXML
-    private ComboBox<String> cbStatus;
+	@FXML
+	private ComboBox<String> cbStatus;
 
-    @FXML
-    private ComboBox<String> cbTipoAnuncio1;
+	@FXML
+	private ComboBox<String> cbTipoAnuncio1;
 
-    @FXML
-    private ComboBox<String> cbTipoAnuncio2;
+	@FXML
+	private ComboBox<String> cbTipoAnuncio2;
 
-    @FXML
-    private ComboBox<String> cbTipoAnuncio3;
+	@FXML
+	private ComboBox<String> cbTipoAnuncio3;
 
-    @FXML
-    private ComboBox<String> cbTipoAnuncio4;
+	@FXML
+	private ComboBox<String> cbTipoAnuncio4;
 
-    @FXML
-    private ComboBox<String> cbTipoAnuncio5;
+	@FXML
+	private ComboBox<String> cbTipoAnuncio5;
 
-    @FXML
-    private TextField txtCliente;
+	@FXML
+	private TextField txtCliente;
 
-    @FXML
-    private TextField txtData;
+	@FXML
+	private TextField txtData;
 
-    @FXML
-    private TextField txtIdDado;
+	@FXML
+	private TextField txtIdDado;
 
-    @FXML
-    private TextField txtIdVenda;
+	@FXML
+	private TextField txtIdVenda;
 
-    @FXML
-    private TextField txtQtde1;
+	@FXML
+	private TextField txtQtde1;
 
-    @FXML
-    private TextField txtQtde2;
+	@FXML
+	private TextField txtQtde2;
 
-    @FXML
-    private TextField txtQtde3;
+	@FXML
+	private TextField txtQtde3;
 
-    @FXML
-    private TextField txtQtde4;
+	@FXML
+	private TextField txtQtde4;
 
-    @FXML
-    private TextField txtQtde5;
+	@FXML
+	private TextField txtQtde5;
 
-    @FXML
-    private TextField txtValorRecebido1;
+	@FXML
+	private TextField txtValorRecebido1;
 
-    @FXML
-    private TextField txtValorRecebido2;
+	@FXML
+	private TextField txtValorRecebido2;
 
-    @FXML
-    private TextField txtValorRecebido3;
+	@FXML
+	private TextField txtValorRecebido3;
 
-    @FXML
-    private TextField txtValorRecebido4;
+	@FXML
+	private TextField txtValorRecebido4;
 
-    @FXML
-    private TextField txtValorRecebido5;
+	@FXML
+	private TextField txtValorRecebido5;
 
-    @FXML
-    private TextField txtValorTotal1;
+	@FXML
+	private TextField txtValorTotal1;
 
-    @FXML
-    private TextField txtValorTotal2;
+	@FXML
+	private TextField txtValorTotal2;
 
-    @FXML
-    private TextField txtValorTotal3;
+	@FXML
+	private TextField txtValorTotal3;
 
-    @FXML
-    private TextField txtValorTotal4;
+	@FXML
+	private TextField txtValorTotal4;
 
-    @FXML
-    private TextField txtValorTotal5;
+	@FXML
+	private TextField txtValorTotal5;
 
-    @FXML
-    private TextField txtValorUnitario1;
+	@FXML
+	private TextField txtValorUnitario1;
 
-    @FXML
-    private TextField txtValorUnitario2;
+	@FXML
+	private TextField txtValorUnitario2;
 
-    @FXML
-    private TextField txtValorUnitario3;
+	@FXML
+	private TextField txtValorUnitario3;
 
-    @FXML
-    private TextField txtValorUnitario4;
+	@FXML
+	private TextField txtValorUnitario4;
 
-    @FXML
-    private TextField txtValorUnitario5;
-	
+	@FXML
+	private TextField txtValorUnitario5;
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		setNumberFields();
@@ -183,9 +183,8 @@ public class ModalInserirController implements Initializable {
 			setVisibilityInsertItem(i, Boolean.FALSE);
 		cbCanal.setItems(
 				FXCollections.observableArrayList(Arrays.asList(Constants.LOJA.SHOPEE, Constants.LOJA.MERCADO_LIVRE)));
-		cbStatus.setItems(
-				FXCollections.observableArrayList(Arrays.asList(Constants.STATUS.PENDENTE,
-						Constants.STATUS.CONCLUIDO, Constants.STATUS.DEVOLUCAO, Constants.STATUS.CANCELADO)));
+		cbStatus.setItems(FXCollections.observableArrayList(Arrays.asList(Constants.STATUS.PENDENTE,
+				Constants.STATUS.CONCLUIDO, Constants.STATUS.DEVOLUCAO, Constants.STATUS.CANCELADO)));
 		cbStatus.setValue(Constants.STATUS.PENDENTE);
 		cbTipoAnuncioSetItems(cbTipoAnuncio1);
 		cbTipoAnuncioSetItems(cbTipoAnuncio2);
@@ -206,7 +205,7 @@ public class ModalInserirController implements Initializable {
 				.observableArrayList(Arrays.asList(Constants.TIPO_ANUNCIO.CLASSICO, Constants.TIPO_ANUNCIO.CLASSICO_FG,
 						Constants.TIPO_ANUNCIO.PREMIUM, Constants.TIPO_ANUNCIO.PREMIUM_FG)));
 	}
-	
+
 	private List<String> cbItemSetItems() {
 		try {
 			return geralController.findItensAtivos();
@@ -307,47 +306,47 @@ public class ModalInserirController implements Initializable {
 					cbTipoAnuncio1.getSelectionModel().getSelectedItem(), txtValorRecebido1);
 		}
 	}
-	
+
 	@FXML
-    void onValorUnitario2Released(KeyEvent event) {
+	void onValorUnitario2Released(KeyEvent event) {
 		if (Objects.nonNull(txtQtde2) && txtValorUnitario2.getText().length() > 3) {
 			setTextValorTotal(txtQtde2.getText(), txtValorUnitario2.getText(), txtValorTotal2);
 			setTextValorRecebido(txtQtde2.getText(), txtValorUnitario2.getText(),
 					cbTipoAnuncio2.getSelectionModel().getSelectedItem(), txtValorRecebido2);
 		}
-    }
+	}
 
-    @FXML
-    void onValorUnitario3Released(KeyEvent event) {
-    	if (Objects.nonNull(txtQtde3) && txtValorUnitario3.getText().length() > 3) {
+	@FXML
+	void onValorUnitario3Released(KeyEvent event) {
+		if (Objects.nonNull(txtQtde3) && txtValorUnitario3.getText().length() > 3) {
 			setTextValorTotal(txtQtde3.getText(), txtValorUnitario3.getText(), txtValorTotal3);
 			setTextValorRecebido(txtQtde3.getText(), txtValorUnitario3.getText(),
 					cbTipoAnuncio3.getSelectionModel().getSelectedItem(), txtValorRecebido3);
 		}
-    }
+	}
 
-    @FXML
-    void onValorUnitario4Released(KeyEvent event) {
-    	if (Objects.nonNull(txtQtde4) && txtValorUnitario4.getText().length() > 3) {
+	@FXML
+	void onValorUnitario4Released(KeyEvent event) {
+		if (Objects.nonNull(txtQtde4) && txtValorUnitario4.getText().length() > 3) {
 			setTextValorTotal(txtQtde4.getText(), txtValorUnitario4.getText(), txtValorTotal4);
 			setTextValorRecebido(txtQtde4.getText(), txtValorUnitario4.getText(),
 					cbTipoAnuncio4.getSelectionModel().getSelectedItem(), txtValorRecebido4);
 		}
-    }
+	}
 
-    @FXML
-    void onValorUnitario5Released(KeyEvent event) {
-    	if (Objects.nonNull(txtQtde5) && txtValorUnitario5.getText().length() > 3) {
+	@FXML
+	void onValorUnitario5Released(KeyEvent event) {
+		if (Objects.nonNull(txtQtde5) && txtValorUnitario5.getText().length() > 3) {
 			setTextValorTotal(txtQtde5.getText(), txtValorUnitario5.getText(), txtValorTotal5);
 			setTextValorRecebido(txtQtde5.getText(), txtValorUnitario5.getText(),
 					cbTipoAnuncio5.getSelectionModel().getSelectedItem(), txtValorRecebido5);
 		}
-    }
-	
+	}
+
 	private void setTextValorTotal(String qtde, String unitario, TextField field) {
 		field.setText(String.format("R$ %.2f", CalculaTotalERecebido.calculaTotal(qtde, unitario)).replace(".", ","));
 	}
-	
+
 	private void setTextValorRecebido(String qtde, String unitario, String tipoAnuncio, TextField field) {
 		Double total = CalculaTotalERecebido.calculaTotal(qtde, unitario);
 		Double recebido;
@@ -361,16 +360,17 @@ public class ModalInserirController implements Initializable {
 	}
 
 	@FXML
-    void onApagarAction(ActionEvent event) {
+	void onApagarAction(ActionEvent event) {
 		String canal = cbCanal.getSelectionModel().getSelectedItem();
 		Long idVenda = !txtIdVenda.getText().isBlank() ? Long.valueOf(txtIdVenda.getText()) : null;
 		Long idDado = !txtIdDado.getText().isBlank() ? Long.valueOf(txtIdDado.getText()) : null;
-		
+
 		if (Objects.isNull(canal)) {
-			Alerts.showAlert("Canal não encontrado", "ERRO", Constants.MESSAGE.CANAL_NAO_PREENCHIDO, AlertType.INFORMATION);
+			Alerts.showAlert("Canal não encontrado", "ERRO", Constants.MESSAGE.CANAL_NAO_PREENCHIDO,
+					AlertType.INFORMATION);
 			return;
 		}
-		
+
 		try {
 			if (Alerts.confirmationAlert("Excluir", Constants.MESSAGE.IRREVERSIVEL))
 				if (canal.equals(Constants.LOJA.SHOPEE))
@@ -383,8 +383,8 @@ public class ModalInserirController implements Initializable {
 		}
 		LoadScene.getModalStage().close();
 		buscaAutomatica();
-    }
-	
+	}
+
 	@FXML
 	void onSalvarAction(ActionEvent event) {
 		Long idVenda = !txtIdVenda.getText().isBlank() ? Long.valueOf(txtIdVenda.getText()) : null;
@@ -393,35 +393,40 @@ public class ModalInserirController implements Initializable {
 		Date data = !txtData.getText().isBlank() ? DataUtils.stringToDate(txtData.getText()) : null;
 		String cliente = !txtCliente.getText().isBlank() ? txtCliente.getText() : null;
 		String status = cbStatus.getSelectionModel().getSelectedItem();
-		
+
 		String codItem = cbItem1.getSelectionModel().getSelectedItem();
 		String tipoAnuncio = cbTipoAnuncio1.getSelectionModel().getSelectedItem();
 		Integer qtde = !txtQtde1.getText().isBlank() ? Integer.parseInt(txtQtde1.getText()) : null;
-		Double valorUnitario = !txtValorUnitario1.getText().isBlank() ? Double.valueOf(txtValorUnitario1.getText()) : null;
+		Double valorUnitario = !txtValorUnitario1.getText().isBlank() ? Double.valueOf(txtValorUnitario1.getText())
+				: null;
 		Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
-		Double valorRecebido = canal.equals(Constants.LOJA.SHOPEE) ? CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde)
+		Double valorRecebido = canal.equals(Constants.LOJA.SHOPEE)
+				? CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde)
 				: CalculaTotalERecebido.calculaRecebidoML(valorUnitario, qtde, tipoAnuncio);
-		
+
 		if (Objects.isNull(canal) || Objects.isNull(data) || Objects.isNull(cliente) || Objects.isNull(status)
 				|| Objects.isNull(codItem) || Objects.isNull(qtde) || Objects.isNull(valorUnitario)
 				|| (canal.equals(Constants.LOJA.MERCADO_LIVRE) && Objects.isNull(tipoAnuncio))) {
-			Alerts.showAlert("Campos não preenchidos", "ERRO", Constants.MESSAGE.CAMPOS_NAO_PREENCHIDOS, AlertType.INFORMATION);
+			Alerts.showAlert("Campos não preenchidos", "ERRO", Constants.MESSAGE.CAMPOS_NAO_PREENCHIDOS,
+					AlertType.INFORMATION);
 			return;
 		}
-		
+
 		if (canal.equals(Constants.LOJA.SHOPEE)) {
 			try {
 				if (Objects.isNull(idVenda)) {
-					shopeeController.insertVenda(data, cliente, status, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+					shopeeController.insertVenda(data, cliente, status, codItem, qtde, valorUnitario, valorTotal,
+							valorRecebido);
 				} else {
-					shopeeController.editVenda(idVenda, idDado, data, cliente, status, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
+					shopeeController.editVenda(idVenda, idDado, data, cliente, status, codItem, qtde, valorUnitario,
+							valorTotal, valorRecebido);
 					return;
 				}
 			} catch (SQLException e) {
 				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 				e.printStackTrace();
 			}
-			if (linhasVisiveis > 1)				
+			if (linhasVisiveis > 1)
 				inserirOutrosItensShopee(cbItem2, txtQtde2, txtValorUnitario2);
 			if (linhasVisiveis > 2)
 				inserirOutrosItensShopee(cbItem3, txtQtde3, txtValorUnitario3);
@@ -429,8 +434,7 @@ public class ModalInserirController implements Initializable {
 				inserirOutrosItensShopee(cbItem4, txtQtde4, txtValorUnitario4);
 			if (linhasVisiveis > 4)
 				inserirOutrosItensShopee(cbItem5, txtQtde5, txtValorUnitario5);
-		}
-		else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
+		} else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
 			try {
 				if (Objects.isNull(idVenda))
 					mercadoLivreController.insertVenda(data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario,
@@ -444,7 +448,7 @@ public class ModalInserirController implements Initializable {
 				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 				e.printStackTrace();
 			}
-			if (linhasVisiveis > 1)				
+			if (linhasVisiveis > 1)
 				inserirOutrosItensML(cbItem2, cbTipoAnuncio2, txtQtde2, txtValorUnitario2);
 			if (linhasVisiveis > 2)
 				inserirOutrosItensML(cbItem3, cbTipoAnuncio3, txtQtde3, txtValorUnitario3);
@@ -456,11 +460,12 @@ public class ModalInserirController implements Initializable {
 		LoadScene.getModalStage().close();
 		buscaAutomatica();
 	}
-	
+
 	private void inserirOutrosItensShopee(ComboBox<String> cbItem, TextField txtQtde, TextField txtValorUnitario) {
 		String codItem = cbItem.getSelectionModel().getSelectedItem();
 		Integer qtde = !txtQtde.getText().isBlank() ? Integer.parseInt(txtQtde.getText()) : null;
-		Double valorUnitario = !txtValorUnitario.getText().isBlank() ? Double.valueOf(txtValorUnitario.getText()) : null;
+		Double valorUnitario = !txtValorUnitario.getText().isBlank() ? Double.valueOf(txtValorUnitario.getText())
+				: null;
 		Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
 		Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
 		try {
@@ -470,17 +475,19 @@ public class ModalInserirController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void inserirOutrosItensML(ComboBox<String> cbItem, ComboBox<String> cbTipoAnuncio, TextField txtQtde,
 			TextField txtValorUnitario) {
 		String codItem = cbItem.getSelectionModel().getSelectedItem();
 		String tipoAnuncio = cbTipoAnuncio.getSelectionModel().getSelectedItem();
 		Integer qtde = !txtQtde.getText().isBlank() ? Integer.parseInt(txtQtde.getText()) : null;
-		Double valorUnitario = !txtValorUnitario.getText().isBlank() ? Double.valueOf(txtValorUnitario.getText()) : null;
+		Double valorUnitario = !txtValorUnitario.getText().isBlank() ? Double.valueOf(txtValorUnitario.getText())
+				: null;
 		Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
 		Double valorRecebido = CalculaTotalERecebido.calculaRecebidoML(valorUnitario, qtde, tipoAnuncio);
 		try {
-			mercadoLivreController.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal, valorRecebido);
+			mercadoLivreController.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal,
+					valorRecebido);
 		} catch (SQLException e) {
 			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
@@ -551,9 +558,9 @@ public class ModalInserirController implements Initializable {
 		StackPane.setMargin(button4,
 				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
 	}
-	
-	private void setComboBoxPosition(ComboBox<String> field1, ComboBox<String> field2, ComboBox<String> field3, ComboBox<String> field4,
-			ComboBox<String> field5, Double position) {
+
+	private void setComboBoxPosition(ComboBox<String> field1, ComboBox<String> field2, ComboBox<String> field3,
+			ComboBox<String> field4, ComboBox<String> field5, Double position) {
 		Insets curMargins = StackPane.getMargin(field1);
 		StackPane.setMargin(field1,
 				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
@@ -625,17 +632,16 @@ public class ModalInserirController implements Initializable {
 			break;
 		}
 	}
-	
+
 	public void updateFieldsEdit(Long id, String canal) {
 		btnApagar.setVisible(Boolean.TRUE);
 		if (canal.equals("S")) {
 			updateFieldsEditShopee(id);
-		}
-		else if (canal.equals("ML")) {
+		} else if (canal.equals("ML")) {
 			updateFieldsEditMercadoLivre(id);
 		}
 	}
-	
+
 	public void updateFieldsEditShopee(Long id) {
 		try {
 			VendaShopeeEntity vendaShopee = shopeeController.findById(id);
@@ -656,7 +662,7 @@ public class ModalInserirController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void updateFieldsEditMercadoLivre(Long id) {
 		try {
 			VendaMercadoLivreEntity vendaML = mercadoLivreController.findById(id);
@@ -682,7 +688,7 @@ public class ModalInserirController implements Initializable {
 	private void setLinhasVisiveis(Integer linhasVisiveis) {
 		this.linhasVisiveis = linhasVisiveis;
 	}
-	
+
 	private void buscaAutomatica() {
 //		viewVendasController.buscaAutomatica();
 	}

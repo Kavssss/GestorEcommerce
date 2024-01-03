@@ -8,5 +8,5 @@ public class ItemGeralEntity extends ItemEntity {
 			Double valorRecebido) {
 		super(idItem, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
 	}
-	
+
 }

@@ -18,8 +18,8 @@ public class VendaMercadoLivreController {
 	 * @return Todas as vendas
 	 * @throws SQLException
 	 */
-	public List<VendaMercadoLivreDTO> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio,
-			Integer qtde, String codItem, String cliente, String status) throws SQLException {
+	public List<VendaMercadoLivreDTO> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio, Integer qtde,
+			String codItem, String cliente, String status) throws SQLException {
 		return service.findVendas(dataInicio, dataFim, tipoAnuncio, qtde, codItem, cliente, status);
 	}
 
@@ -33,7 +33,7 @@ public class VendaMercadoLivreController {
 		service.insertVenda(data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario, valorTotal,
 				valorRecebido);
 	}
-	
+
 	public void insertVenda(Date data, String cliente, String status) throws SQLException {
 		service.insertVenda(data, cliente, status);
 	}
@@ -58,11 +58,11 @@ public class VendaMercadoLivreController {
 		service.editVenda(idVenda, idDado, data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario, valorTotal,
 				valorRecebido);
 	}
-	
+
 	public void deleteVenda(Long idVenda, Long idDado) throws SQLException {
 		service.deleteVenda(idVenda, idDado);
 	}
-	
+
 	public List<Double> findValorTotalPorMes(Integer ano, Integer mes1, Integer mes2) {
 		return service.findValorTotalPorMes(ano, mes1, mes2);
 	}

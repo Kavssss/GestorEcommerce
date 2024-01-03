@@ -30,172 +30,174 @@ import javafx.stage.Stage;
 public class ViewProdutosController {
 
 	ItemController itemController = new ItemController();
-	
-    @FXML
-    private Button btnBuscar;
 
-    @FXML
-    private Button btnBaixarModelo;
+	@FXML
+	private Button btnBuscar;
 
-    @FXML
-    private Button btnInserir;
-    
-    @FXML
-    private Button btnInserirEmMassa;
+	@FXML
+	private Button btnBaixarModelo;
 
-    @FXML
-    private Button btnLimpar;
+	@FXML
+	private Button btnInserir;
 
-    @FXML
-    private Button btnProdutos;
+	@FXML
+	private Button btnInserirEmMassa;
 
-    @FXML
-    private Button btnDashboard;
+	@FXML
+	private Button btnLimpar;
 
-    @FXML
-    private Button btnVendas;
+	@FXML
+	private Button btnProdutos;
 
-    @FXML
-    private TableColumn<ItemDTO, String> columnCodItem;
+	@FXML
+	private Button btnDashboard;
 
-    @FXML
-    private TableColumn<ItemDTO, String> columnDescricao;
+	@FXML
+	private Button btnVendas;
 
-    @FXML
-    private TableColumn<ItemDTO, String> columnModelo;
-    
-    @FXML
-    private TableColumn<ItemDTO, String> columnSituacao;
+	@FXML
+	private TableColumn<ItemDTO, String> columnCodItem;
 
-    @FXML
-    private TableColumn<ItemDTO, String> columnVariacao;
+	@FXML
+	private TableColumn<ItemDTO, String> columnDescricao;
 
-    @FXML
-    private TableView<ItemDTO> tbProduto;
+	@FXML
+	private TableColumn<ItemDTO, String> columnModelo;
 
-    @FXML
-    private TextField txtCodItem;
+	@FXML
+	private TableColumn<ItemDTO, String> columnSituacao;
 
-    @FXML
-    private TextField txtDescricao;
+	@FXML
+	private TableColumn<ItemDTO, String> columnVariacao;
 
-    @FXML
-    private TextField txtModelo;
+	@FXML
+	private TableView<ItemDTO> tbProduto;
 
-    @FXML
-    private TextField txtVariacao;
-    
-    @FXML
-    void onVendasAction(ActionEvent event) {
-    	LoadScene.changeScene(Constants.VIEWS.VENDAS);
-    }
-    
-    @FXML
-    void onDashboardAction(ActionEvent event) {
+	@FXML
+	private TextField txtCodItem;
+
+	@FXML
+	private TextField txtDescricao;
+
+	@FXML
+	private TextField txtModelo;
+
+	@FXML
+	private TextField txtVariacao;
+
+	@FXML
+	void onVendasAction(ActionEvent event) {
+		LoadScene.changeScene(Constants.VIEWS.VENDAS);
+	}
+
+	@FXML
+	void onDashboardAction(ActionEvent event) {
 		LoadScene.changeScene(Constants.VIEWS.DASHBOARD);
-    }
+	}
 
-    @FXML
-    void onBuscarAction(ActionEvent event) {
-    	String codItem = !txtCodItem.getText().isBlank() ? "%"+txtCodItem.getText()+"%" : null;
-    	String modelo = !txtModelo.getText().isBlank() ? "%"+txtModelo.getText()+"%" : null;
-    	String variacao = !txtVariacao.getText().isBlank() ? "%"+txtVariacao.getText()+"%" : null;
-    	String descricao = !txtDescricao.getText().isBlank() ? "%"+txtDescricao.getText()+"%" : null;
-    	
-    	try {
-    		montaTabela(itemController.findProdutos(codItem, modelo, variacao, descricao));
+	@FXML
+	void onBuscarAction(ActionEvent event) {
+		String codItem = !txtCodItem.getText().isBlank() ? "%" + txtCodItem.getText() + "%" : null;
+		String modelo = !txtModelo.getText().isBlank() ? "%" + txtModelo.getText() + "%" : null;
+		String variacao = !txtVariacao.getText().isBlank() ? "%" + txtVariacao.getText() + "%" : null;
+		String descricao = !txtDescricao.getText().isBlank() ? "%" + txtDescricao.getText() + "%" : null;
+
+		try {
+			montaTabela(itemController.findProdutos(codItem, modelo, variacao, descricao));
 		} catch (SQLException e) {
 			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
-    }
-    
-    private void montaTabela(List<ItemDTO> vendas) {
-    	columnCodItem.setCellValueFactory(new PropertyValueFactory<>("codItem"));
-    	columnModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
-    	columnVariacao.setCellValueFactory(new PropertyValueFactory<>("variacao"));
-    	columnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-    	columnSituacao.setCellValueFactory(new PropertyValueFactory<>("isAtivo"));
-		
+	}
+
+	private void montaTabela(List<ItemDTO> vendas) {
+		columnCodItem.setCellValueFactory(new PropertyValueFactory<>("codItem"));
+		columnModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
+		columnVariacao.setCellValueFactory(new PropertyValueFactory<>("variacao"));
+		columnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+		columnSituacao.setCellValueFactory(new PropertyValueFactory<>("isAtivo"));
+
 		tbProduto.setItems(FXCollections.observableArrayList(vendas));
 	}
 
-    @FXML
-    void onInserirAction(ActionEvent event) {
-    	callModalInserirProduto(Constraints.currentStage(event));
-    }
-    
-    private void callModalInserirProduto(Stage parentStage) {
+	@FXML
+	void onInserirAction(ActionEvent event) {
+		callModalInserirProduto(Constraints.currentStage(event));
+	}
+
+	private void callModalInserirProduto(Stage parentStage) {
 		LoadScene.callInsertProdutoModal(parentStage, getClass());
 	}
 
-    @FXML
-    void onLimparAction(ActionEvent event) {
+	@FXML
+	void onLimparAction(ActionEvent event) {
 		txtCodItem.setText("");
 		txtModelo.setText("");
 		txtVariacao.setText("");
 		txtDescricao.setText("");
 		tbProduto.getItems().clear();
-    }
+	}
 
-    @FXML
-    void onTbProdutoMouseClicked(MouseEvent event) {
-    	if (event.getClickCount() == 2) {
-            ItemDTO selectedItem = tbProduto.getSelectionModel().getSelectedItem();
-            if (selectedItem != null) {
-            	callModalEditar(Constraints.currentStage(event), selectedItem.getId());
-            }
-        }
-    }
-    
-    private void callModalEditar(Stage parentStage, Long id) {
+	@FXML
+	void onTbProdutoMouseClicked(MouseEvent event) {
+		if (event.getClickCount() == 2) {
+			ItemDTO selectedItem = tbProduto.getSelectionModel().getSelectedItem();
+			if (selectedItem != null) {
+				callModalEditar(Constraints.currentStage(event), selectedItem.getId());
+			}
+		}
+	}
+
+	private void callModalEditar(Stage parentStage, Long id) {
 		LoadScene.callEditProdutoModal(parentStage, getClass(), id);
 	}
-    
-    @FXML
-    void onInserirEmMassaAction(ActionEvent event) {
-    	Alerts.showAlert("Inserção em massa", null, "Selecione o arquivo do tipo CSV (Separado por vírgulas)", AlertType.INFORMATION);
-		FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Selecione um arquivo");
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo Separado por Vírgulas(*.csv)", "*.csv");
-        fileChooser.getExtensionFilters().add(extFilter);
 
-        File file = fileChooser.showOpenDialog(Constraints.currentStage(event));
-        
-        if (file == null)
-        	return;
-        
-        try {
-	        BufferedReader reader = new BufferedReader(new FileReader(file));
-	        
-	        String line;
-	        Boolean skip = Boolean.TRUE;
-	        
-	        while (Objects.nonNull((line = reader.readLine()))) {
-	        	if (skip) {
-	        		skip = !skip;
-	        		continue;
-	        	}
-	        	
-	        	String[] s = line.split(";");
-	            String codItem = s[0];
-	            String modelo = s[1];
-	            String variacao = s[2];
-	            String descricao = s[3];
-	            itemController.insertItem(codItem, modelo, variacao, descricao, Boolean.TRUE);
-	        }
-	        Alerts.showAlert("Sucesso", null, "Operação realizada com sucesso.", AlertType.INFORMATION);
-	        reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+	@FXML
+	void onInserirEmMassaAction(ActionEvent event) {
+		Alerts.showAlert("Inserção em massa", null, "Selecione o arquivo do tipo CSV (Separado por vírgulas)",
+				AlertType.INFORMATION);
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Selecione um arquivo");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo Separado por Vírgulas(*.csv)",
+				"*.csv");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		File file = fileChooser.showOpenDialog(Constraints.currentStage(event));
+
+		if (file == null)
+			return;
+
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+
+			String line;
+			Boolean skip = Boolean.TRUE;
+
+			while (Objects.nonNull((line = reader.readLine()))) {
+				if (skip) {
+					skip = !skip;
+					continue;
+				}
+
+				String[] s = line.split(";");
+				String codItem = s[0];
+				String modelo = s[1];
+				String variacao = s[2];
+				String descricao = s[3];
+				itemController.insertItem(codItem, modelo, variacao, descricao, Boolean.TRUE);
+			}
+			Alerts.showAlert("Sucesso", null, "Operação realizada com sucesso.", AlertType.INFORMATION);
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-    }
-    
-    @FXML
-    void onBaixarModeloAction(ActionEvent event) {
-    	Alerts.modeloProdutoAlert();
-    }
+	}
+
+	@FXML
+	void onBaixarModeloAction(ActionEvent event) {
+		Alerts.modeloProdutoAlert();
+	}
 
 }

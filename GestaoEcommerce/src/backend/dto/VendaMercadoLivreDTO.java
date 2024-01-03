@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VendaMercadoLivreDTO extends VendaMercadoLivreEntity {
-	
+
 	private String codItem;
 	private Integer qtde;
 	private String valorUnitario;
@@ -25,9 +25,9 @@ public class VendaMercadoLivreDTO extends VendaMercadoLivreEntity {
 	private String totalSemFrete;
 	private String fData = DataUtils.dateToString(this.getData());
 
-	public VendaMercadoLivreDTO(Long idVenda, Date data, String cliente, String status, Long idDado,
-			String codItem, Integer qtde, String valorUnitario, String valorTotal, String valorRecebido,
-			String tipoAnuncio, Boolean isFreteGratis, String totalSemFrete) {
+	public VendaMercadoLivreDTO(Long idVenda, Date data, String cliente, String status, Long idDado, String codItem,
+			Integer qtde, String valorUnitario, String valorTotal, String valorRecebido, String tipoAnuncio,
+			Boolean isFreteGratis, String totalSemFrete) {
 		super(idVenda, data, cliente, status, idDado);
 		this.codItem = codItem;
 		this.qtde = qtde;
@@ -38,5 +38,5 @@ public class VendaMercadoLivreDTO extends VendaMercadoLivreEntity {
 		this.isFreteGratis = isFreteGratis;
 		this.totalSemFrete = totalSemFrete;
 	}
-	
+
 }

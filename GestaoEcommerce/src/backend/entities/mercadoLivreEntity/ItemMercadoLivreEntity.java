@@ -10,12 +10,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ItemMercadoLivreEntity extends ItemEntity {	
-	
+public class ItemMercadoLivreEntity extends ItemEntity {
+
 	private String tipoAnuncio;
 	private Boolean isFreteGratis;
 	private Double totalSemFrete;
-	
+
 	public ItemMercadoLivreEntity(Long idItem, String codItem, Integer qtde, Double valorUnitario, Double valorTotal,
 			Double valorRecebido, String tipoAnuncio, Boolean isFreteGratis, Double totalSemFrete) {
 		super(idItem, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
@@ -23,6 +23,5 @@ public class ItemMercadoLivreEntity extends ItemEntity {
 		this.isFreteGratis = isFreteGratis;
 		this.totalSemFrete = totalSemFrete;
 	}
-	
-}
 
+}

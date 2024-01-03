@@ -36,5 +36,5 @@ public class ItemEntity {
 		this.descricao = descricao;
 		this.isAtivo = isAtivo;
 	}
-	
+
 }

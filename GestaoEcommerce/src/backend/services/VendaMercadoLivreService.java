@@ -13,8 +13,8 @@ public class VendaMercadoLivreService {
 
 	VendaMercadoLivreRepository repository = new VendaMercadoLivreRepositoryImpl();
 
-	public List<VendaMercadoLivreDTO> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio,
-			Integer qtde, String codItem, String cliente, String status) throws SQLException {
+	public List<VendaMercadoLivreDTO> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio, Integer qtde,
+			String codItem, String cliente, String status) throws SQLException {
 		return repository.findVendas(dataInicio, dataFim, tipoAnuncio, qtde, codItem, cliente, status);
 	}
 
@@ -23,7 +23,7 @@ public class VendaMercadoLivreService {
 		repository.insertVenda(data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario, valorTotal,
 				valorRecebido);
 	}
-	
+
 	public void insertVenda(Date data, String cliente, String status) throws SQLException {
 		repository.insertVenda(data, cliente, status);
 	}
@@ -43,11 +43,11 @@ public class VendaMercadoLivreService {
 		repository.editVenda(idVenda, idDado, data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario,
 				valorTotal, valorRecebido);
 	}
-	
+
 	public void deleteVenda(Long idVenda, Long idDado) throws SQLException {
 		repository.deleteVenda(idVenda, idDado);
 	}
-	
+
 	public List<Double> findValorTotalPorMes(Integer ano, Integer mes1, Integer mes2) {
 		return repository.findValorTotalPorMes(ano, mes1, mes2);
 	}

@@ -14,7 +14,7 @@ public interface VendaMercadoLivreRepository {
 
 	void insertVenda(Date data, String cliente, String status, String codItem, String tipoAnuncio, Integer qtde,
 			Double valorUnitario, Double valorTotal, Double valorRecebido) throws SQLException;
-	
+
 	void insertVenda(Date data, String cliente, String status) throws SQLException;
 
 	void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal,
@@ -27,7 +27,7 @@ public interface VendaMercadoLivreRepository {
 			throws SQLException;
 
 	void deleteVenda(Long idVenda, Long idDado) throws SQLException;
-	
+
 	List<Double> findValorTotalPorMes(Integer ano, Integer mes1, Integer mes2);
-	
+
 }

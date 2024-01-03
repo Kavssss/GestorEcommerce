@@ -17,5 +17,5 @@ public class ItemDTO {
 	private String variacao;
 	private String descricao;
 	private String isAtivo;
-	
+
 }
