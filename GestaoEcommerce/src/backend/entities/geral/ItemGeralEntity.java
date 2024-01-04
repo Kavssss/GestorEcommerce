@@ -1,4 +1,4 @@
-package backend.entities.geralEntity;
+package backend.entities.geral;
 
 import backend.entities.ItemEntity;
 

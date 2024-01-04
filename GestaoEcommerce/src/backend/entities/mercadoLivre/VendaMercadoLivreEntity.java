@@ -1,4 +1,4 @@
-package backend.entities.mercadoLivreEntity;
+package backend.entities.mercadoLivre;
 
 import java.sql.Date;
 import java.util.ArrayList;

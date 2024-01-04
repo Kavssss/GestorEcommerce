@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="javafx.scene.control.ButtonType"/>
-    <fullyQualifiedTypeName name="frontend.utils.Constants.MESSAGE"/>
-    <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
     <fullyQualifiedTypeName name="frontend.utils.Constants.VIEWS"/>
     <fullyQualifiedTypeName name="java.time.ZoneId"/>
     <fullyQualifiedTypeName name="javafx.scene.chart.PieChart.Data"/>
     <fullyQualifiedTypeName name="javafx.scene.Group"/>
     <fullyQualifiedTypeName name="backend.controllers.VendaGeralController"/>
-    <fullyQualifiedTypeName name="javafx.scene.control.Label"/>
     <fullyQualifiedTypeName name="frontend.utils.Constants.STATUS"/>
     <fullyQualifiedTypeName name="javafx.scene.chart.XYChart"/>
     <fullyQualifiedTypeName name="javafx.scene.chart.XYChart.Series"/>
@@ -41,7 +37,6 @@
     <fullyQualifiedTypeName name="backend.utils.Constants.TAXA_SHOPEE"/>
     <fullyQualifiedTypeName name="javafx.scene.control.Button"/>
     <fullyQualifiedTypeName name="javafx.scene.control.TextField"/>
-    <fullyQualifiedTypeName name="java.util.Objects"/>
     <fullyQualifiedTypeName name="backend.utils.Taxas"/>
     <fullyQualifiedTypeName name="frontend.utils.Constants.LOJA"/>
     <fullyQualifiedTypeName name="java.io.FileReader"/>
@@ -54,10 +49,15 @@
     <fullyQualifiedTypeName name="java.util.Timer"/>
     <fullyQualifiedTypeName name="javafx.stage.WindowEvent"/>
     <fullyQualifiedTypeName name="javafx.event.EventHandler"/>
-    <fullyQualifiedTypeName name="javafx.fxml.Initializable"/>
     <fullyQualifiedTypeName name="frontend.views.utils.Constraints"/>
     <fullyQualifiedTypeName name="frontend.utils.enums.Usuario"/>
+    <fullyQualifiedTypeName name="frontend.utils.LoadScene"/>
+    <fullyQualifiedTypeName name="javafx.fxml.Initializable"/>
+    <fullyQualifiedTypeName name="frontend.utils.enums.TipoUsuario"/>
+    <fullyQualifiedTypeName name="lombok.Setter"/>
     <fullyQualifiedTypeName name="frontend.views.utils.Alerts"/>
     <fullyQualifiedTypeName name="javafx.scene.control.Alert.AlertType"/>
-    <fullyQualifiedTypeName name="frontend.utils.LoadScene"/>
+    <fullyQualifiedTypeName name="java.util.Objects"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.Label"/>
+    <fullyQualifiedTypeName name="javafx.stage.StageStyle"/>
 </qualifiedTypeNameHistroy>

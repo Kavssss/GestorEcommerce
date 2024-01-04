@@ -1,4 +1,4 @@
-package backend.entities.shopeeEntity;
+package backend.entities.shopee;
 
 import backend.entities.ItemEntity;
 import lombok.Getter;

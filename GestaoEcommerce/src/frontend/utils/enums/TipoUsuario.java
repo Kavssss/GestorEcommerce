@@ -1,6 +1,6 @@
 package frontend.utils.enums;
 
-public enum Usuario {
+public enum TipoUsuario {
 
 	PADRAO,
 	ADMINISTRADOR

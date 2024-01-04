@@ -1,4 +1,4 @@
-package backend.entities.geralEntity;
+package backend.entities.geral;
 
 import java.sql.Date;
 import java.util.ArrayList;

@@ -2,7 +2,7 @@ package backend.dto;
 
 import java.sql.Date;
 
-import backend.entities.shopeeEntity.VendaShopeeEntity;
+import backend.entities.shopee.VendaShopeeEntity;
 import frontend.utils.DataUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

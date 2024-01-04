@@ -10,8 +10,8 @@ import java.util.Objects;
 
 import backend.controllers.ItemController;
 import backend.dto.VendaShopeeDTO;
-import backend.entities.shopeeEntity.ItemShopeeEntity;
-import backend.entities.shopeeEntity.VendaShopeeEntity;
+import backend.entities.shopee.ItemShopeeEntity;
+import backend.entities.shopee.VendaShopeeEntity;
 import frontend.utils.Constants;
 import frontend.utils.DataUtils;
 import frontend.views.utils.Alerts;

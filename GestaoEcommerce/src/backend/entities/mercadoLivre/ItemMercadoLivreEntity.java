@@ -1,4 +1,4 @@
-package backend.entities.mercadoLivreEntity;
+package backend.entities.mercadoLivre;
 
 import backend.entities.ItemEntity;
 import lombok.AllArgsConstructor;

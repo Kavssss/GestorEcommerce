@@ -1,4 +1,4 @@
-package backend.entities.shopeeEntity;
+package backend.entities.shopee;
 
 import java.sql.Date;
 import java.util.ArrayList;

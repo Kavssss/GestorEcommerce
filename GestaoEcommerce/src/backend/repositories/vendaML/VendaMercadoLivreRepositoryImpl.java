@@ -11,8 +11,8 @@ import java.util.Objects;
 
 import backend.controllers.ItemController;
 import backend.dto.VendaMercadoLivreDTO;
-import backend.entities.mercadoLivreEntity.ItemMercadoLivreEntity;
-import backend.entities.mercadoLivreEntity.VendaMercadoLivreEntity;
+import backend.entities.mercadoLivre.ItemMercadoLivreEntity;
+import backend.entities.mercadoLivre.VendaMercadoLivreEntity;
 import backend.utils.CalculaTotalERecebido;
 import backend.utils.Constants;
 import frontend.utils.DataUtils;

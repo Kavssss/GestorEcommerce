@@ -1,6 +1,6 @@
 package frontend.views.utils;
 
-import frontend.utils.enums.Usuario;
+import frontend.utils.enums.TipoUsuario;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class Constraints {
 
-	public static Usuario usuario;
+	public static TipoUsuario usuario;
 	
 	public static void setTextFieldNumber(TextField txt) {
 		txt.textProperty().addListener((obs, oldValue, newValue) -> {
@@ -31,6 +31,14 @@ public class Constraints {
 	public static void setTextFieldMaxLength(TextField txt, int max) {
 		txt.textProperty().addListener((obs, oldValue, newValue) -> {
 			if (newValue != null && newValue.length() > max) {
+				txt.setText(oldValue);
+			}
+		});
+	}
+	
+	public static void setNoSpaceTextField(TextField txt) {
+		txt.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (newValue != null && newValue.matches(".*[\\s].*")) {
 				txt.setText(oldValue);
 			}
 		});
@@ -63,11 +71,11 @@ public class Constraints {
 		return (Stage) ((Node) event.getSource()).getScene().getWindow();
 	}
 
-	public static Usuario getUsuario() {
+	public static TipoUsuario getUsuario() {
 		return usuario;
 	}
 
-	public static void setUsuario(Usuario usuario) {
+	public static void setUsuario(TipoUsuario usuario) {
 		Constraints.usuario = usuario;
 	}
 

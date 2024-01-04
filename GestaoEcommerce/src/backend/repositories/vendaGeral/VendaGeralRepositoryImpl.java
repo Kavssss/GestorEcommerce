@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Objects;
 
 import backend.dto.VendaGeralDTO;
-import backend.entities.geralEntity.ItemGeralEntity;
-import backend.entities.geralEntity.VendaGeralEntity;
+import backend.entities.geral.ItemGeralEntity;
+import backend.entities.geral.VendaGeralEntity;
 import frontend.utils.Constants;
 import models.DAO;
 import models.DbException;

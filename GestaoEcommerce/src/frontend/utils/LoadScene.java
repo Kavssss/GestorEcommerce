@@ -13,11 +13,13 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class LoadScene {
 
 	private static Stage stage;
 	private static Stage modalStage;
+	private static Stage loginModalStage;
 	
 	private static Scene indexScene;
 	private static Scene vendasScene;
@@ -84,6 +86,7 @@ public class LoadScene {
 	public static void callCadastroModal(Stage parentStage, Class<?> currentClass) {
 		try {
 			buildModal(parentStage, currentClass, Constants.MODAL.CADASTRO, "Cadastrar");
+			setLoginModalStage(parentStage);
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
 		}
@@ -94,13 +97,14 @@ public class LoadScene {
 		FXMLLoader loader = new FXMLLoader(currentClass.getResource(pathModal));
 		Pane pane = loader.load();
 		Stage modalStage = new Stage();
-		Image icon = new Image(currentClass.getResourceAsStream("../images/logo.png"));
-		modalStage.getIcons().add(icon);
+//		Image icon = new Image(currentClass.getResourceAsStream("../images/logo.png"));
+//		modalStage.getIcons().add(icon);
 		modalStage.setTitle(title);
 		modalStage.setScene(new Scene(pane));
 		modalStage.setResizable(Boolean.FALSE);
 		modalStage.initOwner(parentStage);
 		modalStage.initModality(Modality.WINDOW_MODAL);
+		modalStage.initStyle(StageStyle.UNDECORATED);
 		setModalStage(modalStage);
 		modalStage.showAndWait();
 	}
@@ -181,4 +185,12 @@ public class LoadScene {
 		LoadScene.modalStage = modalStage;
 	}
 
+	public static Stage getLoginModalStage() {
+		return loginModalStage;
+	}
+
+	public static void setLoginModalStage(Stage loginModal) {
+		LoadScene.loginModalStage = loginModal;
+	}
+	
 }

@@ -12,95 +12,99 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="300.0" maxWidth="400.0" minHeight="300.0" minWidth="400.0" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ModalOpcoesController">
+<StackPane maxHeight="300.0" maxWidth="400.0" minHeight="300.0" minWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: linear-gradient(to top, #000, #002); -fx-border-color: #FFF;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ModalCadastroController">
    <children>
-      <ImageView fitHeight="120.0" fitWidth="400.0" pickOnBounds="true" scaleY="2.5">
+      <ImageView fitHeight="120.0" fitWidth="400.0" pickOnBounds="true" scaleY="2.5" visible="false">
          <image>
             <Image url="@../images/telas/modal_login.png" />
          </image>
       </ImageView>
-      <TextField fx:id="txtUsuario" layoutX="297.0" layoutY="58.0" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" StackPane.alignment="TOP_LEFT">
-         <StackPane.margin>
-            <Insets left="75.0" top="90.0" />
-         </StackPane.margin></TextField>
-      <TextField fx:id="txtFrete" layoutX="135.0" layoutY="120.0" maxHeight="29.0" maxWidth="150.0" minHeight="29.0" minWidth="150.0" prefHeight="29.0" prefWidth="150.0" promptText="Frete" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" visible="false" StackPane.alignment="TOP_LEFT">
-         <StackPane.margin>
-            <Insets left="125.0" top="140.0" />
-         </StackPane.margin>
-      </TextField>
-      <Button fx:id="btnCancelar" maxHeight="23.0" maxWidth="85.0" minHeight="23.0" minWidth="85.0" mnemonicParsing="false" onAction="#onCancelarAction" prefHeight="23.0" prefWidth="85.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="CANCELAR" visible="false" StackPane.alignment="TOP_LEFT">
-         <font>
-            <Font name="Arial Bold" size="12.0" />
-         </font>
-         <StackPane.margin>
-            <Insets left="200.0" top="260.0" />
-         </StackPane.margin>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="btnSalvar" maxHeight="23.0" maxWidth="85.0" minHeight="23.0" minWidth="85.0" mnemonicParsing="false" onAction="#onSalvarAction" prefHeight="23.0" prefWidth="85.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="SALVAR" StackPane.alignment="TOP_LEFT">
-         <font>
-            <Font name="Arial Bold" size="12.0" />
-         </font>
-         <StackPane.margin>
-            <Insets left="300.0" top="260.0" />
-         </StackPane.margin>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Label alignment="CENTER" maxHeight="32.0" maxWidth="400.0" minHeight="32.0" minWidth="400.0" prefHeight="32.0" prefWidth="400.0" text="Cadastrar" textAlignment="CENTER" textFill="#e5e5e5" StackPane.alignment="TOP_LEFT">
+      <Label alignment="CENTER" text="Cadastrar" textAlignment="CENTER" textFill="#e5e5e5" StackPane.alignment="TOP_CENTER">
          <font>
             <Font size="24.0" />
          </font>
          <StackPane.margin>
-            <Insets top="2.0" />
+            <Insets top="7.0" />
          </StackPane.margin>
       </Label>
-      <RadioButton fx:id="rbAdmin" mnemonicParsing="false" text="Administrador" textFill="#e5e5e5" StackPane.alignment="TOP_LEFT">
+      <RadioButton fx:id="rbAdmin" mnemonicParsing="false" text="Administrador" textFill="#e5e5e5" StackPane.alignment="TOP_CENTER">
          <StackPane.margin>
-            <Insets left="90.0" top="45.0" />
+            <Insets left="-130.0" top="50.0" />
          </StackPane.margin>
       </RadioButton>
-      <RadioButton fx:id="rbPadrao" mnemonicParsing="false" text="Usuário padrão" textFill="#e5e5e5" StackPane.alignment="TOP_LEFT">
+      <RadioButton fx:id="rbPadrao" mnemonicParsing="false" text="Usuário padrão" textFill="#e5e5e5" StackPane.alignment="TOP_CENTER">
          <StackPane.margin>
-            <Insets left="210.0" top="45.0" />
+            <Insets left="120.0" top="50.0" />
          </StackPane.margin>
       </RadioButton>
-      <Label maxHeight="15.0" maxWidth="250.0" minHeight="15.0" minWidth="250.0" prefHeight="15.0" prefWidth="250.0" text="Confirmar senha" textAlignment="CENTER" textFill="#bfbfbf" StackPane.alignment="TOP_LEFT">
-         <StackPane.margin>
-            <Insets left="75.0" top="182.0" />
-         </StackPane.margin>
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Label>
       <Label maxHeight="15.0" maxWidth="250.0" minHeight="15.0" minWidth="250.0" prefHeight="15.0" prefWidth="250.0" text="Usuário" textAlignment="CENTER" textFill="#bfbfbf" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font size="11.0" />
+         </font>
          <StackPane.margin>
-            <Insets left="75.0" top="72.0" />
+            <Insets left="75.0" top="77.0" />
          </StackPane.margin>
+      </Label>
+      <TextField fx:id="txtUsuario" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" StackPane.alignment="TOP_CENTER">
+         <StackPane.margin>
+            <Insets top="95.0" />
+         </StackPane.margin>
+      </TextField>
+      <Label maxHeight="15.0" maxWidth="250.0" minHeight="15.0" minWidth="250.0" prefHeight="15.0" prefWidth="250.0" text="Senha" textAlignment="CENTER" textFill="#bfbfbf" StackPane.alignment="TOP_CENTER">
+         <StackPane.margin>
+            <Insets top="132.0" />
+         </StackPane.margin>
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="txtSenha" layoutX="85.0" layoutY="215.0" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-radius: 15; -fx-background-color: rgb(128,128,155);" StackPane.alignment="TOP_CENTER">
+         <StackPane.margin>
+            <Insets top="150.0" />
+         </StackPane.margin>
+      </PasswordField>
+      <Label maxHeight="15.0" maxWidth="250.0" minHeight="15.0" minWidth="250.0" prefHeight="15.0" prefWidth="250.0" text="Confirmar senha" textAlignment="CENTER" textFill="#bfbfbf" StackPane.alignment="TOP_CENTER">
+         <StackPane.margin>
+            <Insets top="187.0" />
+         </StackPane.margin>
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="txtConfirmarSenha" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-radius: 15; -fx-background-color: rgb(128,128,155);" StackPane.alignment="TOP_CENTER">
+         <StackPane.margin>
+            <Insets top="205.0" />
+         </StackPane.margin>
+      </PasswordField>
+      <Button fx:id="btnSalvar" maxHeight="23.0" maxWidth="85.0" minHeight="23.0" minWidth="85.0" mnemonicParsing="false" onAction="#onSalvarAction" prefHeight="23.0" prefWidth="85.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="SALVAR" StackPane.alignment="BOTTOM_CENTER">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+         <StackPane.margin>
+            <Insets bottom="20.0" />
+         </StackPane.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label fx:id="labelError" alignment="CENTER" layoutX="160.0" layoutY="17.0" maxHeight="15.0" maxWidth="250.0" minHeight="15.0" minWidth="250.0" prefHeight="15.0" prefWidth="250.0" textAlignment="CENTER" textFill="RED" visible="false" StackPane.alignment="TOP_CENTER">
          <font>
             <Font size="10.0" />
          </font>
-      </Label>
-      <Label maxHeight="15.0" maxWidth="250.0" minHeight="15.0" minWidth="250.0" prefHeight="15.0" prefWidth="250.0" text="Senha" textAlignment="CENTER" textFill="#bfbfbf" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
-            <Insets left="75.0" top="127.0" />
+            <Insets top="236.0" />
          </StackPane.margin>
+      </Label>
+      <Button fx:id="btnX" alignment="CENTER" maxHeight="20.0" maxWidth="20.0" minHeight="20.0" minWidth="20.0" mnemonicParsing="false" onAction="#onXAction" prefHeight="20.0" prefWidth="20.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="X" StackPane.alignment="TOP_RIGHT">
          <font>
-            <Font size="10.0" />
+            <Font name="Arial Bold" size="9.0" />
          </font>
-      </Label>
-      <PasswordField fx:id="txtSenha" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-radius: 15; -fx-background-color: rgb(128,128,155);" StackPane.alignment="TOP_LEFT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
          <StackPane.margin>
-            <Insets left="75.0" top="145.0" />
+            <Insets right="10.0" top="10.0" />
          </StackPane.margin>
-      </PasswordField>
-      <PasswordField fx:id="txtConfirmarSenha" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-radius: 15; -fx-background-color: rgb(128,128,155);" StackPane.alignment="TOP_LEFT">
-         <StackPane.margin>
-            <Insets left="75.0" top="200.0" />
-         </StackPane.margin>
-      </PasswordField>
+      </Button>
    </children>
 </StackPane>

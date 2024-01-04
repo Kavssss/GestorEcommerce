@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import backend.dto.VendaShopeeDTO;
-import backend.entities.shopeeEntity.VendaShopeeEntity;
+import backend.entities.shopee.VendaShopeeEntity;
 import backend.repositories.vendaShopee.VendaShopeeRepository;
 import backend.repositories.vendaShopee.VendaShopeeRepositoryImpl;
 
