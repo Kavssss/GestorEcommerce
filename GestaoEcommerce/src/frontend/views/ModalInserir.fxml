@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="360.0" maxWidth="974.0" minHeight="360.0" minWidth="974.0" prefHeight="360.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ModalInserirController">
+<StackPane maxHeight="360.0" maxWidth="974.0" minHeight="360.0" minWidth="974.0" prefHeight="360.0" prefWidth="974.0" style="-fx-background-color: linear-gradient(to top, #000, #002); -fx-border-color: #FFF;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ModalInserirController">
    <children>
-      <ImageView fitHeight="360.0" fitWidth="974.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="360.0" fitWidth="974.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/telas/modal_inserir.png" />
          </image>
@@ -25,7 +25,7 @@
       </TextField>
       <ComboBox fx:id="cbCanal" maxHeight="29.0" maxWidth="180.0" minHeight="29.0" minWidth="180.0" onAction="#onCanalAction" prefHeight="29.0" prefWidth="180.0" promptText="Canal de Venda" style="-fx-background-radius: 15; -fx-background-color: rgb(128,128,155);" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
-            <Insets left="67.0" top="48.0" />
+            <Insets left="58.0" top="48.0" />
          </StackPane.margin>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -33,12 +33,12 @@
       </ComboBox>
       <TextField fx:id="txtData" maxHeight="29.0" maxWidth="160.0" minHeight="29.0" minWidth="160.0" onKeyReleased="#onDataReleased" prefHeight="29.0" prefWidth="160.0" promptText="Data (dd/mm/aaaa)" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
-            <Insets left="287.0" top="48.0" />
+            <Insets left="278.0" top="48.0" />
          </StackPane.margin>
       </TextField>
       <TextField fx:id="txtCliente" maxHeight="29.0" maxWidth="270.0" minHeight="29.0" minWidth="270.0" prefHeight="29.0" prefWidth="270.0" promptText="Nome do Cliente" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
-            <Insets left="467.0" top="48.0" />
+            <Insets left="458.0" top="48.0" />
          </StackPane.margin>
       </TextField>
       <ComboBox fx:id="cbStatus" layoutX="77.0" layoutY="58.0" maxHeight="29.0" maxWidth="180.0" minHeight="29.0" minWidth="180.0" prefHeight="29.0" prefWidth="180.0" promptText="Status" style="-fx-background-radius: 15; -fx-background-color: rgb(128,128,155);" StackPane.alignment="TOP_LEFT">
@@ -46,7 +46,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
          <StackPane.margin>
-            <Insets left="757.0" top="48.0" />
+            <Insets left="748.0" top="48.0" />
          </StackPane.margin>
       </ComboBox>
       <ComboBox fx:id="cbItem1" maxHeight="29.0" maxWidth="100.0" minHeight="29.0" minWidth="100.0" prefHeight="29.0" prefWidth="100.0" promptText="Item" style="-fx-background-radius: 15; -fx-background-color: rgb(128,128,155);" StackPane.alignment="TOP_LEFT">
@@ -253,12 +253,12 @@
             <Insets left="852.0" top="276.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="btnAddItem" maxHeight="23.0" maxWidth="75.0" minHeight="23.0" minWidth="75.0" mnemonicParsing="false" onAction="#onAddItemAction" prefHeight="23.0" prefWidth="75.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="+ ITEM" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="btnAddItem" maxHeight="23.0" maxWidth="75.0" minHeight="23.0" minWidth="75.0" mnemonicParsing="false" onAction="#onAddItemAction" prefHeight="23.0" prefWidth="75.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="+ ITEM" StackPane.alignment="BOTTOM_LEFT">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
          <StackPane.margin>
-            <Insets left="20.0" top="317.0" />
+            <Insets bottom="20.0" left="20.0" />
          </StackPane.margin>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -275,23 +275,23 @@
             <Insets left="652.0" top="317.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="btnCancelar" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" onAction="#onCancelarAction" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="CANCELAR" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="btnX" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#onXAction" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="X" StackPane.alignment="TOP_RIGHT">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
          <StackPane.margin>
-            <Insets left="756.0" top="317.0" />
+            <Insets right="15.0" top="15.0" />
          </StackPane.margin>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnSalvar" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" onAction="#onSalvarAction" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="SALVAR" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="btnSalvar" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" onAction="#onSalvarAction" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="SALVAR" StackPane.alignment="BOTTOM_RIGHT">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
          <StackPane.margin>
-            <Insets left="860.0" top="317.0" />
+            <Insets bottom="20.0" right="20.0" />
          </StackPane.margin>
          <cursor>
             <Cursor fx:constant="HAND" />

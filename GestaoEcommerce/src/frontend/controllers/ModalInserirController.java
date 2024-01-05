@@ -51,7 +51,7 @@ public class ModalInserirController implements Initializable {
 	private Button btnApagar;
 
 	@FXML
-	private Button btnCancelar;
+	private Button btnX;
 
 	@FXML
 	private Button btnSalvar;
@@ -289,7 +289,7 @@ public class ModalInserirController implements Initializable {
 	}
 
 	@FXML
-	void onCancelarAction(ActionEvent event) {
+	void onXAction(ActionEvent event) {
 		LoadScene.getModalStage().close();
 	}
 

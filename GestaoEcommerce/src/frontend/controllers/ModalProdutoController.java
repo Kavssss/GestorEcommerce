@@ -22,7 +22,7 @@ public class ModalProdutoController implements Initializable {
 	ItemController itemController = new ItemController();
 
 	@FXML
-	private Button btnCancelar;
+	private Button btnX;
 
 	@FXML
 	private Button btnDesativar;
@@ -54,7 +54,7 @@ public class ModalProdutoController implements Initializable {
 	}
 
 	@FXML
-	void onCancelarAction(ActionEvent event) {
+	void onXAction(ActionEvent event) {
 		LoadScene.getModalStage().close();
 	}
 

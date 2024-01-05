@@ -8,8 +8,12 @@ public class UsuarioService {
 
 	UsuarioRepository repository = new UsuarioRepositoryImpl();
 	
-	public Boolean findUsuarioByName(String nome) {
-		return repository.findUsuarioByName(nome);
+	public Boolean isDuplicateUser(String nome) {
+		return repository.isDuplicateUser(nome);
+	}
+	
+	public Boolean isValidLogin(String usuario, String senha) {
+		return repository.isValidLogin(usuario, senha);
 	}
 	
 	public void insertNewUser(String user, String senha, TipoUsuario tipo) {

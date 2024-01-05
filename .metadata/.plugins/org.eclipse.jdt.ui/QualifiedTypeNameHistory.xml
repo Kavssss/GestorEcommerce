@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="frontend.utils.Constants.VIEWS"/>
-    <fullyQualifiedTypeName name="java.time.ZoneId"/>
-    <fullyQualifiedTypeName name="javafx.scene.chart.PieChart.Data"/>
-    <fullyQualifiedTypeName name="javafx.scene.Group"/>
-    <fullyQualifiedTypeName name="backend.controllers.VendaGeralController"/>
-    <fullyQualifiedTypeName name="frontend.utils.Constants.STATUS"/>
     <fullyQualifiedTypeName name="javafx.scene.chart.XYChart"/>
     <fullyQualifiedTypeName name="javafx.scene.chart.XYChart.Series"/>
     <fullyQualifiedTypeName name="javafx.scene.chart.XYChart.Data"/>
@@ -19,7 +13,6 @@
     <fullyQualifiedTypeName name="frontend.utils.Constants.SEMESTRE"/>
     <fullyQualifiedTypeName name="frontend.utils.enuns.TipoOperacao"/>
     <fullyQualifiedTypeName name="javafx.scene.input.MouseEvent"/>
-    <fullyQualifiedTypeName name="javafx.scene.paint.Color"/>
     <fullyQualifiedTypeName name="frontend.utils.DataUtils"/>
     <fullyQualifiedTypeName name="backend.utils.CalculaTotalERecebido"/>
     <fullyQualifiedTypeName name="java.awt.Image"/>
@@ -52,12 +45,19 @@
     <fullyQualifiedTypeName name="frontend.views.utils.Constraints"/>
     <fullyQualifiedTypeName name="frontend.utils.enums.Usuario"/>
     <fullyQualifiedTypeName name="frontend.utils.LoadScene"/>
-    <fullyQualifiedTypeName name="javafx.fxml.Initializable"/>
     <fullyQualifiedTypeName name="frontend.utils.enums.TipoUsuario"/>
     <fullyQualifiedTypeName name="lombok.Setter"/>
-    <fullyQualifiedTypeName name="frontend.views.utils.Alerts"/>
-    <fullyQualifiedTypeName name="javafx.scene.control.Alert.AlertType"/>
     <fullyQualifiedTypeName name="java.util.Objects"/>
     <fullyQualifiedTypeName name="javafx.scene.control.Label"/>
     <fullyQualifiedTypeName name="javafx.stage.StageStyle"/>
+    <fullyQualifiedTypeName name="javafx.fxml.Initializable"/>
+    <fullyQualifiedTypeName name="frontend.views.utils.Alerts"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.Alert.AlertType"/>
+    <fullyQualifiedTypeName name="javafx.scene.Node"/>
+    <fullyQualifiedTypeName name="frontend.views.utils.CSS"/>
+    <fullyQualifiedTypeName name="frontend.views.utils.CSS.COLOR"/>
+    <fullyQualifiedTypeName name="frontend.views.utils.CSS.FIELD"/>
+    <fullyQualifiedTypeName name="frontend.views.utils.CSS.LIGHT_THEME"/>
+    <fullyQualifiedTypeName name="javafx.scene.paint.Color"/>
+    <fullyQualifiedTypeName name="frontend.utils.ColorUtils"/>
 </qualifiedTypeNameHistroy>

@@ -43,6 +43,10 @@ public class Constraints {
 			}
 		});
 	}
+	
+	public static Boolean validatePassword(String password) {
+		return password.length() > 3;
+	}
 
 	public static void setTextFieldDouble(TextField txt) {
 		txt.textProperty().addListener((obs, oldValue, newValue) -> {

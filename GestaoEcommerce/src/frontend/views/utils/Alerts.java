@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
+import javafx.stage.StageStyle;
 
 public class Alerts {
 
@@ -21,6 +22,7 @@ public class Alerts {
 		alert.setTitle(title);
 		alert.setHeaderText(header);
 		alert.setContentText(content);
+		alert.initStyle(StageStyle.UNDECORATED);
 		alert.showAndWait();
 	}
 

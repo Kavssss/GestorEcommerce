@@ -7,8 +7,12 @@ public class UsuarioController {
 	
 	UsuarioService service = new UsuarioService();
 	
-	public Boolean findUsuarioByName(String nome) {
-		return service.findUsuarioByName(nome);
+	public Boolean isDuplicateUser(String nome) {
+		return service.isDuplicateUser(nome);
+	}
+	
+	public Boolean isValidLogin(String usuario, String senha) {
+		return service.isValidLogin(usuario, senha);
 	}
 	
 	public void insertNewUser(String user, String senha, TipoUsuario tipo) {

@@ -16,12 +16,30 @@ public class UsuarioRepositoryImpl extends DAO implements UsuarioRepository {
 	ResultSet resultSet;
 	
 	@Override
-	public Boolean findUsuarioByName(String nome) {
+	public Boolean isDuplicateUser(String nome) {
 		String sql = "SELECT 1 FROM TB_USUARIO WHERE NM_USUARIO = ?";
 		try {
 			this.conectar();
 			preparedStatement = this.conexao.prepareStatement(sql);
 			preparedStatement.setString(1, nome);
+			System.out.println(preparedStatement.toString());
+			resultSet = preparedStatement.executeQuery();
+			Boolean retorno = resultSet.next();
+			this.desconectar(this.conexao);
+			return retorno;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public Boolean isValidLogin(String usuario, String senha) {
+		String sql = "SELECT 1 FROM TB_USUARIO WHERE NM_USUARIO = ? AND SENHA_USUARIO = ?";
+		try {
+			this.conectar();
+			preparedStatement = this.conexao.prepareStatement(sql);
+			preparedStatement.setString(1, usuario);
+			preparedStatement.setString(2, senha);
 			System.out.println(preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
 			Boolean retorno = resultSet.next();

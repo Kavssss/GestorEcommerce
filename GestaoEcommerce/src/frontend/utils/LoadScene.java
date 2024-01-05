@@ -69,7 +69,7 @@ public class LoadScene {
 
 	public static void callInsertVendaModal(Stage parentStage, Class<?> currentClass) {
 		try {
-			buildModal(parentStage, currentClass, Constants.MODAL.INSERIR_VENDA, "Inserir venda");
+			buildModal(parentStage, currentClass, Constants.MODAL.INSERIR_VENDA, "Inserir venda", false);
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
 		}
@@ -77,7 +77,7 @@ public class LoadScene {
 	
 	public static void callLoginModal(Stage parentStage, Class<?> currentClass) {
 		try {
-			buildModal(parentStage, currentClass, Constants.MODAL.LOGIN, "Login");
+			buildModal(parentStage, currentClass, Constants.MODAL.LOGIN, "Login", true);
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
 		}
@@ -85,14 +85,13 @@ public class LoadScene {
 	
 	public static void callCadastroModal(Stage parentStage, Class<?> currentClass) {
 		try {
-			buildModal(parentStage, currentClass, Constants.MODAL.CADASTRO, "Cadastrar");
-			setLoginModalStage(parentStage);
+			buildModal(parentStage, currentClass, Constants.MODAL.CADASTRO, "Cadastrar", false);
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
 		}
 	}
 
-	private static void buildModal(Stage parentStage, Class<?> currentClass, String pathModal, String title)
+	private static void buildModal(Stage parentStage, Class<?> currentClass, String pathModal, String title, Boolean isLogin)
 			throws IOException {
 		FXMLLoader loader = new FXMLLoader(currentClass.getResource(pathModal));
 		Pane pane = loader.load();
@@ -106,6 +105,8 @@ public class LoadScene {
 		modalStage.initModality(Modality.WINDOW_MODAL);
 		modalStage.initStyle(StageStyle.UNDECORATED);
 		setModalStage(modalStage);
+		if (isLogin)
+			setLoginModalStage(modalStage);
 		modalStage.showAndWait();
 	}
 
@@ -133,7 +134,7 @@ public class LoadScene {
 
 	public static void callInsertProdutoModal(Stage parentStage, Class<?> currentClass) {
 		try {
-			buildModal(parentStage, currentClass, Constants.MODAL.INSERIR_PRODUTO, "Inserir produto");
+			buildModal(parentStage, currentClass, Constants.MODAL.INSERIR_PRODUTO, "Inserir produto", false);
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
 		}
@@ -163,7 +164,7 @@ public class LoadScene {
 
 	public static void callOpcoesModal(Stage parentStage, Class<?> currentClass) {
 		try {
-			buildModal(parentStage, currentClass, Constants.MODAL.OPCOES, "Opções");
+			buildModal(parentStage, currentClass, Constants.MODAL.OPCOES, "Opções", false);
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
 		}

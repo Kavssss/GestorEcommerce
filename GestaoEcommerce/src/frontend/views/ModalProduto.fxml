@@ -9,14 +9,14 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="225.0" maxWidth="974.0" minHeight="225.0" minWidth="974.0" prefHeight="225.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ModalProdutoController">
+<StackPane maxHeight="225.0" maxWidth="974.0" minHeight="225.0" minWidth="974.0" prefHeight="225.0" prefWidth="974.0" style="-fx-background-color: linear-gradient(to top, #000, #002); -fx-border-color: #FFF;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.ModalProdutoController">
    <children>
       <TextField fx:id="txtIdItem" maxHeight="29.0" maxWidth="29.0" minHeight="29.0" minWidth="29.0" prefHeight="29.0" prefWidth="29.0" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" visible="false" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
             <Insets left="5.0" top="5.0" />
          </StackPane.margin>
       </TextField>
-      <ImageView fitHeight="225.0" fitWidth="974.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="225.0" fitWidth="974.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/telas/modal_produto.png" />
          </image>
@@ -40,7 +40,7 @@
             <Insets left="125.0" top="101.0" />
          </StackPane.margin>
       </TextField>
-      <Button fx:id="btnDesativar" layoutX="870.0" layoutY="327.0" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" onAction="#onDesativarAction" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="DESATIVAR" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="btnDesativar" layoutX="870.0" layoutY="327.0" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" onAction="#onDesativarAction" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="DESATIVAR" StackPane.alignment="BOTTOM_RIGHT">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
@@ -48,26 +48,26 @@
             <Cursor fx:constant="HAND" />
          </cursor>
          <StackPane.margin>
-            <Insets left="652.0" top="182.0" />
+            <Insets bottom="15.0" right="120.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="btnCancelar" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" onAction="#onCancelarAction" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="CANCELAR" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="btnX" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#onXAction" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="X" StackPane.alignment="TOP_RIGHT">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
          <StackPane.margin>
-            <Insets left="756.0" top="182.0" />
+            <Insets right="15.0" top="15.0" />
          </StackPane.margin>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnSalvar" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" onAction="#onSalvarAction" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="SALVAR" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="btnSalvar" maxHeight="23.0" maxWidth="94.0" minHeight="23.0" minWidth="94.0" mnemonicParsing="false" onAction="#onSalvarAction" prefHeight="23.0" prefWidth="94.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="SALVAR" StackPane.alignment="BOTTOM_RIGHT">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
          <StackPane.margin>
-            <Insets left="860.0" top="182.0" />
+            <Insets bottom="15.0" right="15.0" />
          </StackPane.margin>
          <cursor>
             <Cursor fx:constant="HAND" />

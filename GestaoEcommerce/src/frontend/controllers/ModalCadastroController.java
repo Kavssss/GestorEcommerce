@@ -64,33 +64,32 @@ public class ModalCadastroController implements Initializable {
     	String confirmaSenha = !txtConfirmarSenha.getText().isBlank() ? txtConfirmarSenha.getText() : null;
     	TipoUsuario tipo;
     	
-    	if (Objects.nonNull(toggleGroup.getSelectedToggle()))
-    		tipo = toggleGroup.getSelectedToggle().equals(rbPadrao) ? TipoUsuario.PADRAO : TipoUsuario.ADMINISTRADOR;
-    	else {
-    		labelError.setText("Tipo de usuário não selecionado!");
-			labelError.setVisible(true);
+    	if (Objects.isNull(toggleGroup.getSelectedToggle())) {
+    		displayErrorMessage("Tipo de usuário não selecionado!");
 			return;
     	}
     	if (Objects.isNull(usuario)) {
-    		labelError.setText("Usuário não pode ser vazio!");
-    		labelError.setVisible(true);
+    		displayErrorMessage("Usuário não pode ser vazio!");
     		return;
     	}
     	if (Objects.isNull(senha)) {
-			labelError.setText("Senha não pode ser vazio!");
-    		labelError.setVisible(true);
+    		displayErrorMessage("Senha não pode ser vazio!");
     		return;
 		}
     	if (Objects.isNull(confirmaSenha) || !senha.equals(confirmaSenha)) {
-    		labelError.setText("Senhas não batem!");
-    		labelError.setVisible(true);
+    		displayErrorMessage("Senhas não batem!");
+    		return;
     	}
     	if (userExists(usuario)) {
-    		labelError.setText("Usuário já existe!");
-    		labelError.setVisible(true);
+    		displayErrorMessage("Usuário já existe!");
+    		return;
+    	}
+    	if (!Constraints.validatePassword(senha)) {
+    		displayErrorMessage("Senha com pelo menos 4 caracteres!");
     		return;
     	}
     	
+    	tipo = toggleGroup.getSelectedToggle().equals(rbPadrao) ? TipoUsuario.PADRAO : TipoUsuario.ADMINISTRADOR;
     	controller.insertNewUser(usuario, senha, tipo);
     	LoadScene.getModalStage().close();
     }
@@ -101,7 +100,11 @@ public class ModalCadastroController implements Initializable {
     }
 
     private Boolean userExists(String user) {
-    	return controller.findUsuarioByName(user);
+    	return controller.isDuplicateUser(user);
     }
 
+    private void displayErrorMessage(String msg) {
+    	labelError.setText(msg);
+    	labelError.setVisible(Boolean.TRUE);
+    }
 }
