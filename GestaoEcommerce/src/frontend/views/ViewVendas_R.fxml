@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane gridLinesVisible="true" minHeight="600.0" minWidth="1024.0" prefHeight="600.0" prefWidth="1024.0" style="-fx-background-color: linear-gradient(to top, #000, #002);" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1">
+<GridPane minHeight="600.0" minWidth="1024.0" prefHeight="600.0" prefWidth="1024.0" style="-fx-background-color: linear-gradient(to top, #000, #002);" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="frontend.controllers.ViewVendasController">
   <columnConstraints>
       <ColumnConstraints percentWidth="2.0" />
       <ColumnConstraints percentWidth="2.0" />
@@ -95,7 +95,7 @@
       <RowConstraints percentHeight="4.0" />
   </rowConstraints>
    <children>
-      <Button fx:id="btnVendas" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onVendasAction" style="-fx-background-radius: 15;" text="VENDAS" textFill="#000022" GridPane.columnIndex="2" GridPane.columnSpan="7" GridPane.rowIndex="1">
+      <Button fx:id="btnVendas" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-radius: 15;" text="VENDAS" textFill="#000022" GridPane.columnIndex="2" GridPane.columnSpan="7" GridPane.rowIndex="1">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -140,47 +140,47 @@
          </font>
       </Button>
       <Label cache="true" depthTest="DISABLE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Canal de Venda" textFill="WHITE" GridPane.columnIndex="5" GridPane.columnSpan="7" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-      <ComboBox fx:id="cbCanal" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#onCanalAction" promptText="Mercado Livreaaaaaaaaa" style="-fx-background-radius: 15; -fx-background-color: ddd;" GridPane.columnIndex="5" GridPane.columnSpan="7" GridPane.rowIndex="4" />
+      <ComboBox fx:id="cbCanal" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#onCanalAction" style="-fx-background-radius: 15; -fx-background-color: ddd;" GridPane.columnIndex="5" GridPane.columnSpan="7" GridPane.rowIndex="4" />
       <Label cache="true" depthTest="DISABLE" layoutX="46.0" layoutY="77.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Data Início" textFill="WHITE" GridPane.columnIndex="14" GridPane.columnSpan="7" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
       <DatePicker fx:id="dpDataInicio" layoutX="207.0" layoutY="99.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-radius: 15; -fx-background-color: ddd;" GridPane.columnIndex="14" GridPane.columnSpan="7" GridPane.rowIndex="4" />
       <Label cache="true" depthTest="DISABLE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Data Fim" textFill="WHITE" GridPane.columnIndex="23" GridPane.columnSpan="7" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
       <DatePicker fx:id="dpDataFim" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-radius: 15; -fx-background-color: ddd;" GridPane.columnIndex="23" GridPane.columnSpan="7" GridPane.rowIndex="4" />
       <Label cache="true" depthTest="DISABLE" layoutX="122.0" layoutY="77.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Tipo de Anúncio" textFill="WHITE" GridPane.columnIndex="32" GridPane.columnSpan="8" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-      <ComboBox fx:id="cbTipoAnuncio" layoutX="139.0" layoutY="99.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#onTipoAnuncioAction" promptText="Premium - Frete Grátis" style="-fx-background-radius: 15; -fx-background-color: ddd;" GridPane.columnIndex="32" GridPane.columnSpan="8" GridPane.rowIndex="4" />
+      <ComboBox fx:id="cbTipoAnuncio" layoutX="139.0" layoutY="99.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-radius: 15; -fx-background-color: ddd;" GridPane.columnIndex="32" GridPane.columnSpan="8" GridPane.rowIndex="4" />
       <Label cache="true" depthTest="DISABLE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Qtde" textFill="WHITE" GridPane.columnIndex="42" GridPane.columnSpan="3" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
       <TextField fx:id="txtQtde" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: ddd; -fx-background-radius: 15;" GridPane.columnIndex="42" GridPane.columnSpan="3" GridPane.rowIndex="4">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
       </TextField>
-      <Label cache="true" depthTest="DISABLE" layoutX="735.0" layoutY="77.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Status" textFill="WHITE" GridPane.columnIndex="35" GridPane.columnSpan="7" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
-      <ComboBox fx:id="cbStatus" layoutX="701.0" layoutY="99.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#onStatusAction" promptText="Devolução" style="-fx-background-radius: 15; -fx-background-color: ddd;" GridPane.columnIndex="35" GridPane.columnSpan="7" GridPane.rowIndex="7" />
-      <Label cache="true" depthTest="DISABLE" layoutX="918.0" layoutY="77.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Cliente" textFill="WHITE" GridPane.columnIndex="17" GridPane.columnSpan="16" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
-      <TextField fx:id="txtCliente" layoutX="906.0" layoutY="100.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: ddd; -fx-background-radius: 15;" GridPane.columnIndex="17" GridPane.columnSpan="16" GridPane.rowIndex="7">
+      <Label cache="true" depthTest="DISABLE" layoutX="735.0" layoutY="77.0" maxWidth="1.7976931348623157E308" text="Status" textFill="WHITE" GridPane.columnIndex="35" GridPane.columnSpan="7" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
+      <ComboBox fx:id="cbStatus" layoutX="701.0" layoutY="99.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-radius: 15; -fx-background-color: ddd;" GridPane.columnIndex="35" GridPane.columnSpan="7" GridPane.rowIndex="6" />
+      <Label cache="true" depthTest="DISABLE" layoutX="918.0" layoutY="77.0" maxWidth="1.7976931348623157E308" text="Cliente" textFill="WHITE" GridPane.columnIndex="17" GridPane.columnSpan="16" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
+      <TextField fx:id="txtCliente" layoutX="906.0" layoutY="100.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: ddd; -fx-background-radius: 15;" GridPane.columnIndex="17" GridPane.columnSpan="16" GridPane.rowIndex="6">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
       </TextField>
-      <Label cache="true" depthTest="DISABLE" layoutX="504.0" layoutY="144.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Cód. Item" textFill="WHITE" GridPane.columnIndex="8" GridPane.columnSpan="7" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
-      <TextField fx:id="txtCodItem" layoutX="292.0" layoutY="166.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: ddd; -fx-background-radius: 15;" GridPane.columnIndex="8" GridPane.columnSpan="7" GridPane.rowIndex="7">
+      <Label cache="true" depthTest="DISABLE" layoutX="504.0" layoutY="144.0" maxWidth="1.7976931348623157E308" text="Cód. Item" textFill="WHITE" GridPane.columnIndex="8" GridPane.columnSpan="7" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
+      <TextField fx:id="txtCodItem" layoutX="292.0" layoutY="166.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: ddd; -fx-background-radius: 15;" GridPane.columnIndex="8" GridPane.columnSpan="7" GridPane.rowIndex="6">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
       </TextField>
-      <TableView fx:id="tbGeral" onMouseClicked="#onTbGeralMouseClicked" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" GridPane.columnIndex="2" GridPane.columnSpan="46" GridPane.rowIndex="10" GridPane.rowSpan="13">
+      <TableView fx:id="tbGeral" onMouseClicked="#onTbGeralMouseClicked" style="-fx-background-radius: 7; -fx-background-color: transparent;" GridPane.columnIndex="2" GridPane.columnSpan="46" GridPane.rowIndex="10" GridPane.rowSpan="14">
          <columns>
-            <TableColumn fx:id="columnDataTbGeral" editable="false" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="DATA" />
-            <TableColumn fx:id="columnClienteTbGeral" editable="false" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="CLIENTE" />
-            <TableColumn fx:id="columnQtdTbGeral" editable="false" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="QTD" />
-            <TableColumn fx:id="columnItemTbGeral" editable="false" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="ITEM" />
-            <TableColumn fx:id="columnUnitTbGeral" editable="false" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="UNIT" />
-            <TableColumn fx:id="columnTotalTbGeral" editable="false" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="TOTAL" />
-            <TableColumn fx:id="columnRecebidoTbGeral" editable="false" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="RECEBIDO" />
-            <TableColumn fx:id="columnStatusTbGeral" editable="false" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="STATUS" />
-            <TableColumn fx:id="columnCanalTbGeral" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="CANAL" />
+            <TableColumn fx:id="columnDataTbGeral" editable="false" resizable="false" style="-fx-alignment: CENTER;" text="DATA" />
+            <TableColumn fx:id="columnClienteTbGeral" editable="false" resizable="false" style="-fx-alignment: CENTER;" text="CLIENTE" />
+            <TableColumn fx:id="columnQtdTbGeral" editable="false" resizable="false" style="-fx-alignment: CENTER;" text="QTD" />
+            <TableColumn fx:id="columnItemTbGeral" editable="false" resizable="false" style="-fx-alignment: CENTER;" text="ITEM" />
+            <TableColumn fx:id="columnUnitTbGeral" editable="false" resizable="false" style="-fx-alignment: CENTER;" text="UNIT" />
+            <TableColumn fx:id="columnTotalTbGeral" editable="false" resizable="false" style="-fx-alignment: CENTER;" text="TOTAL" />
+            <TableColumn fx:id="columnRecebidoTbGeral" editable="false" resizable="false" style="-fx-alignment: CENTER;" text="RECEBIDO" />
+            <TableColumn fx:id="columnStatusTbGeral" editable="false" resizable="false" style="-fx-alignment: CENTER;" text="STATUS" />
+            <TableColumn fx:id="columnCanalTbGeral" editable="false" resizable="false" style="-fx-alignment: CENTER;" text="CANAL" />
          </columns>
       </TableView>
-      <TableView fx:id="tbShopee" onMouseClicked="#onTbShopeeClicked" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" GridPane.columnIndex="2" GridPane.columnSpan="46" GridPane.rowIndex="10" GridPane.rowSpan="13">
+      <TableView fx:id="tbShopee" onMouseClicked="#onTbShopeeClicked" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" GridPane.columnIndex="2" GridPane.columnSpan="46" GridPane.rowIndex="10" GridPane.rowSpan="14">
          <columns>
             <TableColumn fx:id="columnDataTbShopee" editable="false" maxWidth="-1.0" minWidth="85.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="DATA" />
             <TableColumn fx:id="columnClienteTbShopee" editable="false" maxWidth="-1.0" minWidth="300.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="CLIENTE" />
@@ -192,7 +192,7 @@
             <TableColumn fx:id="columnStatusTbShopee" editable="false" maxWidth="-1.0" minWidth="93.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="STATUS" />
          </columns>
       </TableView>
-      <TableView fx:id="tbMercadoLivre" onMouseClicked="#onTbMercadoLivreClicked" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" GridPane.columnIndex="2" GridPane.columnSpan="46" GridPane.rowIndex="10" GridPane.rowSpan="13">
+      <TableView fx:id="tbMercadoLivre" onMouseClicked="#onTbMercadoLivreClicked" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" GridPane.columnIndex="2" GridPane.columnSpan="46" GridPane.rowIndex="10" GridPane.rowSpan="14">
          <columns>
             <TableColumn fx:id="columnDataTbMercadoLivre" editable="false" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="DATA" />
             <TableColumn fx:id="columnClienteTbMercadoLivre" editable="false" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="CLIENTE" />
@@ -205,5 +205,60 @@
             <TableColumn fx:id="columnStatusTbMercadoLivre" editable="false" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="STATUS" />
          </columns>
       </TableView>
+      <Button fx:id="btnInserir" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="33.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onInserirAction" style="-fx-background-radius: 15;" text="INSERIR +" textFill="#000022" GridPane.columnIndex="31" GridPane.columnSpan="5" GridPane.rowIndex="8" GridPane.rowSpan="2">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnBuscar" alignment="CENTER" contentDisplay="CENTER" layoutX="645.0" layoutY="213.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBuscarAction" style="-fx-background-radius: 15;" text="BUSCAR" textFill="#000022" GridPane.columnIndex="37" GridPane.columnSpan="5" GridPane.rowIndex="8" GridPane.rowSpan="2">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnLimpar" alignment="CENTER" contentDisplay="CENTER" layoutX="768.0" layoutY="213.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLimparAction" style="-fx-background-radius: 15;" text="LIMPAR" textFill="#000022" GridPane.columnIndex="43" GridPane.columnSpan="5" GridPane.rowIndex="8" GridPane.rowSpan="2">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnInserirEmMassa" alignment="CENTER" contentDisplay="CENTER" layoutX="891.0" layoutY="213.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onInserirEmMassaAction" style="-fx-background-radius: 15;" text="INSERIR EM LOTE" textFill="#000022" GridPane.columnIndex="2" GridPane.columnSpan="7" GridPane.rowIndex="8" GridPane.rowSpan="2">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnBaixarModelo" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="213.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBaixarModeloAction" style="-fx-background-radius: 15;" text="BAIXAR MODELO" textFill="#000022" GridPane.columnIndex="10" GridPane.columnSpan="7" GridPane.rowIndex="8" GridPane.rowSpan="2">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </GridPane>

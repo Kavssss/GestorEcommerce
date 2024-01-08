@@ -29,18 +29,15 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -72,13 +69,10 @@ public class ViewVendasController implements Initializable {
 	private Button btnDashboard;
 
 	@FXML
-	private Button btnOpcoes;
+	private Button btnTaxas;
 
 	@FXML
 	private Button btnVendas;
-
-	@FXML
-	private Label labelLegenda;
 
 	@FXML
 	private ComboBox<String> cbCanal;
@@ -154,10 +148,10 @@ public class ViewVendasController implements Initializable {
 	private TextField txtCodItem;
 
 	@FXML
-	private TextField txtDataFim;
+    private DatePicker dpDataFim;
 
-	@FXML
-	private TextField txtDataInicio;
+    @FXML
+    private DatePicker dpDataInicio;
 
 	@FXML
 	private TextField txtQtde;
@@ -165,12 +159,8 @@ public class ViewVendasController implements Initializable {
 	@FXML
 	private ComboBox<String> cbStatus;
 
-	@FXML
-	private Label txtErroData;
-
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		labelLegenda.setVisible(Boolean.FALSE);
 		setNumberFields();
 		setItensComboBox();
 	}
@@ -190,15 +180,15 @@ public class ViewVendasController implements Initializable {
 		}
 	}
 
-	@FXML
-	void onDataInicioReleased(KeyEvent event) {
-		DataUtils.formataData(txtDataInicio, event);
-	}
-
-	@FXML
-	void onDataFimReleased(KeyEvent event) {
-		DataUtils.formataData(txtDataFim, event);
-	}
+//	@FXML
+//	void onDataInicioReleased(KeyEvent event) {
+//		DataUtils.formataData(txtDataInicio, event);
+//	}
+//
+//	@FXML
+//	void onDataFimReleased(KeyEvent event) {
+//		DataUtils.formataData(txtDataFim, event);
+//	}
 
 	@FXML
 	void onInserirAction(ActionEvent event) {
@@ -208,33 +198,19 @@ public class ViewVendasController implements Initializable {
 	@FXML
 	void onBuscarAction() {
 		String canal = cbCanal.getSelectionModel().getSelectedItem();
-		Date dataInicio = !txtDataInicio.getText().isBlank() ? DataUtils.stringToDate(txtDataInicio.getText()) : null;
-		Date dataFim = !txtDataFim.getText().isBlank() ? DataUtils.stringToDate(txtDataFim.getText()) : null;
+		Date dataInicio = Date.valueOf(dpDataInicio.getValue());
+		Date dataFim = Date.valueOf(dpDataFim.getValue());
 		String tipoAnuncio = cbTipoAnuncio.getSelectionModel().getSelectedItem();
 		Integer qtde = !txtQtde.getText().isBlank() ? Integer.parseInt(txtQtde.getText()) : null;
 		String codItem = !txtCodItem.getText().isBlank() ? "%" + txtCodItem.getText() + "%" : null;
 		String cliente = !txtCliente.getText().isBlank() ? "%" + txtCliente.getText() + "%" : null;
 		String status = cbStatus.getSelectionModel().getSelectedItem();
-
-		if (dataInicio == null && dataFim != null) {
-			Insets curMargins = StackPane.getMargin(txtErroData);
-			StackPane.setMargin(txtErroData,
-					new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), 260));
-			txtErroData.setVisible(true);
-			return;
-		}
-
-		if (dataInicio != null && dataFim == null) {
-			Insets curMargins = StackPane.getMargin(txtErroData);
-			StackPane.setMargin(txtErroData,
-					new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), 458));
-			txtErroData.setVisible(true);
-			return;
-		}
-
-		if ((dataInicio == null && dataFim == null) || (dataInicio != null && dataFim != null)) {
-			txtErroData.setVisible(false);
-		}
+		
+		Double d = tbGeral.getWidth();
+		
+		columnDataTbGeral.setMinWidth(d * 0.5);
+		columnDataTbGeral.setMaxWidth(d * 0.5);
+		columnDataTbGeral.setPrefWidth(d * 0.5);
 
 		if (canal == null || canal.equals(Constants.LOJA.GERAL)) {
 			try {
@@ -256,10 +232,6 @@ public class ViewVendasController implements Initializable {
 				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			}
 		}
-		if (tbGeral.isVisible())
-			labelLegenda.setVisible(Boolean.TRUE);
-		else
-			labelLegenda.setVisible(Boolean.FALSE);
 	}
 
 	private void montaTabelaGeral(List<VendaGeralDTO> vendas) {
@@ -310,8 +282,8 @@ public class ViewVendasController implements Initializable {
 	void onLimparAction() {
 		cbCanal.getSelectionModel().clearSelection();
 		cbCanal.setPromptText("Canal de Venda");
-		txtDataInicio.setText("");
-		txtDataFim.setText("");
+//		txtDataInicio.setText("");
+//		txtDataFim.setText("");
 		cbTipoAnuncio.getSelectionModel().clearSelection();
 		txtQtde.setText("");
 		txtCodItem.setText("");
@@ -319,8 +291,6 @@ public class ViewVendasController implements Initializable {
 		cbStatus.getSelectionModel().clearSelection();
 		cbStatus.setPromptText("Status");
 		setVisibilityTables(false, false, false);
-		txtErroData.setVisible(false);
-		labelLegenda.setVisible(Boolean.FALSE);
 	}
 
 	@FXML
@@ -359,10 +329,10 @@ public class ViewVendasController implements Initializable {
 
 	private void setNumberFields() {
 		Constraints.setTextFieldNumber(txtQtde);
-		Constraints.setTextFieldNumberBar(txtDataInicio);
-		Constraints.setTextFieldMaxLength(txtDataInicio, 10);
-		Constraints.setTextFieldNumberBar(txtDataFim);
-		Constraints.setTextFieldMaxLength(txtDataFim, 10);
+//		Constraints.setTextFieldNumberBar(txtDataInicio);
+//		Constraints.setTextFieldMaxLength(txtDataInicio, 10);
+//		Constraints.setTextFieldNumberBar(txtDataFim);
+//		Constraints.setTextFieldMaxLength(txtDataFim, 10);
 	}
 
 	private void setItensComboBox() {
@@ -490,7 +460,7 @@ public class ViewVendasController implements Initializable {
 	}
 
 	@FXML
-	void onOpcoesAction(ActionEvent event) {
+	void onTaxasAction(ActionEvent event) {
 		LoadScene.callOpcoesModal(Constraints.currentStage(event), getClass());
 	}
 

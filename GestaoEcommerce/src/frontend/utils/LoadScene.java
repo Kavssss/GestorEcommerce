@@ -31,7 +31,7 @@ public class LoadScene {
 		stage.setTitle("Gestor Eccomerce");
 		Image icon = new Image(currentClass.getResourceAsStream("../images/logo.png"));
 		stage.getIcons().add(icon);
-		stage.setResizable(false);
+//		stage.setResizable(false);
 
 		Parent indexFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.INDEX));
 		Parent vendasFxml = FXMLLoader.load(currentClass.getResource(Constants.VIEWS.VENDAS));
