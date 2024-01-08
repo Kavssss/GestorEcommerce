@@ -45,7 +45,7 @@
             <Insets left="75.0" top="77.0" />
          </StackPane.margin>
       </Label>
-      <TextField fx:id="txtUsuario" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-color: rgb(128,128,155); -fx-background-radius: 15;" StackPane.alignment="TOP_CENTER">
+      <TextField fx:id="txtUsuario" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-color: #ddd; -fx-background-radius: 15;" StackPane.alignment="TOP_CENTER">
          <StackPane.margin>
             <Insets top="95.0" />
          </StackPane.margin>
@@ -58,7 +58,7 @@
             <Font size="11.0" />
          </font>
       </Label>
-      <PasswordField fx:id="txtSenha" layoutX="85.0" layoutY="215.0" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-radius: 15; -fx-background-color: rgb(128,128,155);" StackPane.alignment="TOP_CENTER">
+      <PasswordField fx:id="txtSenha" layoutX="85.0" layoutY="215.0" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-radius: 15; -fx-background-color: #ddd;" StackPane.alignment="TOP_CENTER">
          <StackPane.margin>
             <Insets top="150.0" />
          </StackPane.margin>
@@ -71,12 +71,12 @@
             <Font size="11.0" />
          </font>
       </Label>
-      <PasswordField fx:id="txtConfirmarSenha" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-radius: 15; -fx-background-color: rgb(128,128,155);" StackPane.alignment="TOP_CENTER">
+      <PasswordField fx:id="txtConfirmarSenha" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-radius: 15; -fx-background-color: #ddd;" StackPane.alignment="TOP_CENTER">
          <StackPane.margin>
             <Insets top="205.0" />
          </StackPane.margin>
       </PasswordField>
-      <Button fx:id="btnSalvar" maxHeight="23.0" maxWidth="85.0" minHeight="23.0" minWidth="85.0" mnemonicParsing="false" onAction="#onSalvarAction" prefHeight="23.0" prefWidth="85.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="SALVAR" StackPane.alignment="BOTTOM_CENTER">
+      <Button fx:id="btnSalvar" maxHeight="23.0" maxWidth="85.0" minHeight="23.0" minWidth="85.0" mnemonicParsing="false" onAction="#onSalvarAction" prefHeight="23.0" prefWidth="85.0" style="-fx-background-radius: 15;" text="SALVAR" textFill="#000022" StackPane.alignment="BOTTOM_CENTER">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
@@ -95,7 +95,7 @@
             <Insets top="236.0" />
          </StackPane.margin>
       </Label>
-      <Button fx:id="btnX" alignment="CENTER" maxHeight="20.0" maxWidth="20.0" minHeight="20.0" minWidth="20.0" mnemonicParsing="false" onAction="#onXAction" prefHeight="20.0" prefWidth="20.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="X" StackPane.alignment="TOP_RIGHT">
+      <Button fx:id="btnX" alignment="CENTER" maxHeight="20.0" maxWidth="30.0" minHeight="20.0" minWidth="30.0" mnemonicParsing="false" onAction="#onXAction" prefHeight="20.0" prefWidth="30.0" style="-fx-text-fill: rgb(0,0,60);" text="X" textFill="#000022" StackPane.alignment="TOP_RIGHT">
          <font>
             <Font name="Arial Bold" size="9.0" />
          </font>
@@ -103,7 +103,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
          <StackPane.margin>
-            <Insets right="10.0" top="10.0" />
+            <Insets right="5.0" top="5.0" />
          </StackPane.margin>
       </Button>
    </children>

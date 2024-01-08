@@ -49,7 +49,7 @@
             <Font size="11.0" />
          </font>
       </Label>
-      <PasswordField fx:id="txtSenha" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-radius: 15; -fx-background-color: #80809B;" StackPane.alignment="TOP_CENTER">
+      <PasswordField fx:id="txtSenha" maxHeight="29.0" maxWidth="250.0" minHeight="29.0" minWidth="250.0" prefHeight="29.0" prefWidth="250.0" style="-fx-background-radius: 15; -fx-background-color: #ddd;" StackPane.alignment="TOP_CENTER">
          <StackPane.margin>
             <Insets top="120.0" />
          </StackPane.margin>
@@ -59,7 +59,7 @@
             <Insets top="155.0" />
          </StackPane.margin>
       </Label>
-      <Button fx:id="btnX" alignment="CENTER" maxHeight="20.0" maxWidth="20.0" minHeight="20.0" minWidth="30.0" mnemonicParsing="false" onAction="#onXAction" prefHeight="20.0" prefWidth="20.0" style="-fx-text-fill: rgb(0,0,60);" text="X" StackPane.alignment="TOP_RIGHT">
+      <Button fx:id="btnX" alignment="CENTER" maxHeight="20.0" maxWidth="20.0" minHeight="20.0" minWidth="30.0" mnemonicParsing="false" onAction="#onXAction" prefHeight="20.0" prefWidth="20.0" style="-fx-text-fill: rgb(0,0,60);" text="X" textFill="#000022" StackPane.alignment="TOP_RIGHT">
          <font>
             <Font name="Arial Bold" size="9.0" />
          </font>
@@ -70,7 +70,7 @@
             <Insets right="5.0" top="5.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="btnNovo" maxHeight="23.0" maxWidth="80.0" minHeight="23.0" minWidth="80.0" mnemonicParsing="false" onAction="#onNovoAction" prefHeight="23.0" prefWidth="80.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="NOVO +" StackPane.alignment="BOTTOM_LEFT">
+      <Button fx:id="btnNovo" maxHeight="23.0" maxWidth="80.0" minHeight="23.0" minWidth="80.0" mnemonicParsing="false" onAction="#onNovoAction" prefHeight="23.0" prefWidth="80.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="NOVO +" textFill="#000022" StackPane.alignment="BOTTOM_LEFT">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
@@ -81,7 +81,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnEntrar" maxHeight="23.0" maxWidth="85.0" minHeight="23.0" minWidth="85.0" mnemonicParsing="false" onAction="#onEntrarAction" prefHeight="23.0" prefWidth="85.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="ENTRAR" StackPane.alignment="BOTTOM_RIGHT">
+      <Button fx:id="btnEntrar" maxHeight="23.0" maxWidth="85.0" minHeight="23.0" minWidth="85.0" mnemonicParsing="false" onAction="#onEntrarAction" prefHeight="23.0" prefWidth="85.0" style="-fx-background-radius: 15; -fx-text-fill: rgb(0,0,60);" text="ENTRAR" textFill="#000022" StackPane.alignment="BOTTOM_RIGHT">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
