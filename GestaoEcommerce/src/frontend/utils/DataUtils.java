@@ -3,6 +3,7 @@ package frontend.utils;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +15,10 @@ import javafx.scene.input.KeyEvent;
 
 public class DataUtils {
 
+	public static final String MAX_DATE = "9999-12-31";
+	public static final String MIN_DATE = "0001-01-01";
+	public final Date TODAY = Date.valueOf(LocalDate.now());
+	
 	public static String addBarraData(String data) {
 		if (data.length() == 2)
 			return data.concat("/");

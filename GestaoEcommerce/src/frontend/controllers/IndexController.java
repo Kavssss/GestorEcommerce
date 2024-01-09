@@ -23,7 +23,7 @@ public class IndexController implements Initializable {
 	private Button btnProdutos;
 
 	@FXML
-	private Button btnOpcoes;
+	private Button btnTaxas;
 
 	@FXML
 	private Button btnVendas;
@@ -44,7 +44,7 @@ public class IndexController implements Initializable {
 	}
 
 	@FXML
-	void onOpcoesAction(ActionEvent event) {
+	void onTaxasAction(ActionEvent event) {
 		LoadScene.callOpcoesModal(Constraints.currentStage(event), getClass());
 	}
 
@@ -57,6 +57,9 @@ public class IndexController implements Initializable {
             	LoadScene.callLoginModal(LoadScene.getStage(), getClass());
             }
         });
+		LoadScene.windowSizes();
 	}
+	
+	
 
 }

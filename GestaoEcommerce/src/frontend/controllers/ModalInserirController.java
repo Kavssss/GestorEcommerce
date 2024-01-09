@@ -295,7 +295,7 @@ public class ModalInserirController implements Initializable {
 
 	@FXML
 	void onDataReleased(KeyEvent event) {
-		DataUtils.formataData(txtData, event);
+//		DataUtils.formataData(txtData, event);
 	}
 
 	@FXML
@@ -592,7 +592,7 @@ public class ModalInserirController implements Initializable {
 		Constraints.setTextFieldNumber(txtQtde3);
 		Constraints.setTextFieldNumber(txtQtde4);
 		Constraints.setTextFieldNumber(txtQtde5);
-		Constraints.setTextFieldNumberBar(txtData);
+//		Constraints.setTextFieldNumberBar(txtData);
 		Constraints.setTextFieldMaxLength(txtData, 10);
 	}
 
@@ -651,7 +651,7 @@ public class ModalInserirController implements Initializable {
 			cbCanal.setValue(Constants.LOJA.SHOPEE);
 			cbCanal.setEditable(Boolean.FALSE);
 			setPositionFields(cbCanal.getSelectionModel().getSelectedItem());
-			txtData.setText(DataUtils.dateToString(vendaShopee.getData()));
+//			txtData.setText(DataUtils.dateToString(vendaShopee.getData()));
 			txtCliente.setText(vendaShopee.getCliente());
 			cbItem1.setValue(itemShopee.getCodItem());
 			txtQtde1.setText(itemShopee.getQtde().toString());
@@ -672,7 +672,7 @@ public class ModalInserirController implements Initializable {
 			cbCanal.setValue(Constants.LOJA.MERCADO_LIVRE);
 			cbCanal.setEditable(Boolean.FALSE);
 			setPositionFields(cbCanal.getSelectionModel().getSelectedItem());
-			txtData.setText(DataUtils.dateToString(vendaML.getData()));
+//			txtData.setText(DataUtils.dateToString(vendaML.getData()));
 			txtCliente.setText(vendaML.getCliente());
 			cbItem1.setValue(itemML.getCodItem());
 			cbTipoAnuncio1.setValue(itemML.getTipoAnuncio());

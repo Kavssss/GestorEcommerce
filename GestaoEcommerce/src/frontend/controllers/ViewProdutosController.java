@@ -4,9 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import backend.controllers.ItemController;
 import backend.dto.ItemDTO;
@@ -17,6 +19,7 @@ import frontend.views.utils.Constraints;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -27,7 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class ViewProdutosController {
+public class ViewProdutosController implements Initializable {
 
 	ItemController itemController = new ItemController();
 
@@ -198,6 +201,12 @@ public class ViewProdutosController {
 	@FXML
 	void onBaixarModeloAction(ActionEvent event) {
 		Alerts.modeloProdutoAlert();
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		LoadScene.getStage().setWidth(LoadScene.getWidth());
+		LoadScene.getStage().setHeight(LoadScene.getHeight());
 	}
 
 }

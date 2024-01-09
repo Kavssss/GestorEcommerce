@@ -33,6 +33,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -158,9 +159,17 @@ public class ViewVendasController implements Initializable {
 
 	@FXML
 	private ComboBox<String> cbStatus;
+	
+	@FXML
+    private Label labelError;
+	
+	@FXML
+    private Button btnCopyDate;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		LoadScene.getStage().setWidth(LoadScene.getWidth());
+		LoadScene.getStage().setHeight(LoadScene.getHeight());
 		setNumberFields();
 		setItensComboBox();
 	}
@@ -180,37 +189,63 @@ public class ViewVendasController implements Initializable {
 		}
 	}
 
-//	@FXML
-//	void onDataInicioReleased(KeyEvent event) {
-//		DataUtils.formataData(txtDataInicio, event);
-//	}
-//
-//	@FXML
-//	void onDataFimReleased(KeyEvent event) {
-//		DataUtils.formataData(txtDataFim, event);
-//	}
-
 	@FXML
 	void onInserirAction(ActionEvent event) {
 		LoadScene.callInsertVendaModal(Constraints.currentStage(event), getClass());
+	}
+	
+	private void ajustaColuna(TableView<?> table, TableColumn<?, ?> column, Double percent) {
+		Double value = (table.getWidth() - 22D) * percent;
+		column.setMinWidth(value);
+		column.setMaxWidth(value);
+		column.setPrefWidth(value);
 	}
 
 	@FXML
 	void onBuscarAction() {
 		String canal = cbCanal.getSelectionModel().getSelectedItem();
-		Date dataInicio = Date.valueOf(dpDataInicio.getValue());
-		Date dataFim = Date.valueOf(dpDataFim.getValue());
+		Date dataInicio = Objects.nonNull(dpDataInicio.getValue()) ? Date.valueOf(dpDataInicio.getValue()) : null;
+		Date dataFim = Objects.nonNull(dpDataFim.getValue()) ? Date.valueOf(dpDataFim.getValue()) : null;
 		String tipoAnuncio = cbTipoAnuncio.getSelectionModel().getSelectedItem();
 		Integer qtde = !txtQtde.getText().isBlank() ? Integer.parseInt(txtQtde.getText()) : null;
 		String codItem = !txtCodItem.getText().isBlank() ? "%" + txtCodItem.getText() + "%" : null;
 		String cliente = !txtCliente.getText().isBlank() ? "%" + txtCliente.getText() + "%" : null;
 		String status = cbStatus.getSelectionModel().getSelectedItem();
 		
-		Double d = tbGeral.getWidth();
+		ajustaColuna(tbGeral, columnDataTbGeral, 0.1);
+		ajustaColuna(tbGeral, columnQtdTbGeral, 0.05);
+		ajustaColuna(tbGeral, columnItemTbGeral, 0.1);
+		ajustaColuna(tbGeral, columnClienteTbGeral, 0.3);
+		ajustaColuna(tbGeral, columnUnitTbGeral, 0.1);
+		ajustaColuna(tbGeral, columnTotalTbGeral, 0.1);
+		ajustaColuna(tbGeral, columnRecebidoTbGeral, 0.1);
+		ajustaColuna(tbGeral, columnStatusTbGeral, 0.1);
+		ajustaColuna(tbGeral, columnCanalTbGeral, 0.05);
 		
-		columnDataTbGeral.setMinWidth(d * 0.5);
-		columnDataTbGeral.setMaxWidth(d * 0.5);
-		columnDataTbGeral.setPrefWidth(d * 0.5);
+		ajustaColuna(tbMercadoLivre, columnDataTbMercadoLivre, 0.09);
+		ajustaColuna(tbMercadoLivre, columnAnuncioTbMercadoLivre, 0.09);
+		ajustaColuna(tbMercadoLivre, columnQtdTbMercadoLivre, 0.07);
+		ajustaColuna(tbMercadoLivre, columnItemTbMercadoLivre, 0.09);
+		ajustaColuna(tbMercadoLivre, columnClienteTbMercadoLivre, 0.3);
+		ajustaColuna(tbMercadoLivre, columnUnitTbMercadoLivre, 0.09);
+		ajustaColuna(tbMercadoLivre, columnTotalTbMercadoLivre, 0.09);
+		ajustaColuna(tbMercadoLivre, columnRecebidoTbMercadoLivre, 0.09);
+		ajustaColuna(tbMercadoLivre, columnStatusTbMercadoLivre, 0.09);
+		
+		if (Objects.nonNull(dataInicio) && Objects.isNull(dataFim))
+			dataFim = Date.valueOf(DataUtils.MAX_DATE);
+		else if (Objects.isNull(dataInicio) && Objects.nonNull(dataFim))
+			dataInicio = Date.valueOf(DataUtils.MIN_DATE);
+		
+		System.out.println(dataInicio);
+		System.out.println(dataFim);
+		
+		if (Objects.nonNull(dataInicio) && Objects.nonNull(dataFim))
+			if (dataInicio.after(dataFim)) {
+				labelError.setText("\'Data Início\' após \'Data Fim\'");
+				labelError.setVisible(true);
+				return;
+			}
 
 		if (canal == null || canal.equals(Constants.LOJA.GERAL)) {
 			try {
@@ -281,15 +316,16 @@ public class ViewVendasController implements Initializable {
 	@FXML
 	void onLimparAction() {
 		cbCanal.getSelectionModel().clearSelection();
-		cbCanal.setPromptText("Canal de Venda");
-//		txtDataInicio.setText("");
-//		txtDataFim.setText("");
+		cbCanal.setPromptText("");
 		cbTipoAnuncio.getSelectionModel().clearSelection();
 		txtQtde.setText("");
 		txtCodItem.setText("");
 		txtCliente.setText("");
 		cbStatus.getSelectionModel().clearSelection();
-		cbStatus.setPromptText("Status");
+		cbStatus.setPromptText("");
+		dpDataInicio.setValue(null);
+		dpDataFim.setValue(null);
+		btnCopyDate.setVisible(false);
 		setVisibilityTables(false, false, false);
 	}
 
@@ -329,10 +365,9 @@ public class ViewVendasController implements Initializable {
 
 	private void setNumberFields() {
 		Constraints.setTextFieldNumber(txtQtde);
-//		Constraints.setTextFieldNumberBar(txtDataInicio);
-//		Constraints.setTextFieldMaxLength(txtDataInicio, 10);
-//		Constraints.setTextFieldNumberBar(txtDataFim);
-//		Constraints.setTextFieldMaxLength(txtDataFim, 10);
+		Constraints.setTextFieldMaxLength(txtQtde, 5);
+		Constraints.setTextFieldNumberBar(dpDataInicio);
+		Constraints.setTextFieldNumberBar(dpDataFim);
 	}
 
 	private void setItensComboBox() {
@@ -468,5 +503,25 @@ public class ViewVendasController implements Initializable {
 	void onBaixarModeloAction(ActionEvent event) {
 		Alerts.tipoArquivoAlert();
 	}
+	
+	@FXML
+	void onDataInicioAction(ActionEvent event) {
+		btnCopyDate.setText(">");
+		btnCopyDate.setVisible(true);
+	}
+	
+	@FXML
+    void onDataFimAction(ActionEvent event) {
+		btnCopyDate.setText("<");
+		btnCopyDate.setVisible(true);
+    }
+	
+	@FXML
+    void onCopyDateAction(ActionEvent event) {
+		if (btnCopyDate.getText().equals("<"))
+			dpDataInicio.setValue(dpDataFim.getValue());
+		else
+			dpDataFim.setValue(dpDataInicio.getValue());
+    }
 
 }

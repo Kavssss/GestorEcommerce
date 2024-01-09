@@ -4,6 +4,7 @@ import frontend.utils.enums.TipoUsuario;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -20,10 +21,13 @@ public class Constraints {
 		});
 	}
 
-	public static void setTextFieldNumberBar(TextField txt) {
-		txt.textProperty().addListener((obs, oldValue, newValue) -> {
+	public static void setTextFieldNumberBar(DatePicker txt) {
+		txt.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+			
+			
+			
 			if (newValue != null && !newValue.matches("[\\d/]*")) {
-				txt.setText(oldValue);
+				txt.getEditor().setText(oldValue);
 			}
 		});
 	}

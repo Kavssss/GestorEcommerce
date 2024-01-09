@@ -28,7 +28,7 @@ public interface Constants {
 	}
 
 	interface VIEWS {
-		String INDEX = "/frontend/views/Index.fxml";
+		String INDEX = "/frontend/views/Index_R.fxml";
 		String VENDAS = "/frontend/views/ViewVendas_R.fxml";
 		String PRODUTOS = "/frontend/views/ViewProdutos.fxml";
 		String DASHBOARD = "/frontend/views/Dashboard.fxml";

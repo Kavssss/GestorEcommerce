@@ -25,6 +25,9 @@ public class LoadScene {
 	private static Scene vendasScene;
 	private static Scene produtosScene;
 	private static Scene dashboardScene;
+	
+	private static Double width = 1024D;
+	private static Double height = 600D;
 
 	public static void load(Stage stage, Class<?> currentClass) throws IOException {
 		setStage(stage);
@@ -169,6 +172,16 @@ public class LoadScene {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
 		}
 	}
+	
+	public static void windowSizes() {
+		getStage().widthProperty().addListener((observable, oldValue, newValue) -> {
+            setWidth(newValue.doubleValue());
+        });
+		
+		getStage().heightProperty().addListener((observable, oldValue, newValue) -> {
+			setHeight(newValue.doubleValue());
+        });
+	}
 
 	public static Stage getStage() {
 		return stage;
@@ -192,6 +205,22 @@ public class LoadScene {
 
 	public static void setLoginModalStage(Stage loginModal) {
 		LoadScene.loginModalStage = loginModal;
+	}
+
+	public static Double getWidth() {
+		return width;
+	}
+
+	public static void setWidth(Double width) {
+		LoadScene.width = width;
+	}
+
+	public static Double getHeight() {
+		return height;
+	}
+
+	public static void setHeight(Double height) {
+		LoadScene.height = height;
 	}
 	
 }

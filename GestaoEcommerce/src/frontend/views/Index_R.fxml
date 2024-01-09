@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" style="-fx-background-color: linear-gradient(to top, #000, #002);" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.IndexController">
+  <columnConstraints>
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+    <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+      <ColumnConstraints percentWidth="2.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints percentHeight="4.0" />
+    <RowConstraints percentHeight="4.0" />
+    <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+      <RowConstraints percentHeight="4.0" />
+  </rowConstraints>
+   <children>
+      <Button fx:id="btnVendas" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onVendasAction" style="-fx-background-radius: 15;" text="VENDAS" textFill="#000022" GridPane.columnIndex="2" GridPane.columnSpan="7" GridPane.rowIndex="1">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnProdutos" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onProdutosAction" style="-fx-background-radius: 15;" text="PRODUTOS" textAlignment="CENTER" textFill="#000022" GridPane.columnIndex="10" GridPane.columnSpan="7" GridPane.rowIndex="1">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDashboard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDashboardAction" style="-fx-background-radius: 15;" text="DASHBOARD" textFill="#000022" GridPane.columnIndex="18" GridPane.columnSpan="7" GridPane.rowIndex="1">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnTaxas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTaxasAction" style="-fx-background-radius: 15;" text="TAXAS" textFill="#000022" GridPane.columnIndex="26" GridPane.columnSpan="5" GridPane.rowIndex="1">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</GridPane>
