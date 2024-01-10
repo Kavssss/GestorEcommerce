@@ -366,8 +366,6 @@ public class ViewVendasController implements Initializable {
 	private void setNumberFields() {
 		Constraints.setTextFieldNumber(txtQtde);
 		Constraints.setTextFieldMaxLength(txtQtde, 5);
-		Constraints.setTextFieldNumberBar(dpDataInicio);
-		Constraints.setTextFieldNumberBar(dpDataFim);
 	}
 
 	private void setItensComboBox() {

@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="javafx.scene.chart.CategoryAxis"/>
-    <fullyQualifiedTypeName name="java.util.Arrays"/>
-    <fullyQualifiedTypeName name="frontend.utils.Constants.MES_ABREV"/>
-    <fullyQualifiedTypeName name="java.time.Month"/>
     <fullyQualifiedTypeName name="java.time.Year"/>
     <fullyQualifiedTypeName name="frontend.utils.Constants.ANO"/>
     <fullyQualifiedTypeName name="frontend.utils.Constants.MES"/>
     <fullyQualifiedTypeName name="frontend.utils.Constants.SEMESTRE"/>
     <fullyQualifiedTypeName name="frontend.utils.enuns.TipoOperacao"/>
     <fullyQualifiedTypeName name="javafx.scene.input.MouseEvent"/>
-    <fullyQualifiedTypeName name="frontend.utils.DataUtils"/>
     <fullyQualifiedTypeName name="backend.utils.CalculaTotalERecebido"/>
     <fullyQualifiedTypeName name="java.awt.Image"/>
     <fullyQualifiedTypeName name="java.net.URL"/>
@@ -26,7 +21,6 @@
     <fullyQualifiedTypeName name="javafx.scene.image.Image"/>
     <fullyQualifiedTypeName name="backend.utils.Constants.TAXA_SHOPEE"/>
     <fullyQualifiedTypeName name="javafx.scene.control.Button"/>
-    <fullyQualifiedTypeName name="javafx.scene.control.TextField"/>
     <fullyQualifiedTypeName name="backend.utils.Taxas"/>
     <fullyQualifiedTypeName name="frontend.utils.Constants.LOJA"/>
     <fullyQualifiedTypeName name="java.io.FileReader"/>
@@ -45,19 +39,25 @@
     <fullyQualifiedTypeName name="frontend.utils.enums.TipoUsuario"/>
     <fullyQualifiedTypeName name="lombok.Setter"/>
     <fullyQualifiedTypeName name="java.util.Objects"/>
-    <fullyQualifiedTypeName name="javafx.scene.control.Label"/>
     <fullyQualifiedTypeName name="javafx.stage.StageStyle"/>
-    <fullyQualifiedTypeName name="javafx.fxml.Initializable"/>
     <fullyQualifiedTypeName name="frontend.views.utils.Alerts"/>
     <fullyQualifiedTypeName name="javafx.scene.control.Alert.AlertType"/>
-    <fullyQualifiedTypeName name="javafx.scene.Node"/>
     <fullyQualifiedTypeName name="frontend.views.utils.CSS"/>
     <fullyQualifiedTypeName name="frontend.views.utils.CSS.FIELD"/>
     <fullyQualifiedTypeName name="frontend.views.utils.CSS.LIGHT_THEME"/>
     <fullyQualifiedTypeName name="javafx.scene.paint.Color"/>
     <fullyQualifiedTypeName name="frontend.utils.ColorUtils"/>
     <fullyQualifiedTypeName name="frontend.views.utils.CSS.COLOR"/>
-    <fullyQualifiedTypeName name="java.time.LocalDate"/>
     <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="java.time.ZoneId"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.ScrollBar"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.ScrollPane"/>
+    <fullyQualifiedTypeName name="java.time.LocalDate"/>
+    <fullyQualifiedTypeName name="frontend.utils.DataUtils"/>
+    <fullyQualifiedTypeName name="javafx.scene.input.KeyEvent"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.TextField"/>
+    <fullyQualifiedTypeName name="javafx.fxml.Initializable"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.Label"/>
+    <fullyQualifiedTypeName name="javafx.scene.Node"/>
+    <fullyQualifiedTypeName name="javafx.scene.layout.GridPane"/>
 </qualifiedTypeNameHistroy>

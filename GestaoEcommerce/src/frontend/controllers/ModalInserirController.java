@@ -17,7 +17,6 @@ import backend.entities.shopee.ItemShopeeEntity;
 import backend.entities.shopee.VendaShopeeEntity;
 import backend.utils.CalculaTotalERecebido;
 import frontend.utils.Constants;
-import frontend.utils.DataUtils;
 import frontend.utils.LoadScene;
 import frontend.views.utils.Alerts;
 import frontend.views.utils.Constraints;
@@ -25,13 +24,15 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.GridPane;
 import models.DbException;
 
 public class ModalInserirController implements Initializable {
@@ -108,7 +109,7 @@ public class ModalInserirController implements Initializable {
 	private TextField txtCliente;
 
 	@FXML
-	private TextField txtData;
+    private DatePicker dpData;
 
 	@FXML
 	private TextField txtIdDado;
@@ -175,9 +176,29 @@ public class ModalInserirController implements Initializable {
 
 	@FXML
 	private TextField txtValorUnitario5;
+	
+	@FXML
+    private Label labelTipoAnuncio;
+	
+	@FXML
+    private Label labelCodItem;
+	
+	@FXML
+    private Label labelQtde;
+	
+	@FXML
+    private Label labelValorUnitario;
+	
+	@FXML
+    private Label labelValorTotal;
+	
+	@FXML
+    private Label labelValorRecebido;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		LoadScene.getModalStage().setWidth(LoadScene.getModalWidth());
+		LoadScene.getModalStage().setHeight(LoadScene.getModalHeight());
 		setNumberFields();
 		for (int i = 2; i <= 5; i++)
 			setVisibilityInsertItem(i, Boolean.FALSE);
@@ -390,7 +411,7 @@ public class ModalInserirController implements Initializable {
 		Long idVenda = !txtIdVenda.getText().isBlank() ? Long.valueOf(txtIdVenda.getText()) : null;
 		Long idDado = !txtIdDado.getText().isBlank() ? Long.valueOf(txtIdDado.getText()) : null;
 		String canal = cbCanal.getSelectionModel().getSelectedItem();
-		Date data = !txtData.getText().isBlank() ? DataUtils.stringToDate(txtData.getText()) : null;
+		Date data = Objects.nonNull(dpData.getValue()) ? Date.valueOf(dpData.getValue()) : null;
 		String cliente = !txtCliente.getText().isBlank() ? txtCliente.getText() : null;
 		String status = cbStatus.getSelectionModel().getSelectedItem();
 
@@ -494,91 +515,82 @@ public class ModalInserirController implements Initializable {
 		}
 	}
 
+//	private void setPositionFields(String canal) {
+//		if (canal == null)
+//			return;
+//
+//		if (canal.equals(Constants.LOJA.SHOPEE)) {
+//			setComboBoxPosition(cbItem1, cbItem2, cbItem3, cbItem4, cbItem5, 142D);
+//			setTextFieldsPosition(txtQtde1, txtQtde2, txtQtde3, txtQtde4, txtQtde5, 272D);
+//			setTextFieldsPosition(txtValorUnitario1, txtValorUnitario2, txtValorUnitario3, txtValorUnitario4,
+//					txtValorUnitario5, 382D);
+//			setTextFieldsPosition(txtValorTotal1, txtValorTotal2, txtValorTotal3, txtValorTotal4, txtValorTotal5, 542D);
+//			setTextFieldsPosition(txtValorRecebido1, txtValorRecebido2, txtValorRecebido3, txtValorRecebido4,
+//					txtValorRecebido5, 702D);
+//			setButtonsPosition(btnX2, btnX3, btnX4, btnX5, 852D);
+//
+//			setVisibilityTipoAnuncio(Boolean.FALSE);
+//			setLinhasVisiveis(1);
+//		} else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
+//			setComboBoxPosition(cbItem1, cbItem2, cbItem3, cbItem4, cbItem5, 67D);
+//			setTextFieldsPosition(txtQtde1, txtQtde2, txtQtde3, txtQtde4, txtQtde5, 377D);
+//			setTextFieldsPosition(txtValorUnitario1, txtValorUnitario2, txtValorUnitario3, txtValorUnitario4,
+//					txtValorUnitario5, 477D);
+//			setTextFieldsPosition(txtValorTotal1, txtValorTotal2, txtValorTotal3, txtValorTotal4, txtValorTotal5, 627D);
+//			setTextFieldsPosition(txtValorRecebido1, txtValorRecebido2, txtValorRecebido3, txtValorRecebido4,
+//					txtValorRecebido5, 777D);
+//			setButtonsPosition(btnX2, btnX3, btnX4, btnX5, 927D);
+//
+//			cbTipoAnuncio1.setVisible(Boolean.TRUE);
+//			setLinhasVisiveis(1);
+//		}
+//	}
+	
 	private void setPositionFields(String canal) {
 		if (canal == null)
 			return;
 
 		if (canal.equals(Constants.LOJA.SHOPEE)) {
-			setComboBoxPosition(cbItem1, cbItem2, cbItem3, cbItem4, cbItem5, 142D);
-			setTextFieldsPosition(txtQtde1, txtQtde2, txtQtde3, txtQtde4, txtQtde5, 272D);
-			setTextFieldsPosition(txtValorUnitario1, txtValorUnitario2, txtValorUnitario3, txtValorUnitario4,
-					txtValorUnitario5, 382D);
-			setTextFieldsPosition(txtValorTotal1, txtValorTotal2, txtValorTotal3, txtValorTotal4, txtValorTotal5, 542D);
-			setTextFieldsPosition(txtValorRecebido1, txtValorRecebido2, txtValorRecebido3, txtValorRecebido4,
-					txtValorRecebido5, 702D);
-			setButtonsPosition(btnX2, btnX3, btnX4, btnX5, 852D);
+			setFieldsPosition(labelCodItem, cbItem1, cbItem2, cbItem3, cbItem4, cbItem5, 7);
+			setFieldsPosition(labelQtde, txtQtde1, txtQtde2, txtQtde3, txtQtde4, txtQtde5, 15);
+			setFieldsPosition(labelValorUnitario, txtValorUnitario1, txtValorUnitario2, txtValorUnitario3, txtValorUnitario4,
+					txtValorUnitario5, 21);
+			setFieldsPosition(labelValorTotal, txtValorTotal1, txtValorTotal2, txtValorTotal3, txtValorTotal4, txtValorTotal5, 29);
+			setFieldsPosition(labelValorRecebido, txtValorRecebido1, txtValorRecebido2, txtValorRecebido3, txtValorRecebido4,
+					txtValorRecebido5, 37);
+			setFieldsPosition(null, null, btnX2, btnX3, btnX4, btnX5, 44);
 
 			setVisibilityTipoAnuncio(Boolean.FALSE);
 			setLinhasVisiveis(1);
 		} else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
-			setComboBoxPosition(cbItem1, cbItem2, cbItem3, cbItem4, cbItem5, 67D);
-			setTextFieldsPosition(txtQtde1, txtQtde2, txtQtde3, txtQtde4, txtQtde5, 377D);
-			setTextFieldsPosition(txtValorUnitario1, txtValorUnitario2, txtValorUnitario3, txtValorUnitario4,
-					txtValorUnitario5, 477D);
-			setTextFieldsPosition(txtValorTotal1, txtValorTotal2, txtValorTotal3, txtValorTotal4, txtValorTotal5, 627D);
-			setTextFieldsPosition(txtValorRecebido1, txtValorRecebido2, txtValorRecebido3, txtValorRecebido4,
-					txtValorRecebido5, 777D);
-			setButtonsPosition(btnX2, btnX3, btnX4, btnX5, 927D);
+			setFieldsPosition(labelCodItem, cbItem1, cbItem2, cbItem3, cbItem4, cbItem5, 4);
+			setFieldsPosition(labelQtde, txtQtde1, txtQtde2, txtQtde3, txtQtde4, txtQtde5, 21);
+			setFieldsPosition(labelValorUnitario, txtValorUnitario1, txtValorUnitario2, txtValorUnitario3, txtValorUnitario4,
+					txtValorUnitario5, 26);
+			setFieldsPosition(labelValorTotal, txtValorTotal1, txtValorTotal2, txtValorTotal3, txtValorTotal4, txtValorTotal5, 33);
+			setFieldsPosition(labelValorRecebido, txtValorRecebido1, txtValorRecebido2, txtValorRecebido3, txtValorRecebido4,
+					txtValorRecebido5, 40);
+			setFieldsPosition(null, null, btnX2, btnX3, btnX4, btnX5, 47);
 
 			cbTipoAnuncio1.setVisible(Boolean.TRUE);
+			labelTipoAnuncio.setVisible(Boolean.TRUE);
 			setLinhasVisiveis(1);
 		}
 	}
-
-	private void setTextFieldsPosition(TextField field1, TextField field2, TextField field3, TextField field4,
-			TextField field5, Double position) {
-		Insets curMargins = StackPane.getMargin(field1);
-		StackPane.setMargin(field1,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
-		curMargins = StackPane.getMargin(field2);
-		StackPane.setMargin(field2,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
-		curMargins = StackPane.getMargin(field3);
-		StackPane.setMargin(field3,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
-		curMargins = StackPane.getMargin(field4);
-		StackPane.setMargin(field4,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
-		curMargins = StackPane.getMargin(field5);
-		StackPane.setMargin(field5,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
-	}
-
-	private void setButtonsPosition(Button button1, Button button2, Button button3, Button button4, Double position) {
-		Insets curMargins = StackPane.getMargin(button1);
-		StackPane.setMargin(button1,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
-		curMargins = StackPane.getMargin(button2);
-		StackPane.setMargin(button2,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
-		curMargins = StackPane.getMargin(button3);
-		StackPane.setMargin(button3,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
-		curMargins = StackPane.getMargin(button4);
-		StackPane.setMargin(button4,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
-	}
-
-	private void setComboBoxPosition(ComboBox<String> field1, ComboBox<String> field2, ComboBox<String> field3,
-			ComboBox<String> field4, ComboBox<String> field5, Double position) {
-		Insets curMargins = StackPane.getMargin(field1);
-		StackPane.setMargin(field1,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
-		curMargins = StackPane.getMargin(field2);
-		StackPane.setMargin(field2,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
-		curMargins = StackPane.getMargin(field3);
-		StackPane.setMargin(field3,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
-		curMargins = StackPane.getMargin(field4);
-		StackPane.setMargin(field4,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
-		curMargins = StackPane.getMargin(field5);
-		StackPane.setMargin(field5,
-				new Insets(curMargins.getTop(), curMargins.getRight(), curMargins.getBottom(), position));
+	
+	private void setFieldsPosition(Node label, Node field1, Node field2, Node field3, Node field4, Node field5, Integer position) {
+		if (Objects.nonNull(label))
+			GridPane.setColumnIndex(label, position);
+		if (Objects.nonNull(field1))
+			GridPane.setColumnIndex(field1, position);
+		GridPane.setColumnIndex(field2, position);
+		GridPane.setColumnIndex(field3, position);
+		GridPane.setColumnIndex(field4, position);
+		GridPane.setColumnIndex(field5, position);
 	}
 
 	private void setVisibilityTipoAnuncio(Boolean bool) {
+		labelTipoAnuncio.setVisible(bool);
 		cbTipoAnuncio1.setVisible(bool);
 		cbTipoAnuncio2.setVisible(bool);
 		cbTipoAnuncio3.setVisible(bool);
@@ -592,8 +604,6 @@ public class ModalInserirController implements Initializable {
 		Constraints.setTextFieldNumber(txtQtde3);
 		Constraints.setTextFieldNumber(txtQtde4);
 		Constraints.setTextFieldNumber(txtQtde5);
-//		Constraints.setTextFieldNumberBar(txtData);
-		Constraints.setTextFieldMaxLength(txtData, 10);
 	}
 
 	private void setVisibilityInsertItem(Integer row, Boolean visible) {
@@ -672,7 +682,6 @@ public class ModalInserirController implements Initializable {
 			cbCanal.setValue(Constants.LOJA.MERCADO_LIVRE);
 			cbCanal.setEditable(Boolean.FALSE);
 			setPositionFields(cbCanal.getSelectionModel().getSelectedItem());
-//			txtData.setText(DataUtils.dateToString(vendaML.getData()));
 			txtCliente.setText(vendaML.getCliente());
 			cbItem1.setValue(itemML.getCodItem());
 			cbTipoAnuncio1.setValue(itemML.getTipoAnuncio());

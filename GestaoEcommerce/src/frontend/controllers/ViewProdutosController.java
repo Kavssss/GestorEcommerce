@@ -191,9 +191,7 @@ public class ViewProdutosController implements Initializable {
 			}
 			Alerts.showAlert("Sucesso", null, "Operação realizada com sucesso.", AlertType.INFORMATION);
 			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 	}

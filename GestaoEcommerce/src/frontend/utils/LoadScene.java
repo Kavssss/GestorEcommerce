@@ -28,6 +28,8 @@ public class LoadScene {
 	
 	private static Double width = 1024D;
 	private static Double height = 600D;
+	private static Double modalWidth = getWidth() * 0.95;
+	private static Double modalHeight = getHeight() * 0.6;
 
 	public static void load(Stage stage, Class<?> currentClass) throws IOException {
 		setStage(stage);
@@ -75,6 +77,7 @@ public class LoadScene {
 			buildModal(parentStage, currentClass, Constants.MODAL.INSERIR_VENDA, "Inserir venda", false);
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
 		}
 	}
 	
@@ -83,6 +86,7 @@ public class LoadScene {
 			buildModal(parentStage, currentClass, Constants.MODAL.LOGIN, "Login", true);
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
 		}
 	}
 	
@@ -91,6 +95,7 @@ public class LoadScene {
 			buildModal(parentStage, currentClass, Constants.MODAL.CADASTRO, "Cadastrar", false);
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
 		}
 	}
 
@@ -140,6 +145,7 @@ public class LoadScene {
 			buildModal(parentStage, currentClass, Constants.MODAL.INSERIR_PRODUTO, "Inserir produto", false);
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
 		}
 	}
 
@@ -170,6 +176,7 @@ public class LoadScene {
 			buildModal(parentStage, currentClass, Constants.MODAL.OPCOES, "Opções", false);
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
 		}
 	}
 	
@@ -221,6 +228,22 @@ public class LoadScene {
 
 	public static void setHeight(Double height) {
 		LoadScene.height = height;
+	}
+
+	public static Double getModalWidth() {
+		return modalWidth;
+	}
+
+	public static void setModalWidth(Double modalWidth) {
+		LoadScene.modalWidth = modalWidth;
+	}
+
+	public static Double getModalHeight() {
+		return modalHeight;
+	}
+
+	public static void setModalHeight(Double modalHeight) {
+		LoadScene.modalHeight = modalHeight;
 	}
 	
 }
