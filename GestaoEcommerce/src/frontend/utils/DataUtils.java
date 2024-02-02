@@ -38,6 +38,18 @@ public class DataUtils {
 			return null;
 		}
 	}
+	
+	public static Date stringExcelToDate(String in) { // entrada no formato yyyy-MM-dd
+		if (in.isBlank())
+			return null;
+
+		try {
+			SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+			return new java.sql.Date(formato.parse(in).getTime());
+		} catch (ParseException e) {
+			return null;
+		}
+	}
 
 	public static String dateToString(Date in) { // saída no formato dd/MM/yyyy
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");

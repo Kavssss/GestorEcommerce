@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" style="-fx-background-color: linear-gradient(to top, #000, #002);" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.controllers.IndexController">
@@ -133,5 +134,6 @@
             <Font name="Arial Bold" size="14.0" />
          </font>
       </Button>
+      <Rectangle fx:id="recDefocus" arcHeight="5.0" height="600.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: rgba(0, 0, 0, 0.5);" visible="false" width="1024.0" GridPane.columnSpan="50" GridPane.rowSpan="25" />
    </children>
 </GridPane>

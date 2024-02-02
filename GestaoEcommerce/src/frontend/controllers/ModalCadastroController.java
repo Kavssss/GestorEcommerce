@@ -14,13 +14,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.ToggleButton;
 
 public class ModalCadastroController implements Initializable {
 
 	UsuarioController controller = new UsuarioController();
+	Boolean isAdmin = false;
 	
 	@FXML
     private Button btnSalvar;
@@ -32,12 +32,6 @@ public class ModalCadastroController implements Initializable {
     private Label labelError;
 
     @FXML
-    private RadioButton rbAdmin;
-
-    @FXML
-    private RadioButton rbPadrao;
-
-    @FXML
     private PasswordField txtConfirmarSenha;
 
     @FXML
@@ -46,12 +40,11 @@ public class ModalCadastroController implements Initializable {
     @FXML
     private TextField txtUsuario;
     
-    private ToggleGroup toggleGroup = new ToggleGroup();
+    @FXML
+    private ToggleButton switchAdmin;
     
     @Override
 	public void initialize(URL url, ResourceBundle rb) {
-        rbAdmin.setToggleGroup(toggleGroup);
-        rbPadrao.setToggleGroup(toggleGroup);
         Constraints.setNoSpaceTextField(txtSenha);
         Constraints.setNoSpaceTextField(txtConfirmarSenha);
 	}
@@ -64,10 +57,6 @@ public class ModalCadastroController implements Initializable {
     	String confirmaSenha = !txtConfirmarSenha.getText().isBlank() ? txtConfirmarSenha.getText() : null;
     	TipoUsuario tipo;
     	
-    	if (Objects.isNull(toggleGroup.getSelectedToggle())) {
-    		displayErrorMessage("Tipo de usuário não selecionado!");
-			return;
-    	}
     	if (Objects.isNull(usuario)) {
     		displayErrorMessage("Usuário não pode ser vazio!");
     		return;
@@ -89,7 +78,7 @@ public class ModalCadastroController implements Initializable {
     		return;
     	}
     	
-    	tipo = toggleGroup.getSelectedToggle().equals(rbPadrao) ? TipoUsuario.PADRAO : TipoUsuario.ADMINISTRADOR;
+    	tipo = isAdmin ? TipoUsuario.ADMINISTRADOR : TipoUsuario.PADRAO;
     	controller.insertNewUser(usuario, senha, tipo);
     	LoadScene.getModalStage().close();
     }
@@ -97,6 +86,15 @@ public class ModalCadastroController implements Initializable {
     @FXML
     void onXAction(ActionEvent event) {
     	LoadScene.getModalStage().close();
+    }
+    
+    @FXML
+    void onSwitchAdminAction(ActionEvent event) {
+    	isAdmin = !isAdmin;
+    	if (isAdmin)
+    		switchAdmin.setText("Admin");
+    	else
+    		switchAdmin.setText("Padrão");
     }
 
     private Boolean userExists(String user) {

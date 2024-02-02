@@ -28,9 +28,9 @@ public class VendaMercadoLivreController {
 	 * 
 	 * @throws SQLException
 	 */
-	public void insertVenda(Date data, String cliente, String status, String codItem, String tipoAnuncio, Integer qtde,
-			Double valorUnitario, Double valorTotal, Double valorRecebido) throws SQLException {
-		service.insertVenda(data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario, valorTotal,
+	public void insertVenda(Date data, String cliente, String status, String codItem, String tipoAnuncio, Double custoFrete,
+			Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido) throws SQLException {
+		service.insertVenda(data, cliente, status, codItem, tipoAnuncio, custoFrete, qtde, valorUnitario, valorTotal,
 				valorRecebido);
 	}
 
@@ -43,9 +43,9 @@ public class VendaMercadoLivreController {
 	 * 
 	 * @throws SQLException
 	 */
-	public void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario,
+	public void insertItemVenda(String codItem, String tipoAnuncio, Double custoFrete, Integer qtde, Double valorUnitario,
 			Double valorTotal, Double valorRecebido) throws SQLException {
-		service.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal, valorRecebido);
+		service.insertItemVenda(codItem, tipoAnuncio, custoFrete, qtde, valorUnitario, valorTotal, valorRecebido);
 	}
 
 	public VendaMercadoLivreEntity findById(Long id) throws SQLException {
@@ -53,9 +53,9 @@ public class VendaMercadoLivreController {
 	}
 
 	public void editVenda(Long idVenda, Long idDado, Date data, String cliente, String status, String codItem,
-			String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
+			String tipoAnuncio, Double custoFrete, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
 			throws SQLException {
-		service.editVenda(idVenda, idDado, data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario, valorTotal,
+		service.editVenda(idVenda, idDado, data, cliente, status, codItem, tipoAnuncio, custoFrete, qtde, valorUnitario, valorTotal,
 				valorRecebido);
 	}
 

@@ -1,11 +1,9 @@
 package frontend.controllers;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -13,16 +11,24 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import backend.controllers.VendaGeralController;
 import backend.controllers.VendaMercadoLivreController;
 import backend.controllers.VendaShopeeController;
 import backend.dto.VendaGeralDTO;
 import backend.dto.VendaMercadoLivreDTO;
 import backend.dto.VendaShopeeDTO;
-import backend.utils.CalculaTotalERecebido;
+import backend.entities.shopee.VendaShopeeEntity;
+import backend.repositories.vendaShopee.VendaShopeeRepository;
+import backend.repositories.vendaShopee.VendaShopeeRepositoryImpl;
+import backend.services.VendaShopeeService;
 import frontend.utils.Constants;
 import frontend.utils.DataUtils;
 import frontend.utils.LoadScene;
+import frontend.utils.enums.StatusVenda;
 import frontend.views.utils.Alerts;
 import frontend.views.utils.Constraints;
 import javafx.collections.FXCollections;
@@ -41,6 +47,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import models.DbException;
 
 public class ViewVendasController implements Initializable {
 
@@ -180,8 +187,7 @@ public class ViewVendasController implements Initializable {
 		String selection = cbCanal.getSelectionModel().getSelectedItem();
 		if (selection != null && selection.equals(Constants.LOJA.MERCADO_LIVRE)) {
 			cbTipoAnuncio.setPromptText(Constants.TIPO_ANUNCIO.TIPO_ANUNCIO);
-			options = Arrays.asList(Constants.TIPO_ANUNCIO.CLASSICO, Constants.TIPO_ANUNCIO.CLASSICO_FG,
-					Constants.TIPO_ANUNCIO.PREMIUM, Constants.TIPO_ANUNCIO.PREMIUM_FG);
+			options = Arrays.asList(Constants.TIPO_ANUNCIO.CLASSICO, Constants.TIPO_ANUNCIO.PREMIUM);
 			cbTipoAnuncio.setItems(FXCollections.observableArrayList(options));
 		} else {
 			cbTipoAnuncio.setPromptText("-");
@@ -389,96 +395,55 @@ public class ViewVendasController implements Initializable {
 			tbMercadoLivre.getItems().clear();
 	}
 
-	@SuppressWarnings("resource")
 	@FXML
 	void onInserirEmMassaAction(ActionEvent event) {
-		Alerts.showAlert("Inserção em massa", null, "Selecione o arquivo do tipo CSV (Separado por vírgulas)",
-				AlertType.INFORMATION);
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Selecione um arquivo");
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo Separado por Vírgulas(*.csv)",
-				"*.csv");
+		fileChooser.setTitle("Selecione o arquivo");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo Excel (*.xlsx)", "*.xlsx");
 		fileChooser.getExtensionFilters().add(extFilter);
-
 		File file = fileChooser.showOpenDialog(Constraints.currentStage(event));
 
-		if (file == null)
+		if (file.getName().contains("Order.toship.")) {
+			System.out.println("Planilha SHOPEE");
 			return;
+		} else if (file.getName().contains("Vendas_BR_Mercado_Livre_")) {
+			System.out.println("Planilha MERCADO LIVRE");
+			return;
+		}
 
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file, Charset.forName("UTF-8")));
+			FileInputStream fis = new FileInputStream(file);
+		    XSSFWorkbook workbook = new XSSFWorkbook(fis);
+		    XSSFSheet sheet = workbook.getSheetAt(0);
+		    int skip = 0;
+		    String lastId = "";
 
-			String line;
-			int skip = 0;
-			String canal = null;
+		    for (Row row : sheet) {
+		    	if (skip == 0) {
+		    		skip++;
+		    		continue;
+		    	}
 
-			while (Objects.nonNull((line = reader.readLine()))) {
-				if (skip < 3) {
-					if (skip == 2)
-						canal = line.split(";").length == 18 ? Constants.LOJA.SHOPEE : Constants.LOJA.MERCADO_LIVRE;
-					skip++;
-					continue;
-				}
-
-				String[] s = line.split(";");
-				if (s.length != 0) {
-					if (canal.equals(Constants.LOJA.SHOPEE)) {
-						Date data = DataUtils.stringToDate(s[0]);
-						String cliente = s[1];
-						String status = s[2];
-
-						shopeeController.insertVenda(data, cliente, status);
-
-						for (int i = 3; i < s.length; i += 3) {
-							Integer qtde = Integer.valueOf(s[i]);
-							String codItem = s[i + 1];
-							Double valorUnitario = Double
-									.valueOf(s[i + 2].replace("R$", "").replaceAll(" ", "").replace(",", "."));
-							Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
-							Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
-
-							shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido,
-									Boolean.TRUE);
-						}
-					} else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
-
-						Date data = DataUtils.stringToDate(s[0]);
-						String cliente = s[1];
-						String status = s[2];
-
-						mercadoLivreController.insertVenda(data, cliente, status);
-
-						for (int i = 3; i < s.length; i += 5) {
-							String tipoAnuncio = s[i];
-							Boolean isFreteGratis = s[i + 1].equals("S") ? Boolean.TRUE : Boolean.FALSE;
-							Integer qtde = Integer.valueOf(s[i + 2]);
-							String codItem = s[i + 3];
-							Double valorUnitario = Double
-									.valueOf(s[i + 4].replace("R$", "").replaceAll(" ", "").replace(",", "."));
-							Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
-							Double valorRecebido = CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde);
-
-							if (isFreteGratis)
-								if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.CLASSICO))
-									tipoAnuncio = Constants.TIPO_ANUNCIO.CLASSICO_FG;
-								else if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO.PREMIUM))
-									tipoAnuncio = Constants.TIPO_ANUNCIO.PREMIUM_FG;
-
-							mercadoLivreController.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario,
-									valorTotal, valorRecebido); // , Boolean.TRUE);
-						}
-					}
-				} else {
-					Alerts.showAlert("ERRO", "Arquivo vazio!", null, AlertType.INFORMATION);
-					return;
-				}
-			}
-			reader.close();
-			Alerts.showAlert("Sucesso", "INSERÇÃO EM MASSA EXECUTADA COM SUCESSO", null, AlertType.INFORMATION);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		    	String idPedido = row.getCell(0).toString();
+	        	Date date = DataUtils.stringExcelToDate(row.getCell(9).toString());
+	        	String cliente = row.getCell(43).toString();
+	        	String cpf = row.getCell(46).toString();
+	        	Integer qtde = Integer.valueOf(row.getCell(16).toString());
+	        	String item = row.getCell(12).toString();
+	        	Double valorUnitario = Double.valueOf(row.getCell(15).toString());
+	        	Double valorTotal = Double.valueOf(row.getCell(18).toString());
+	        	Double valorRepasse = 
+	        			valorTotal - Double.valueOf(row.getCell(39).toString()) - Double.valueOf(row.getCell(40).toString());
+	        	String status = row.getCell(1).toString();
+	        	
+	        	shopeeController.insertVenda(date, cliente, status, item, qtde, valorUnitario, valorTotal, valorRepasse);
+	        	
+	        	System.out.println("INSERIDO");
+		    }
+		    
+		    fis.close();
+		} catch (IOException | SQLException e) {
+			throw new DbException(e);
 		}
 	}
 

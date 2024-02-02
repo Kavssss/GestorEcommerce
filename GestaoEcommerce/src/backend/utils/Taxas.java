@@ -5,21 +5,19 @@ public class Taxas {
 	private static Double taxaClassicoML = 0.14;
 	private static Double taxaPremiumML = 0.19;
 	private static Double custoFixoML = 6.0;
-	private static Double freteML = 18.95;
+//	private static Double freteML = 18.95;
 
 	private static Double taxaShopee = 0.2;
 	private static Double custoFixoShopee = 3.0;
 
-	public static void buildTaxasMLClassico(Double taxaClassicoML, Double custoFixoML, Double freteML) {
+	public static void buildTaxasMLClassico(Double taxaClassicoML, Double custoFixoML) {
 		Taxas.taxaClassicoML = taxaClassicoML;
 		Taxas.custoFixoML = custoFixoML;
-		Taxas.freteML = freteML;
 	}
 
-	public static void buildTaxasMLPremium(Double taxaPremiumML, Double custoFixoML, Double freteML) {
+	public static void buildTaxasMLPremium(Double taxaPremiumML, Double custoFixoML) {
 		Taxas.taxaPremiumML = taxaPremiumML;
 		Taxas.custoFixoML = custoFixoML;
-		Taxas.freteML = freteML;
 	}
 
 	public static void buildTaxasShopee(Double taxaShopee, Double custoFixoShopee) {
@@ -49,14 +47,6 @@ public class Taxas {
 
 	public static void setCustoFixoML(Double custoFixoML) {
 		Taxas.custoFixoML = custoFixoML;
-	}
-
-	public static Double getFreteML() {
-		return freteML;
-	}
-
-	public static void setFreteML(Double freteML) {
-		Taxas.freteML = freteML;
 	}
 
 	public static Double getTaxaShopee() {

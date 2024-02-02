@@ -106,7 +106,7 @@ public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeReposit
 			preparedStatement.executeUpdate();
 			this.desconectar(this.conexao);
 
-			Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", null, AlertType.INFORMATION);
+//			Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", null, AlertType.INFORMATION);
 		} catch (SQLException e) {
 			Alerts.showAlert("Erro", null, "Não foi possível cadastrar a venda.", AlertType.ERROR);
 			throw new DbException(e.getMessage());

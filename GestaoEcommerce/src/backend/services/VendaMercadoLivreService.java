@@ -18,9 +18,9 @@ public class VendaMercadoLivreService {
 		return repository.findVendas(dataInicio, dataFim, tipoAnuncio, qtde, codItem, cliente, status);
 	}
 
-	public void insertVenda(Date data, String cliente, String status, String codItem, String tipoAnuncio, Integer qtde,
-			Double valorUnitario, Double valorTotal, Double valorRecebido) throws SQLException {
-		repository.insertVenda(data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario, valorTotal,
+	public void insertVenda(Date data, String cliente, String status, String codItem, String tipoAnuncio, Double custoFrete,
+			Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido) throws SQLException {
+		repository.insertVenda(data, cliente, status, codItem, tipoAnuncio, custoFrete, qtde, valorUnitario, valorTotal,
 				valorRecebido);
 	}
 
@@ -28,9 +28,9 @@ public class VendaMercadoLivreService {
 		repository.insertVenda(data, cliente, status);
 	}
 
-	public void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario,
+	public void insertItemVenda(String codItem, String tipoAnuncio, Double custoFrete, Integer qtde, Double valorUnitario,
 			Double valorTotal, Double valorRecebido) throws SQLException {
-		repository.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal, valorRecebido);
+		repository.insertItemVenda(codItem, tipoAnuncio, custoFrete, qtde, valorUnitario, valorTotal, valorRecebido);
 	}
 
 	public VendaMercadoLivreEntity findById(Long id) throws SQLException {
@@ -38,9 +38,9 @@ public class VendaMercadoLivreService {
 	}
 
 	public void editVenda(Long idVenda, Long idDado, Date data, String cliente, String status, String codItem,
-			String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
+			String tipoAnuncio, Double custoFrete, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
 			throws SQLException {
-		repository.editVenda(idVenda, idDado, data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario,
+		repository.editVenda(idVenda, idDado, data, cliente, status, codItem, tipoAnuncio, custoFrete, qtde, valorUnitario,
 				valorTotal, valorRecebido);
 	}
 

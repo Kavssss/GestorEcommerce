@@ -195,10 +195,10 @@
             <TableColumn fx:id="columnStatusTbShopee" editable="false" maxWidth="-1.0" minWidth="93.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="STATUS" />
          </columns>
       </TableView>
-      <TableView fx:id="tbMercadoLivre" onMouseClicked="#onTbMercadoLivreClicked" style="-fx-background-radius: 7; -fx-background-color: transparent;" GridPane.columnIndex="2" GridPane.columnSpan="46" GridPane.rowIndex="10" GridPane.rowSpan="13">
+      <TableView fx:id="tbMercadoLivre" onMouseClicked="#onTbMercadoLivreClicked" style="-fx-background-radius: 7; -fx-background-color: transparent;" visible="false" GridPane.columnIndex="2" GridPane.columnSpan="46" GridPane.rowIndex="10" GridPane.rowSpan="13">
          <columns>
             <TableColumn fx:id="columnDataTbMercadoLivre" editable="false" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="DATA" />
-            <TableColumn fx:id="columnClienteTbMercadoLivre" editable="false" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="CLIENTE" />
+            <TableColumn fx:id="columnClienteTbMercadoLivre" editable="false" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="CLIENTE" visible="false" />
             <TableColumn fx:id="columnAnuncioTbMercadoLivre" resizable="false" style="-fx-alignment: CENTER;" text="ANÚNCIO" />
             <TableColumn fx:id="columnQtdTbMercadoLivre" editable="false" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="QTD" />
             <TableColumn fx:id="columnItemTbMercadoLivre" editable="false" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="ITEM" />

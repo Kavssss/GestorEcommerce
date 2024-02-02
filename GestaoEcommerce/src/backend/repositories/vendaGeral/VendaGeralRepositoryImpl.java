@@ -167,7 +167,7 @@ public class VendaGeralRepositoryImpl extends DAO implements VendaGeralRepositor
 
 	@Override
 	public List<String> findItensAtivos() throws SQLException {
-		String sql = "SELECT COD_ITEM from TB_ITEM WHERE IS_ATIVO = 1";
+		String sql = "SELECT COD_ITEM from TB_ITEM WHERE IS_ATIVO = 1 ORDER BY 1";
 		try {
 			this.conectar();
 			preparedStatement = this.conexao.prepareStatement(sql);

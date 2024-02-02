@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import backend.utils.CanalVenda;
+import backend.utils.CanalVenda_;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,7 @@ public class VendaGeralEntity {
 	private String status;
 	private String canal;
 
-	public VendaGeralEntity(Long id, Date data, String cliente, String status, CanalVenda canal) {
+	public VendaGeralEntity(Long id, Date data, String cliente, String status, CanalVenda_ canal) {
 		this.id = id;
 		this.data = data;
 		this.cliente = cliente;
@@ -36,7 +36,7 @@ public class VendaGeralEntity {
 		this.data = data;
 		this.cliente = cliente;
 		this.status = status;
-		this.canal = canal.equals(CanalVenda.S) ? CanalVenda.S : CanalVenda.ML;
+		this.canal = canal.equals(CanalVenda_.S) ? CanalVenda_.S : CanalVenda_.ML;
 	}
 
 	public void addItem(ItemGeralEntity item) {

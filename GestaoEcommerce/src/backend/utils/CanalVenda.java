@@ -1,10 +1,8 @@
 package backend.utils;
 
-public interface CanalVenda {
+public enum CanalVenda {
 
-	String S = "S";
-	String ML = "ML";
-	String SHOPEE = "Shopee";
-	String MERCADO_LIVRE = "Mercado Livre";
-
+	SHOPEE,
+	MERCADO_LIVRE
+	
 }

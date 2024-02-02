@@ -13,7 +13,6 @@ import backend.controllers.ItemController;
 import backend.dto.VendaMercadoLivreDTO;
 import backend.entities.mercadoLivre.ItemMercadoLivreEntity;
 import backend.entities.mercadoLivre.VendaMercadoLivreEntity;
-import backend.utils.CalculaTotalERecebido;
 import backend.utils.Constants;
 import frontend.utils.DataUtils;
 import frontend.views.utils.Alerts;
@@ -86,7 +85,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			resultSet = preparedStatement.executeQuery();
 			return resultSetToVenda(resultSet);
 		} catch (SQLException e) {
-			throw new DbException(e.getMessage());
+			throw new DbException(e);
 		}
 	}
 
@@ -97,7 +96,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			ItemMercadoLivreEntity item = new ItemMercadoLivreEntity(resultSet.getLong("ID_ITEM"),
 					resultSet.getString("COD_ITEM"), resultSet.getInt("QTDE"), resultSet.getDouble("VALOR_UNITARIO"),
 					resultSet.getDouble("VALOR_TOTAL"), resultSet.getDouble("VALOR_RECEBIDO"),
-					resultSet.getString("TIPO_ANUNCIO"), resultSet.getBoolean("IS_FRETE_GRATIS"),
+					resultSet.getString("TIPO_ANUNCIO"), resultSet.getDouble("CUSTO_FRETE"),
 					resultSet.getDouble("TOTAL_SEM_FRETE"));
 			if (!lastId.equals(resultSet.getLong("ID_VENDA"))) {
 				vendas.add(new VendaMercadoLivreEntity(resultSet.getLong("ID_VENDA"), resultSet.getDate("DATA_VENDA"),
@@ -131,7 +130,8 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 						"R$ " + String.format("%.2f", item.getValorUnitario()),
 						"R$ " + String.format("%.2f", item.getValorTotal()),
 						"R$ " + String.format("%.2f", item.getValorRecebido()), item.getTipoAnuncio(),
-						item.getIsFreteGratis(), "R$ " + String.format("%.2f", item.getTotalSemFrete()));
+						"R$ " + String.format("%.2f", item.getCustoFrete()),
+						"R$ " + String.format("%.2f", item.getTotalSemFrete()));
 				list.add(vendaItem);
 			}
 		}
@@ -139,8 +139,8 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 	}
 
 	@Override
-	public void insertVenda(Date data, String cliente, String status, String codItem, String tipoAnuncio, Integer qtde,
-			Double valorUnitario, Double valorTotal, Double valorRecebido) throws SQLException {
+	public void insertVenda(Date data, String cliente, String status, String codItem, String tipoAnuncio, Double custoFrete, 
+			Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido) throws SQLException {
 		try {
 			this.conectar();
 			preparedStatement = this.conexao.prepareStatement(insertTbVenda());
@@ -152,17 +152,18 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			this.desconectar(this.conexao);
 
 			Long lastId = findLastId();
+			Long idItem = findItemByCodItem(codItem);
 
 			this.conectar();
 			preparedStatement = this.conexao.prepareStatement(insertTbDadosVenda());
 			preparedStatement.setLong(1, lastId);
-			preparedStatement.setLong(2, findItemByCodItem(codItem));
-			preparedStatement.setString(3, (String) tipoAndFrete(tipoAnuncio).get(0));
-			preparedStatement.setBoolean(4, (Boolean) tipoAndFrete(tipoAnuncio).get(1));
+			preparedStatement.setLong(2, idItem);
+			preparedStatement.setString(3, tipoAnuncio);
+			preparedStatement.setDouble(4, custoFrete);
 			preparedStatement.setInt(5, qtde);
 			preparedStatement.setDouble(6, valorUnitario);
 			preparedStatement.setDouble(7, valorTotal);
-			preparedStatement.setDouble(8, CalculaTotalERecebido.valorSemFreteML(valorTotal, qtde));
+			preparedStatement.setDouble(8, (Double) valorTotal - custoFrete * qtde);
 			preparedStatement.setDouble(9, valorRecebido);
 			System.out.println(preparedStatement.toString());
 			preparedStatement.executeUpdate();
@@ -171,7 +172,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", "Venda cadastrada.", AlertType.INFORMATION);
 		} catch (SQLException e) {
 			Alerts.showAlert("Erro", "ERRO", "Não foi possível cadastrar a venda.", AlertType.ERROR);
-			throw new DbException(e.getMessage());
+			throw new DbException(e);
 		}
 	}
 
@@ -188,12 +189,12 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			this.desconectar(this.conexao);
 		} catch (SQLException e) {
 			Alerts.showAlert("Erro", "ERRO", "Não foi possível cadastrar a venda.", AlertType.ERROR);
-			throw new DbException(e.getMessage());
+			throw new DbException(e);
 		}
 	}
 
 	@Override
-	public void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario,
+	public void insertItemVenda(String codItem, String tipoAnuncio, Double custoFrete, Integer qtde, Double valorUnitario,
 			Double valorTotal, Double valorRecebido) throws SQLException {
 		Long lastId = findLastId();
 		Long idItem = findItemByCodItem(codItem);
@@ -213,7 +214,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			preparedStatement.setInt(5, qtde);
 			preparedStatement.setDouble(6, valorUnitario);
 			preparedStatement.setDouble(7, valorTotal);
-			preparedStatement.setDouble(8, CalculaTotalERecebido.valorSemFreteML(valorTotal, qtde));
+			preparedStatement.setDouble(8, (Double) valorTotal - custoFrete * qtde);
 			preparedStatement.setDouble(9, valorRecebido);
 			System.out.println(preparedStatement.toString());
 			preparedStatement.executeUpdate();
@@ -222,7 +223,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 //	 		Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", "Venda cadastrada.", AlertType.INFORMATION);
 		} catch (SQLException e) {
 			Alerts.showAlert("Erro", "ERRO", "Não foi possível cadastrar a venda.", AlertType.ERROR);
-			throw new DbException(e.getMessage());
+			throw new DbException(e);
 		}
 	}
 
@@ -235,7 +236,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 
 	private String insertTbDadosVenda() {
 		StringBuilder sql = new StringBuilder(
-				"INSERT INTO TB_DADOS_VENDA_ML(ID_VENDA, ID_ITEM, TIPO_ANUNCIO, IS_FRETE_GRATIS, ");
+				"INSERT INTO TB_DADOS_VENDA_ML(ID_VENDA, ID_ITEM, TIPO_ANUNCIO, CUSTO_FRETE, ");
 		sql.append(" QTDE, VALOR_UNITARIO, VALOR_TOTAL, TOTAL_SEM_FRETE, VALOR_RECEBIDO) VALUES( ");
 		sql.append(" ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		return sql.toString();
@@ -253,7 +254,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			this.desconectar(this.conexao);
 			return value;
 		} catch (SQLException e) {
-			throw new DbException(e.getMessage());
+			throw new DbException(e);
 		}
 	}
 
@@ -283,7 +284,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			resultSet = preparedStatement.executeQuery();
 			return resultSetToVendaEdit(resultSet);
 		} catch (SQLException e) {
-			throw new DbException(e.getMessage());
+			throw new DbException(e);
 		}
 	}
 
@@ -295,12 +296,12 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 		venda.addItem(new ItemMercadoLivreEntity(resultSet.getLong("ID_ITEM"), resultSet.getString("COD_ITEM"),
 				resultSet.getInt("QTDE"), resultSet.getDouble("VALOR_UNITARIO"), resultSet.getDouble("VALOR_TOTAL"),
 				resultSet.getDouble("VALOR_RECEBIDO"), resultSet.getString("TIPO_ANUNCIO"),
-				resultSet.getBoolean("IS_FRETE_GRATIS"), resultSet.getDouble("ID_DADO")));
+				resultSet.getDouble("CUSTO_FRETE"), resultSet.getDouble("ID_DADO")));
 		while (resultSet.next()) {
 			ItemMercadoLivreEntity item = new ItemMercadoLivreEntity(resultSet.getLong("ID_ITEM"),
 					resultSet.getString("COD_ITEM"), resultSet.getInt("QTDE"), resultSet.getDouble("VALOR_UNITARIO"),
 					resultSet.getDouble("VALOR_TOTAL"), resultSet.getDouble("VALOR_RECEBIDO"),
-					resultSet.getString("TIPO_ANUNCIO"), resultSet.getBoolean("IS_FRETE_GRATIS"),
+					resultSet.getString("TIPO_ANUNCIO"), resultSet.getDouble("CUSTO_FRETE"),
 					resultSet.getDouble("ID_DADO"));
 			venda.addItem(item);
 		}
@@ -310,7 +311,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 
 	@Override
 	public void editVenda(Long idVenda, Long idDado, Date data, String cliente, String status, String codItem,
-			String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
+			String tipoAnuncio, Double custoFrete, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
 			throws SQLException {
 		try {
 			this.conectar();
@@ -331,7 +332,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			preparedStatement.setDouble(4, qtde);
 			preparedStatement.setDouble(5, valorUnitario);
 			preparedStatement.setDouble(6, valorTotal);
-			preparedStatement.setDouble(7, CalculaTotalERecebido.valorSemFreteML(valorTotal, qtde));
+			preparedStatement.setDouble(7, (Double) valorTotal - custoFrete * qtde);
 			preparedStatement.setDouble(8, valorRecebido);
 			preparedStatement.setLong(9, idDado);
 			System.out.println(preparedStatement.toString());
@@ -341,7 +342,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			Alerts.showAlert("Sucesso", "EDITADO COM SUCESSO", "Venda editada.", AlertType.INFORMATION);
 		} catch (SQLException e) {
 			Alerts.showAlert("Erro", "ERRO", "Não foi possível editar a venda.", AlertType.ERROR);
-			throw new DbException(e.getMessage());
+			throw new DbException(e);
 		}
 	}
 
@@ -376,7 +377,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			this.desconectar(this.conexao);
 			return value;
 		} catch (SQLException e) {
-			throw new DbException(e.getMessage());
+			throw new DbException(e);
 		}
 	}
 
@@ -399,7 +400,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			Alerts.showAlert("Sucesso", null, "Venda excluída.", AlertType.INFORMATION);
 		} catch (SQLException e) {
 			Alerts.showAlert("Erro", "ERRO", "Não foi possível excluir a venda.", AlertType.ERROR);
-			throw new DbException(e.getMessage());
+			throw new DbException(e);
 		}
 	}
 
@@ -435,7 +436,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			}
 			return values;
 		} catch (SQLException e) {
-			throw new DbException(e.getMessage());
+			throw new DbException(e);
 		}
 	}
 
@@ -463,7 +464,7 @@ public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercado
 			}
 			return values;
 		} catch (SQLException e) {
-			throw new DbException(e.getMessage());
+			throw new DbException(e);
 		}
 	}
 

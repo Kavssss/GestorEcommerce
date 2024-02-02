@@ -132,6 +132,7 @@ public class LoadScene {
 			modalStage.setResizable(Boolean.FALSE);
 			modalStage.initOwner(parentStage);
 			modalStage.initModality(Modality.WINDOW_MODAL);
+			modalStage.initStyle(StageStyle.UNDECORATED);
 			setModalStage(modalStage);
 			modalStage.showAndWait();
 		} catch (IOException e) {
@@ -163,6 +164,7 @@ public class LoadScene {
 			modalStage.setResizable(Boolean.FALSE);
 			modalStage.initOwner(parentStage);
 			modalStage.initModality(Modality.WINDOW_MODAL);
+			modalStage.initStyle(StageStyle.UNDECORATED);
 			setModalStage(modalStage);
 			modalStage.showAndWait();
 		} catch (IOException e) {
@@ -173,7 +175,7 @@ public class LoadScene {
 
 	public static void callOpcoesModal(Stage parentStage, Class<?> currentClass) {
 		try {
-			buildModal(parentStage, currentClass, Constants.MODAL.OPCOES, "Opções", false);
+			buildModal(parentStage, currentClass, Constants.MODAL.TAXAS, "Opções", false);
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();

@@ -60,6 +60,7 @@ public class ModalLoginController implements Initializable {
     @FXML
     void onXAction(ActionEvent event) {
     	LoadScene.getLoginModalStage().close();
+    	LoadScene.setLoginModalStage(null);
     }
     
     @FXML

@@ -15,8 +15,8 @@ public interface Constants {
 
 		String CLASSICO = "Clássico";
 		String PREMIUM = "Premium";
-		String CLASSICO_FG = "Clássico - Frete Grátis";
-		String PREMIUM_FG = "Premium - Frete Grátis";
+//		String CLASSICO_FG = "Clássico - Frete Grátis";
+//		String PREMIUM_FG = "Premium - Frete Grátis";
 	}
 
 	interface STATUS {
@@ -37,13 +37,14 @@ public interface Constants {
 	interface MODAL {
 		String INSERIR_VENDA = "/frontend/views/ModalInserir_R.fxml";
 		String INSERIR_PRODUTO = "/frontend/views/ModalProduto.fxml";
-		String OPCOES = "/frontend/views/Opcoes.fxml";
+		String TAXAS = "/frontend/views/ModalTaxas_R.fxml";
 		String LOGIN = "/frontend/views/ModalLogin_R.fxml";
 		String CADASTRO = "/frontend/views/ModalCadastro_R.fxml";
 	}
 
 	interface MESSAGE {
 		String CAMPOS_NAO_PREENCHIDOS = "Preencha todos os campos para prosseguir";
+		String NOME_OU_USUARIO_NAO_PREENCHIDO = "Preencha nome ou usuário para prosseguir";
 		String CANAL_NAO_PREENCHIDO = "Campo CANAL não selecionado";
 		String IRREVERSIVEL = "Essa ação é irreversível";
 	}

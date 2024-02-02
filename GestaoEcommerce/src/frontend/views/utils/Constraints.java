@@ -21,16 +21,64 @@ public class Constraints {
 		});
 	}
 
-	public static void setTextFieldNumberBar(DatePicker txt) {
-		txt.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+	public static void setReal(TextField txt) {
+		txt.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (newValue != null) {
+				if (!newValue.isEmpty() && newValue.charAt(0) == ',') {
+					if (newValue.length() == 1)
+						txt.setText("0,");
+					else
+						txt.setText("0,".concat(oldValue.split(",")[1]));
+					return;
+				}
+				
+	            if (!newValue.matches("\\d*([\\,]\\d*)?")) {
+	                txt.setText(oldValue);
+	            }
+	            
+	            if (newValue.split(",").length > 1) {
+	                if (newValue.split(",")[1].length() > 2) {
+	                	txt.setText(oldValue);
+	                }
+	            }
+			}
+        });
+
+		txt.focusedProperty().addListener((obss, oldVal, newVal) -> {
+			if (txt.getText().isEmpty())
+				return;
 			
-			
-			
-			if (newValue != null && !newValue.matches("[\\d/]*")) {
-				txt.getEditor().setText(oldValue);
+			if (!newVal) {  // desfocou
+				String texto = txt.getText().replace("R$ ", "");  //   1,32
+				String[] split = texto.split(","); //  
+				String saida = "";
+
+				if (split.length == 1) {
+					saida = split[0].concat(",00");
+				} else {
+					if (split[1].length() == 1) {
+						saida = split[0].concat("0");
+					}
+				}
+				
+//				txt.setText("R$ " + texto);
+				txt.setText(texto);
 			}
 		});
-	}
+    }
+
+    private static void formatCurrency(TextField txt) {
+        String plainText = txt.getText().replaceAll("[^\\d]", "").replace(",", "");
+
+        if (!plainText.isEmpty()) {
+            // Converte para valor monetário formatado
+            double value = Double.parseDouble(plainText) / 100.0;
+            String formattedText = String.format("R$%.2f", value);
+
+            // Define o texto formatado no TextField
+            txt.setText(formattedText);
+        }
+    }
 
 	public static void setTextFieldMaxLength(TextField txt, int max) {
 		txt.textProperty().addListener((obs, oldValue, newValue) -> {

@@ -31,7 +31,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import models.DbException;
 
@@ -40,7 +39,6 @@ public class ModalInserirController implements Initializable {
 	VendaShopeeController shopeeController = new VendaShopeeController();
 	VendaMercadoLivreController mercadoLivreController = new VendaMercadoLivreController();
 	VendaGeralController geralController = new VendaGeralController();
-
 	ViewVendasController viewVendasController = new ViewVendasController();
 
 	private Integer linhasVisiveis = 1;
@@ -106,7 +104,13 @@ public class ModalInserirController implements Initializable {
 	private ComboBox<String> cbTipoAnuncio5;
 
 	@FXML
-	private TextField txtCliente;
+    private TextField txtNomeCliente;
+	
+	@FXML
+    private TextField txtUsuarioCliente;
+	
+	@FXML
+    private TextField txtCpfCliente;
 
 	@FXML
     private DatePicker dpData;
@@ -178,6 +182,21 @@ public class ModalInserirController implements Initializable {
 	private TextField txtValorUnitario5;
 	
 	@FXML
+    private TextField txtCustoFrete1;
+
+    @FXML
+    private TextField txtCustoFrete2;
+
+    @FXML
+    private TextField txtCustoFrete3;
+
+    @FXML
+    private TextField txtCustoFrete4;
+
+    @FXML
+    private TextField txtCustoFrete5;
+	
+	@FXML
     private Label labelTipoAnuncio;
 	
 	@FXML
@@ -194,11 +213,16 @@ public class ModalInserirController implements Initializable {
 	
 	@FXML
     private Label labelValorRecebido;
+	
+	@FXML
+    private Label labelCustoFrete;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		LoadScene.getModalStage().setWidth(LoadScene.getModalWidth());
 		LoadScene.getModalStage().setHeight(LoadScene.getModalHeight());
+		Constraints.setReal(txtCustoFrete1);
+		Constraints.setReal(txtValorUnitario1);
 		setNumberFields();
 		for (int i = 2; i <= 5; i++)
 			setVisibilityInsertItem(i, Boolean.FALSE);
@@ -207,11 +231,11 @@ public class ModalInserirController implements Initializable {
 		cbStatus.setItems(FXCollections.observableArrayList(Arrays.asList(Constants.STATUS.PENDENTE,
 				Constants.STATUS.CONCLUIDO, Constants.STATUS.DEVOLUCAO, Constants.STATUS.CANCELADO)));
 		cbStatus.setValue(Constants.STATUS.PENDENTE);
-		cbTipoAnuncioSetItems(cbTipoAnuncio1);
-		cbTipoAnuncioSetItems(cbTipoAnuncio2);
-		cbTipoAnuncioSetItems(cbTipoAnuncio3);
-		cbTipoAnuncioSetItems(cbTipoAnuncio4);
-		cbTipoAnuncioSetItems(cbTipoAnuncio5);
+		fillCbTipoAnuncio(cbTipoAnuncio1);
+		fillCbTipoAnuncio(cbTipoAnuncio2);
+		fillCbTipoAnuncio(cbTipoAnuncio3);
+		fillCbTipoAnuncio(cbTipoAnuncio4);
+		fillCbTipoAnuncio(cbTipoAnuncio5);
 		List<String> itens = cbItemSetItems();
 		cbItem1.setItems(FXCollections.observableArrayList(itens));
 		cbItem2.setItems(FXCollections.observableArrayList(itens));
@@ -221,10 +245,9 @@ public class ModalInserirController implements Initializable {
 		btnApagar.setVisible(Boolean.FALSE);
 	}
 
-	private void cbTipoAnuncioSetItems(ComboBox<String> cb) {
+	private void fillCbTipoAnuncio(ComboBox<String> cb) {
 		cb.setItems(FXCollections
-				.observableArrayList(Arrays.asList(Constants.TIPO_ANUNCIO.CLASSICO, Constants.TIPO_ANUNCIO.CLASSICO_FG,
-						Constants.TIPO_ANUNCIO.PREMIUM, Constants.TIPO_ANUNCIO.PREMIUM_FG)));
+				.observableArrayList(Arrays.asList(Constants.TIPO_ANUNCIO.CLASSICO, Constants.TIPO_ANUNCIO.PREMIUM)));
 	}
 
 	private List<String> cbItemSetItems() {
@@ -245,6 +268,7 @@ public class ModalInserirController implements Initializable {
 				setLinhasVisiveis(2);
 				if (canal.equals(Constants.LOJA.MERCADO_LIVRE))
 					cbTipoAnuncio2.setVisible(Boolean.TRUE);
+					txtCustoFrete2.setVisible(Boolean.TRUE);
 				break;
 			case 2:
 				setVisibilityInsertItem(3, Boolean.TRUE);
@@ -252,6 +276,7 @@ public class ModalInserirController implements Initializable {
 				setLinhasVisiveis(3);
 				if (canal.equals(Constants.LOJA.MERCADO_LIVRE))
 					cbTipoAnuncio3.setVisible(Boolean.TRUE);
+					txtCustoFrete3.setVisible(Boolean.TRUE);
 				break;
 			case 3:
 				setVisibilityInsertItem(4, Boolean.TRUE);
@@ -259,6 +284,7 @@ public class ModalInserirController implements Initializable {
 				setLinhasVisiveis(4);
 				if (canal.equals(Constants.LOJA.MERCADO_LIVRE))
 					cbTipoAnuncio4.setVisible(Boolean.TRUE);
+					txtCustoFrete4.setVisible(Boolean.TRUE);
 				break;
 			case 4:
 				setVisibilityInsertItem(5, Boolean.TRUE);
@@ -266,6 +292,7 @@ public class ModalInserirController implements Initializable {
 				setLinhasVisiveis(5);
 				if (canal.equals(Constants.LOJA.MERCADO_LIVRE))
 					cbTipoAnuncio5.setVisible(Boolean.TRUE);
+					txtCustoFrete5.setVisible(Boolean.TRUE);
 				break;
 			}
 		}
@@ -276,6 +303,7 @@ public class ModalInserirController implements Initializable {
 		setVisibilityInsertItem(2, Boolean.FALSE);
 		setLinhasVisiveis(1);
 		cbTipoAnuncio2.setVisible(Boolean.FALSE);
+		txtCustoFrete2.setVisible(Boolean.FALSE);
 	}
 
 	@FXML
@@ -284,6 +312,7 @@ public class ModalInserirController implements Initializable {
 		btnX2.setVisible(Boolean.TRUE);
 		setLinhasVisiveis(2);
 		cbTipoAnuncio3.setVisible(Boolean.FALSE);
+		txtCustoFrete3.setVisible(Boolean.FALSE);
 	}
 
 	@FXML
@@ -292,6 +321,7 @@ public class ModalInserirController implements Initializable {
 		btnX3.setVisible(Boolean.TRUE);
 		setLinhasVisiveis(3);
 		cbTipoAnuncio4.setVisible(Boolean.FALSE);
+		txtCustoFrete4.setVisible(Boolean.FALSE);
 	}
 
 	@FXML
@@ -300,6 +330,7 @@ public class ModalInserirController implements Initializable {
 		btnX4.setVisible(Boolean.TRUE);
 		setLinhasVisiveis(4);
 		cbTipoAnuncio5.setVisible(Boolean.FALSE);
+		txtCustoFrete5.setVisible(Boolean.FALSE);
 	}
 
 	@FXML
@@ -312,72 +343,6 @@ public class ModalInserirController implements Initializable {
 	@FXML
 	void onXAction(ActionEvent event) {
 		LoadScene.getModalStage().close();
-	}
-
-	@FXML
-	void onDataReleased(KeyEvent event) {
-//		DataUtils.formataData(txtData, event);
-	}
-
-	@FXML
-	void onValorUnitario1Released(KeyEvent event) {
-		if (Objects.nonNull(txtQtde1) && txtValorUnitario1.getText().length() > 3) {
-			setTextValorTotal(txtQtde1.getText(), txtValorUnitario1.getText(), txtValorTotal1);
-			setTextValorRecebido(txtQtde1.getText(), txtValorUnitario1.getText(),
-					cbTipoAnuncio1.getSelectionModel().getSelectedItem(), txtValorRecebido1);
-		}
-	}
-
-	@FXML
-	void onValorUnitario2Released(KeyEvent event) {
-		if (Objects.nonNull(txtQtde2) && txtValorUnitario2.getText().length() > 3) {
-			setTextValorTotal(txtQtde2.getText(), txtValorUnitario2.getText(), txtValorTotal2);
-			setTextValorRecebido(txtQtde2.getText(), txtValorUnitario2.getText(),
-					cbTipoAnuncio2.getSelectionModel().getSelectedItem(), txtValorRecebido2);
-		}
-	}
-
-	@FXML
-	void onValorUnitario3Released(KeyEvent event) {
-		if (Objects.nonNull(txtQtde3) && txtValorUnitario3.getText().length() > 3) {
-			setTextValorTotal(txtQtde3.getText(), txtValorUnitario3.getText(), txtValorTotal3);
-			setTextValorRecebido(txtQtde3.getText(), txtValorUnitario3.getText(),
-					cbTipoAnuncio3.getSelectionModel().getSelectedItem(), txtValorRecebido3);
-		}
-	}
-
-	@FXML
-	void onValorUnitario4Released(KeyEvent event) {
-		if (Objects.nonNull(txtQtde4) && txtValorUnitario4.getText().length() > 3) {
-			setTextValorTotal(txtQtde4.getText(), txtValorUnitario4.getText(), txtValorTotal4);
-			setTextValorRecebido(txtQtde4.getText(), txtValorUnitario4.getText(),
-					cbTipoAnuncio4.getSelectionModel().getSelectedItem(), txtValorRecebido4);
-		}
-	}
-
-	@FXML
-	void onValorUnitario5Released(KeyEvent event) {
-		if (Objects.nonNull(txtQtde5) && txtValorUnitario5.getText().length() > 3) {
-			setTextValorTotal(txtQtde5.getText(), txtValorUnitario5.getText(), txtValorTotal5);
-			setTextValorRecebido(txtQtde5.getText(), txtValorUnitario5.getText(),
-					cbTipoAnuncio5.getSelectionModel().getSelectedItem(), txtValorRecebido5);
-		}
-	}
-
-	private void setTextValorTotal(String qtde, String unitario, TextField field) {
-		field.setText(String.format("R$ %.2f", CalculaTotalERecebido.calculaTotal(qtde, unitario)).replace(".", ","));
-	}
-
-	private void setTextValorRecebido(String qtde, String unitario, String tipoAnuncio, TextField field) {
-		Double total = CalculaTotalERecebido.calculaTotal(qtde, unitario);
-		Double recebido;
-		if (cbCanal.getSelectionModel().getSelectedItem().equals(Constants.LOJA.SHOPEE)) {
-			recebido = CalculaTotalERecebido.calculaRecebidoShopee(total, qtde);
-			field.setText(String.format("R$ %.2f", recebido).replace(".", ","));
-		} else if (cbCanal.getSelectionModel().getSelectedItem().equals(Constants.LOJA.MERCADO_LIVRE)) {
-			recebido = CalculaTotalERecebido.calculaRecebidoML(unitario, qtde, tipoAnuncio);
-			field.setText(String.format("R$ %.2f", recebido).replace(".", ","));
-		}
 	}
 
 	@FXML
@@ -412,34 +377,42 @@ public class ModalInserirController implements Initializable {
 		Long idDado = !txtIdDado.getText().isBlank() ? Long.valueOf(txtIdDado.getText()) : null;
 		String canal = cbCanal.getSelectionModel().getSelectedItem();
 		Date data = Objects.nonNull(dpData.getValue()) ? Date.valueOf(dpData.getValue()) : null;
-		String cliente = !txtCliente.getText().isBlank() ? txtCliente.getText() : null;
+		String nomeCliente = !txtNomeCliente.getText().isBlank() ? txtNomeCliente.getText() : null;
+		String usuarioCliente = !txtUsuarioCliente.getText().isBlank() ? txtUsuarioCliente.getText() : null;
+		String cpfCliente = !txtCpfCliente.getText().isBlank() ? txtCpfCliente.getText() : null;
 		String status = cbStatus.getSelectionModel().getSelectedItem();
 
 		String codItem = cbItem1.getSelectionModel().getSelectedItem();
 		String tipoAnuncio = cbTipoAnuncio1.getSelectionModel().getSelectedItem();
+		Double custoFrete = !txtCustoFrete1.getText().isBlank() ? Double.valueOf(txtCustoFrete1.getText()) : null;
 		Integer qtde = !txtQtde1.getText().isBlank() ? Integer.parseInt(txtQtde1.getText()) : null;
 		Double valorUnitario = !txtValorUnitario1.getText().isBlank() ? Double.valueOf(txtValorUnitario1.getText())
 				: null;
-		Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
+		Double valorTotal = qtde * valorUnitario;
 		Double valorRecebido = canal.equals(Constants.LOJA.SHOPEE)
 				? CalculaTotalERecebido.calculaRecebidoShopee(valorTotal, qtde)
-				: CalculaTotalERecebido.calculaRecebidoML(valorUnitario, qtde, tipoAnuncio);
+				: CalculaTotalERecebido.calculaRecebidoML(valorUnitario, qtde, tipoAnuncio, custoFrete);
 
-		if (Objects.isNull(canal) || Objects.isNull(data) || Objects.isNull(cliente) || Objects.isNull(status)
-				|| Objects.isNull(codItem) || Objects.isNull(qtde) || Objects.isNull(valorUnitario)
-				|| (canal.equals(Constants.LOJA.MERCADO_LIVRE) && Objects.isNull(tipoAnuncio))) {
-			Alerts.showAlert("Campos não preenchidos", "ERRO", Constants.MESSAGE.CAMPOS_NAO_PREENCHIDOS,
+		if (Objects.isNull(nomeCliente) && Objects.isNull(usuarioCliente)) {
+			Alerts.showAlert("Campos não preenchidos", "ERRO", Constants.MESSAGE.NOME_OU_USUARIO_NAO_PREENCHIDO,
 					AlertType.INFORMATION);
+			return;
+		}
+		
+		if (Objects.isNull(canal) || Objects.isNull(data) || Objects.isNull(status) || Objects.isNull(codItem)
+				|| Objects.isNull(qtde) || Objects.isNull(valorUnitario)
+				|| (canal.equals(Constants.LOJA.MERCADO_LIVRE) && Objects.isNull(tipoAnuncio))) {
+			Alerts.showAlert("Campos não preenchidos", "ERRO", Constants.MESSAGE.CAMPOS_NAO_PREENCHIDOS, AlertType.INFORMATION);
 			return;
 		}
 
 		if (canal.equals(Constants.LOJA.SHOPEE)) {
 			try {
 				if (Objects.isNull(idVenda)) {
-					shopeeController.insertVenda(data, cliente, status, codItem, qtde, valorUnitario, valorTotal,
+					shopeeController.insertVenda(data, nomeCliente, status, codItem, qtde, valorUnitario, valorTotal,
 							valorRecebido);
 				} else {
-					shopeeController.editVenda(idVenda, idDado, data, cliente, status, codItem, qtde, valorUnitario,
+					shopeeController.editVenda(idVenda, idDado, data, nomeCliente, status, codItem, qtde, valorUnitario,
 							valorTotal, valorRecebido);
 					return;
 				}
@@ -458,11 +431,11 @@ public class ModalInserirController implements Initializable {
 		} else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
 			try {
 				if (Objects.isNull(idVenda))
-					mercadoLivreController.insertVenda(data, cliente, status, codItem, tipoAnuncio, qtde, valorUnitario,
-							valorTotal, valorRecebido);
-				else {
-					mercadoLivreController.editVenda(idVenda, idDado, data, cliente, status, codItem, tipoAnuncio, qtde,
+					mercadoLivreController.insertVenda(data, nomeCliente, status, codItem, tipoAnuncio, custoFrete, qtde,
 							valorUnitario, valorTotal, valorRecebido);
+				else {
+					mercadoLivreController.editVenda(idVenda, idDado, data, nomeCliente, status, codItem, tipoAnuncio, custoFrete,
+							qtde, valorUnitario, valorTotal, valorRecebido);
 					return;
 				}
 			} catch (SQLException e) {
@@ -478,6 +451,7 @@ public class ModalInserirController implements Initializable {
 			if (linhasVisiveis > 4)
 				inserirOutrosItensML(cbItem5, cbTipoAnuncio5, txtQtde5, txtValorUnitario5);
 		}
+		Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", null, AlertType.INFORMATION);
 		LoadScene.getModalStage().close();
 		buscaAutomatica();
 	}
@@ -501,101 +475,92 @@ public class ModalInserirController implements Initializable {
 			TextField txtValorUnitario) {
 		String codItem = cbItem.getSelectionModel().getSelectedItem();
 		String tipoAnuncio = cbTipoAnuncio.getSelectionModel().getSelectedItem();
+		Double custoFrete = !txtCustoFrete1.getText().isBlank() ? Double.valueOf(txtCustoFrete1.getText()) : null;
 		Integer qtde = !txtQtde.getText().isBlank() ? Integer.parseInt(txtQtde.getText()) : null;
 		Double valorUnitario = !txtValorUnitario.getText().isBlank() ? Double.valueOf(txtValorUnitario.getText())
 				: null;
-		Double valorTotal = CalculaTotalERecebido.calculaTotal(qtde, valorUnitario);
-		Double valorRecebido = CalculaTotalERecebido.calculaRecebidoML(valorUnitario, qtde, tipoAnuncio);
+		Double valorTotal = qtde * valorUnitario;
+		Double valorRecebido = CalculaTotalERecebido.calculaRecebidoML(valorUnitario, qtde, tipoAnuncio, custoFrete);
 		try {
-			mercadoLivreController.insertItemVenda(codItem, tipoAnuncio, qtde, valorUnitario, valorTotal,
+			mercadoLivreController.insertItemVenda(codItem, tipoAnuncio, custoFrete, qtde, valorUnitario, valorTotal,
 					valorRecebido);
 		} catch (SQLException e) {
 			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}
-
-//	private void setPositionFields(String canal) {
-//		if (canal == null)
-//			return;
-//
-//		if (canal.equals(Constants.LOJA.SHOPEE)) {
-//			setComboBoxPosition(cbItem1, cbItem2, cbItem3, cbItem4, cbItem5, 142D);
-//			setTextFieldsPosition(txtQtde1, txtQtde2, txtQtde3, txtQtde4, txtQtde5, 272D);
-//			setTextFieldsPosition(txtValorUnitario1, txtValorUnitario2, txtValorUnitario3, txtValorUnitario4,
-//					txtValorUnitario5, 382D);
-//			setTextFieldsPosition(txtValorTotal1, txtValorTotal2, txtValorTotal3, txtValorTotal4, txtValorTotal5, 542D);
-//			setTextFieldsPosition(txtValorRecebido1, txtValorRecebido2, txtValorRecebido3, txtValorRecebido4,
-//					txtValorRecebido5, 702D);
-//			setButtonsPosition(btnX2, btnX3, btnX4, btnX5, 852D);
-//
-//			setVisibilityTipoAnuncio(Boolean.FALSE);
-//			setLinhasVisiveis(1);
-//		} else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
-//			setComboBoxPosition(cbItem1, cbItem2, cbItem3, cbItem4, cbItem5, 67D);
-//			setTextFieldsPosition(txtQtde1, txtQtde2, txtQtde3, txtQtde4, txtQtde5, 377D);
-//			setTextFieldsPosition(txtValorUnitario1, txtValorUnitario2, txtValorUnitario3, txtValorUnitario4,
-//					txtValorUnitario5, 477D);
-//			setTextFieldsPosition(txtValorTotal1, txtValorTotal2, txtValorTotal3, txtValorTotal4, txtValorTotal5, 627D);
-//			setTextFieldsPosition(txtValorRecebido1, txtValorRecebido2, txtValorRecebido3, txtValorRecebido4,
-//					txtValorRecebido5, 777D);
-//			setButtonsPosition(btnX2, btnX3, btnX4, btnX5, 927D);
-//
-//			cbTipoAnuncio1.setVisible(Boolean.TRUE);
-//			setLinhasVisiveis(1);
-//		}
-//	}
 	
 	private void setPositionFields(String canal) {
 		if (canal == null)
 			return;
 
 		if (canal.equals(Constants.LOJA.SHOPEE)) {
-			setFieldsPosition(labelCodItem, cbItem1, cbItem2, cbItem3, cbItem4, cbItem5, 7);
-			setFieldsPosition(labelQtde, txtQtde1, txtQtde2, txtQtde3, txtQtde4, txtQtde5, 15);
-			setFieldsPosition(labelValorUnitario, txtValorUnitario1, txtValorUnitario2, txtValorUnitario3, txtValorUnitario4,
-					txtValorUnitario5, 21);
-			setFieldsPosition(labelValorTotal, txtValorTotal1, txtValorTotal2, txtValorTotal3, txtValorTotal4, txtValorTotal5, 29);
-			setFieldsPosition(labelValorRecebido, txtValorRecebido1, txtValorRecebido2, txtValorRecebido3, txtValorRecebido4,
-					txtValorRecebido5, 37);
-			setFieldsPosition(null, null, btnX2, btnX3, btnX4, btnX5, 44);
+			setFieldsSizeAndPosition(labelCodItem, cbItem1, cbItem2, cbItem3, cbItem4, cbItem5, 7, 6);
+			setFieldsSizeAndPosition(labelQtde, txtQtde1, txtQtde2, txtQtde3, txtQtde4, txtQtde5, 15, 4);
+			setFieldsSizeAndPosition(labelValorUnitario, txtValorUnitario1, txtValorUnitario2, txtValorUnitario3, txtValorUnitario4,
+					txtValorUnitario5, 21, 6);
+			setFieldsSizeAndPosition(labelValorTotal, txtValorTotal1, txtValorTotal2, txtValorTotal3, txtValorTotal4,
+					txtValorTotal5, 29, 6);
+			setFieldsSizeAndPosition(labelValorRecebido, txtValorRecebido1, txtValorRecebido2, txtValorRecebido3, txtValorRecebido4,
+					txtValorRecebido5, 37, 6);
+			setFieldsSizeAndPosition(null, null, btnX2, btnX3, btnX4, btnX5, 44, 1);
 
-			setVisibilityTipoAnuncio(Boolean.FALSE);
-			setLinhasVisiveis(1);
+			hideFieldsML();
 		} else if (canal.equals(Constants.LOJA.MERCADO_LIVRE)) {
-			setFieldsPosition(labelCodItem, cbItem1, cbItem2, cbItem3, cbItem4, cbItem5, 4);
-			setFieldsPosition(labelQtde, txtQtde1, txtQtde2, txtQtde3, txtQtde4, txtQtde5, 21);
-			setFieldsPosition(labelValorUnitario, txtValorUnitario1, txtValorUnitario2, txtValorUnitario3, txtValorUnitario4,
-					txtValorUnitario5, 26);
-			setFieldsPosition(labelValorTotal, txtValorTotal1, txtValorTotal2, txtValorTotal3, txtValorTotal4, txtValorTotal5, 33);
-			setFieldsPosition(labelValorRecebido, txtValorRecebido1, txtValorRecebido2, txtValorRecebido3, txtValorRecebido4,
-					txtValorRecebido5, 40);
-			setFieldsPosition(null, null, btnX2, btnX3, btnX4, btnX5, 47);
+			setFieldsSizeAndPosition(labelCodItem, cbItem1, cbItem2, cbItem3, cbItem4, cbItem5, 3, 6);
+			setFieldsSizeAndPosition(labelQtde, txtQtde1, txtQtde2, txtQtde3, txtQtde4, txtQtde5, 20, 3);
+			setFieldsSizeAndPosition(labelValorUnitario, txtValorUnitario1, txtValorUnitario2, txtValorUnitario3, txtValorUnitario4,
+					txtValorUnitario5, 29, 5);
+			setFieldsSizeAndPosition(labelValorTotal, txtValorTotal1, txtValorTotal2, txtValorTotal3, txtValorTotal4,
+					txtValorTotal5, 35, 5);
+			setFieldsSizeAndPosition(labelValorRecebido, txtValorRecebido1, txtValorRecebido2, txtValorRecebido3, txtValorRecebido4,
+					txtValorRecebido5, 41, 5);
+			setFieldsSizeAndPosition(null, null, btnX2, btnX3, btnX4, btnX5, 47, 1);
 
-			cbTipoAnuncio1.setVisible(Boolean.TRUE);
-			labelTipoAnuncio.setVisible(Boolean.TRUE);
-			setLinhasVisiveis(1);
+			showFieldsML();
 		}
+		setLinhasVisiveis(1);
 	}
 	
-	private void setFieldsPosition(Node label, Node field1, Node field2, Node field3, Node field4, Node field5, Integer position) {
+	private void setFieldsSizeAndPosition(Node label, Node field1, Node field2, Node field3, Node field4, Node field5,
+			Integer position, Integer size) {
 		if (Objects.nonNull(label))
 			GridPane.setColumnIndex(label, position);
-		if (Objects.nonNull(field1))
+		
+		if (Objects.nonNull(field1)) {
 			GridPane.setColumnIndex(field1, position);
+			GridPane.setColumnSpan(field1, size);
+		}
 		GridPane.setColumnIndex(field2, position);
+		GridPane.setColumnSpan(field2, size);
 		GridPane.setColumnIndex(field3, position);
+		GridPane.setColumnSpan(field3, size);
 		GridPane.setColumnIndex(field4, position);
+		GridPane.setColumnSpan(field4, size);
 		GridPane.setColumnIndex(field5, position);
+		GridPane.setColumnSpan(field5, size);
 	}
 
-	private void setVisibilityTipoAnuncio(Boolean bool) {
-		labelTipoAnuncio.setVisible(bool);
-		cbTipoAnuncio1.setVisible(bool);
-		cbTipoAnuncio2.setVisible(bool);
-		cbTipoAnuncio3.setVisible(bool);
-		cbTipoAnuncio4.setVisible(bool);
-		cbTipoAnuncio5.setVisible(bool);
+	private void hideFieldsML() {
+		labelTipoAnuncio.setVisible(false);
+		cbTipoAnuncio1.setVisible(false);
+		cbTipoAnuncio2.setVisible(false);
+		cbTipoAnuncio3.setVisible(false);
+		cbTipoAnuncio4.setVisible(false);
+		cbTipoAnuncio5.setVisible(false);
+		labelCustoFrete.setVisible(false);
+		txtCustoFrete1.setVisible(false);
+		txtCustoFrete2.setVisible(false);
+		txtCustoFrete3.setVisible(false);
+		txtCustoFrete4.setVisible(false);
+		txtCustoFrete5.setVisible(false);
+	}
+	
+	private void showFieldsML() {
+		labelTipoAnuncio.setVisible(true);
+		cbTipoAnuncio1.setVisible(true);
+		labelCustoFrete.setVisible(true);
+		txtCustoFrete1.setVisible(true);
 	}
 
 	private void setNumberFields() {
@@ -662,7 +627,7 @@ public class ModalInserirController implements Initializable {
 			cbCanal.setEditable(Boolean.FALSE);
 			setPositionFields(cbCanal.getSelectionModel().getSelectedItem());
 //			txtData.setText(DataUtils.dateToString(vendaShopee.getData()));
-			txtCliente.setText(vendaShopee.getCliente());
+			txtNomeCliente.setText(vendaShopee.getCliente());
 			cbItem1.setValue(itemShopee.getCodItem());
 			txtQtde1.setText(itemShopee.getQtde().toString());
 			txtValorUnitario1.setText(itemShopee.getValorUnitario().toString());
@@ -682,7 +647,7 @@ public class ModalInserirController implements Initializable {
 			cbCanal.setValue(Constants.LOJA.MERCADO_LIVRE);
 			cbCanal.setEditable(Boolean.FALSE);
 			setPositionFields(cbCanal.getSelectionModel().getSelectedItem());
-			txtCliente.setText(vendaML.getCliente());
+			txtNomeCliente.setText(vendaML.getCliente());
 			cbItem1.setValue(itemML.getCodItem());
 			cbTipoAnuncio1.setValue(itemML.getTipoAnuncio());
 			txtQtde1.setText(itemML.getQtde().toString());

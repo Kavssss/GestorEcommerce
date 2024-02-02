@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -27,6 +28,21 @@ public class IndexController implements Initializable {
 
 	@FXML
 	private Button btnVendas;
+	
+	@FXML
+    private Rectangle recDefocus;
+
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		Stage primaryStage = LoadScene.getStage();
+		primaryStage.setOnShown(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				LoadScene.callLoginModal(LoadScene.getStage(), getClass());
+			}
+		});
+		LoadScene.windowSizes();
+	}
 
 	@FXML
 	void onVendasAction(ActionEvent event) {
@@ -47,19 +63,5 @@ public class IndexController implements Initializable {
 	void onTaxasAction(ActionEvent event) {
 		LoadScene.callOpcoesModal(Constraints.currentStage(event), getClass());
 	}
-
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-		Stage primaryStage = LoadScene.getStage();
-		primaryStage.setOnShown(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-            	LoadScene.callLoginModal(LoadScene.getStage(), getClass());
-            }
-        });
-		LoadScene.windowSizes();
-	}
-	
-	
 
 }

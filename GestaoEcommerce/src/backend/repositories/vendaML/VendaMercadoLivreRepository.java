@@ -12,18 +12,18 @@ public interface VendaMercadoLivreRepository {
 	List<VendaMercadoLivreDTO> findVendas(Date dataInicio, Date dataFim, String tipoAnuncio, Integer qtde,
 			String codItem, String cliente, String status) throws SQLException;
 
-	void insertVenda(Date data, String cliente, String status, String codItem, String tipoAnuncio, Integer qtde,
+	void insertVenda(Date data, String cliente, String status, String codItem, String tipoAnuncio, Double custoFrete, Integer qtde,
 			Double valorUnitario, Double valorTotal, Double valorRecebido) throws SQLException;
 
 	void insertVenda(Date data, String cliente, String status) throws SQLException;
 
-	void insertItemVenda(String codItem, String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal,
+	void insertItemVenda(String codItem, String tipoAnuncio, Double custoFrete, Integer qtde, Double valorUnitario, Double valorTotal,
 			Double valorRecebido) throws SQLException;
 
 	VendaMercadoLivreEntity findById(Long id) throws SQLException;
 
 	void editVenda(Long idVenda, Long idDado, Date data, String cliente, String status, String codItem,
-			String tipoAnuncio, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
+			String tipoAnuncio, Double custoFrete, Integer qtde, Double valorUnitario, Double valorTotal, Double valorRecebido)
 			throws SQLException;
 
 	void deleteVenda(Long idVenda, Long idDado) throws SQLException;

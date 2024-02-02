@@ -19,38 +19,35 @@ public class CalculaTotalERecebido {
 		return (Double) total - total * Taxas.getTaxaShopee() - Taxas.getCustoFixoShopee() * Integer.valueOf(qtde);
 	}
 
-	public static Double calculaRecebidoML(Double unitario, Integer qtde, String tipoAnuncio) {
-		return calculaRecebidoMercadoLivre(tipoAnuncio, String.valueOf(qtde), String.valueOf(unitario));
+	public static Double calculaRecebidoML(Double unitario, Integer qtde, String tipoAnuncio, Double custoFrete) {
+		return calculaRecebidoMercadoLivre(tipoAnuncio, qtde, unitario, custoFrete);
 	}
 
-	public static Double calculaRecebidoML(String unitario, String qtde, String tipoAnuncio) {
-		return calculaRecebidoMercadoLivre(tipoAnuncio, qtde, unitario);
+	public static Double calculaRecebidoML(String unitario, String qtde, String tipoAnuncio, String custoFrete) {
+		return calculaRecebidoMercadoLivre(tipoAnuncio, Integer.valueOf(qtde), Double.valueOf(unitario), Double.valueOf(custoFrete));
 	}
 
-	private static Double calculaRecebidoMercadoLivre(String tipoAnuncio, String quantidade, String unitario) {
-		Double valorUnitario = Double.valueOf(unitario);
-		Integer qtde = Integer.valueOf(quantidade);
-		Double valorTotal = valorUnitario * qtde;
-		Double valorSemFrete = valorSemFreteML(valorTotal, qtde);
+	private static Double calculaRecebidoMercadoLivre(String tipoAnuncio, Integer quantidade, Double unitario, Double custoFrete) {
+		
+		Double valorTotal = unitario * quantidade;
+		Double totalSemFrete = valorTotal - custoFrete * quantidade; // valorSemFreteML(valorTotal, qtde);
 
-		if (valorUnitario < 79)
-			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO)
-					|| tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO_FG))
-				return (Double) valorSemFrete - valorTotal * Taxas.getTaxaClassicoML() - Taxas.getCustoFixoML();
-		if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM)
-				|| tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM_FG))
-			return (Double) valorSemFrete - valorTotal * Taxas.getTaxaPremiumML() - Taxas.getCustoFixoML();
-		else if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO)
-				|| tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO_FG))
-			return (Double) valorSemFrete - valorTotal * Taxas.getTaxaClassicoML();
-		if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM)
-				|| tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM_FG))
-			return (Double) valorSemFrete - valorTotal * Taxas.getTaxaPremiumML();
+		if (unitario < 79) {
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO))
+				return (Double) totalSemFrete - valorTotal * Taxas.getTaxaClassicoML() - Taxas.getCustoFixoML();
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM))
+				return (Double) totalSemFrete - valorTotal * Taxas.getTaxaPremiumML() - Taxas.getCustoFixoML();
+		} else {
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.CLASSICO))
+				return (Double) totalSemFrete - valorTotal * Taxas.getTaxaClassicoML();
+			if (tipoAnuncio.equals(Constants.TIPO_ANUNCIO_ML.PREMIUM))
+				return (Double) totalSemFrete - valorTotal * Taxas.getTaxaPremiumML();
+		}
 		return null;
 	}
 
-	public static Double valorSemFreteML(Double valorTotal, Integer qtde) {
-		return valorTotal - Taxas.getFreteML() * qtde;
-	}
+//	public static Double valorSemFreteML(Double valorTotal, Integer qtde) {
+//		return valorTotal - Taxas.getFreteML() * qtde;
+//	}
 
 }

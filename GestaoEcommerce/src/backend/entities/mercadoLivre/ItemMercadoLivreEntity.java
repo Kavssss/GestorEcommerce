@@ -13,14 +13,14 @@ import lombok.Setter;
 public class ItemMercadoLivreEntity extends ItemEntity {
 
 	private String tipoAnuncio;
-	private Boolean isFreteGratis;
+	private Double custoFrete;
 	private Double totalSemFrete;
 
 	public ItemMercadoLivreEntity(Long idItem, String codItem, Integer qtde, Double valorUnitario, Double valorTotal,
-			Double valorRecebido, String tipoAnuncio, Boolean isFreteGratis, Double totalSemFrete) {
+			Double valorRecebido, String tipoAnuncio, Double custoFrete, Double totalSemFrete) {
 		super(idItem, codItem, qtde, valorUnitario, valorTotal, valorRecebido);
 		this.tipoAnuncio = tipoAnuncio;
-		this.isFreteGratis = isFreteGratis;
+		this.custoFrete = custoFrete;
 		this.totalSemFrete = totalSemFrete;
 	}
 
