@@ -17,9 +17,8 @@ public class Alerts {
 	private static File file;
 	private static Boolean isDownload = Boolean.FALSE;
 
-	public static void showAlert(String title, String header, String content, AlertType type) {
+	public static void showAlert(String header, String content, AlertType type) {
 		Alert alert = new Alert(type);
-		alert.setTitle(title);
 		alert.setHeaderText(header);
 		alert.setContentText(content);
 		alert.initStyle(StageStyle.UNDECORATED);
@@ -77,7 +76,7 @@ public class Alerts {
 					e.printStackTrace();
 				}
 			}
-			showAlert("Sucesso", "Arquivo baixado", null, AlertType.INFORMATION);
+			showAlert("Arquivo baixado", null, AlertType.INFORMATION);
 		}
 	}
 
@@ -109,7 +108,7 @@ public class Alerts {
 					e.printStackTrace();
 				}
 			}
-			showAlert("Sucesso", "Arquivo baixado", null, AlertType.INFORMATION);
+			showAlert("Arquivo baixado", null, AlertType.INFORMATION);
 		}
 	}
 

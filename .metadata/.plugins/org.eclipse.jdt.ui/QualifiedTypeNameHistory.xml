@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="javafx.scene.Scene"/>
-    <fullyQualifiedTypeName name="javax.swing.text.Document"/>
-    <fullyQualifiedTypeName name="javafx.scene.image.Image"/>
-    <fullyQualifiedTypeName name="backend.utils.Constants.TAXA_SHOPEE"/>
     <fullyQualifiedTypeName name="javafx.scene.control.Button"/>
     <fullyQualifiedTypeName name="backend.utils.Taxas"/>
     <fullyQualifiedTypeName name="frontend.utils.Constants.LOJA"/>
@@ -60,4 +56,8 @@
     <fullyQualifiedTypeName name="backend.repositories.vendaShopee.VendaShopeeRepository"/>
     <fullyQualifiedTypeName name="backend.services.VendaShopeeService"/>
     <fullyQualifiedTypeName name="backend.controllers.VendaShopeeController"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="backend.utils.TipoLogin"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="backend.utils.Categoria"/>
 </qualifiedTypeNameHistroy>

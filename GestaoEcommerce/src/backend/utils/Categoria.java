@@ -2,7 +2,15 @@ package backend.utils;
 
 public enum Categoria {
 
-	CINTO,		// 0
-	CHAVEIRO	// 1
+	CINTO,
+	CHAVEIRO;
+
+	
+	public static Categoria obterPorValor(Integer valor) {
+        for (Categoria cat : values()) 
+            if (cat.ordinal() == valor)
+                return cat;
+        throw new IllegalArgumentException("Valor inválido: " + valor);
+    }
 	
 }

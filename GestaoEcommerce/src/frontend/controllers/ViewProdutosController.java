@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import backend.controllers.ItemController;
+import backend.controllers.ProdutoController;
 import backend.dto.ItemDTO;
+import backend.utils.Categoria;
 import frontend.utils.Constants;
 import frontend.utils.LoadScene;
 import frontend.views.utils.Alerts;
@@ -32,7 +33,7 @@ import javafx.stage.Stage;
 
 public class ViewProdutosController implements Initializable {
 
-	ItemController itemController = new ItemController();
+	ProdutoController controller = new ProdutoController();
 
 	@FXML
 	private Button btnBuscar;
@@ -101,14 +102,16 @@ public class ViewProdutosController implements Initializable {
 	@FXML
 	void onBuscarAction(ActionEvent event) {
 		String codItem = !txtCodItem.getText().isBlank() ? "%" + txtCodItem.getText() + "%" : null;
+		Categoria categoria = Categoria.obterPorValor(null);
 		String modelo = !txtModelo.getText().isBlank() ? "%" + txtModelo.getText() + "%" : null;
 		String variacao = !txtVariacao.getText().isBlank() ? "%" + txtVariacao.getText() + "%" : null;
 		String descricao = !txtDescricao.getText().isBlank() ? "%" + txtDescricao.getText() + "%" : null;
+		Integer estoque = null;
 
 		try {
-			montaTabela(itemController.findProdutos(codItem, modelo, variacao, descricao));
+			montaTabela(controller.findProdutos(codItem, categoria, modelo, variacao, descricao, estoque));
 		} catch (SQLException e) {
-			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert(null, e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}
@@ -157,43 +160,43 @@ public class ViewProdutosController implements Initializable {
 
 	@FXML
 	void onInserirEmMassaAction(ActionEvent event) {
-		Alerts.showAlert("Inserção em massa", null, "Selecione o arquivo do tipo CSV (Separado por vírgulas)",
-				AlertType.INFORMATION);
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Selecione um arquivo");
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo Separado por Vírgulas(*.csv)",
-				"*.csv");
-		fileChooser.getExtensionFilters().add(extFilter);
-
-		File file = fileChooser.showOpenDialog(Constraints.currentStage(event));
-
-		if (file == null)
-			return;
-
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-
-			String line;
-			Boolean skip = Boolean.TRUE;
-
-			while (Objects.nonNull((line = reader.readLine()))) {
-				if (skip) {
-					skip = !skip;
-					continue;
-				}
-
-				String[] s = line.split(";");
-				String codItem = s[0];
-				String modelo = s[1];
-				String variacao = s[2];
-				String descricao = s[3];
-				itemController.insertItem(codItem, modelo, variacao, descricao, Boolean.TRUE);
-			}
-			Alerts.showAlert("Sucesso", null, "Operação realizada com sucesso.", AlertType.INFORMATION);
-			reader.close();
-		} catch (IOException | SQLException e) {
-			e.printStackTrace();
-		}
+//		Alerts.showAlert(null, "Selecione o arquivo do tipo CSV (Separado por vírgulas)", AlertType.INFORMATION);
+//		
+//		FileChooser fileChooser = new FileChooser();
+//		fileChooser.setTitle("Selecione um arquivo");
+//		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo Separado por Vírgulas(*.csv)",
+//				"*.csv");
+//		fileChooser.getExtensionFilters().add(extFilter);
+//
+//		File file = fileChooser.showOpenDialog(Constraints.currentStage(event));
+//
+//		if (file == null)
+//			return;
+//
+//		try {
+//			BufferedReader reader = new BufferedReader(new FileReader(file));
+//
+//			String line;
+//			Boolean skip = Boolean.TRUE;
+//
+//			while (Objects.nonNull((line = reader.readLine()))) {
+//				if (skip) {
+//					skip = !skip;
+//					continue;
+//				}
+//
+//				String[] s = line.split(";");
+//				String codItem = s[0];
+//				String modelo = s[1];
+//				String variacao = s[2];
+//				String descricao = s[3];
+//				itemController.insertItem(codItem, modelo, variacao, descricao, Boolean.TRUE);
+//			}
+//			Alerts.showAlert("Sucesso", null, "Operação realizada com sucesso.", AlertType.INFORMATION);
+//			reader.close();
+//		} catch (IOException | SQLException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	@FXML

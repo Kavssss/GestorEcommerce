@@ -352,7 +352,7 @@ public class ModalInserirController implements Initializable {
 		Long idDado = !txtIdDado.getText().isBlank() ? Long.valueOf(txtIdDado.getText()) : null;
 
 		if (Objects.isNull(canal)) {
-			Alerts.showAlert("Canal não encontrado", "ERRO", Constants.MESSAGE.CANAL_NAO_PREENCHIDO,
+			Alerts.showAlert("Canal não encontrado", Constants.MESSAGE.CANAL_NAO_PREENCHIDO,
 					AlertType.INFORMATION);
 			return;
 		}
@@ -364,7 +364,7 @@ public class ModalInserirController implements Initializable {
 				else if (canal.equals(Constants.LOJA.MERCADO_LIVRE))
 					mercadoLivreController.deleteVenda(idVenda, idDado);
 		} catch (SQLException e) {
-			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert(null, e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 		LoadScene.getModalStage().close();
@@ -394,15 +394,14 @@ public class ModalInserirController implements Initializable {
 				: CalculaTotalERecebido.calculaRecebidoML(valorUnitario, qtde, tipoAnuncio, custoFrete);
 
 		if (Objects.isNull(nomeCliente) && Objects.isNull(usuarioCliente)) {
-			Alerts.showAlert("Campos não preenchidos", "ERRO", Constants.MESSAGE.NOME_OU_USUARIO_NAO_PREENCHIDO,
-					AlertType.INFORMATION);
+			Alerts.showAlert(null, Constants.MESSAGE.NOME_OU_USUARIO_NAO_PREENCHIDO, AlertType.INFORMATION);
 			return;
 		}
 		
 		if (Objects.isNull(canal) || Objects.isNull(data) || Objects.isNull(status) || Objects.isNull(codItem)
 				|| Objects.isNull(qtde) || Objects.isNull(valorUnitario)
 				|| (canal.equals(Constants.LOJA.MERCADO_LIVRE) && Objects.isNull(tipoAnuncio))) {
-			Alerts.showAlert("Campos não preenchidos", "ERRO", Constants.MESSAGE.CAMPOS_NAO_PREENCHIDOS, AlertType.INFORMATION);
+			Alerts.showAlert(null, Constants.MESSAGE.CAMPOS_NAO_PREENCHIDOS, AlertType.INFORMATION);
 			return;
 		}
 
@@ -417,7 +416,7 @@ public class ModalInserirController implements Initializable {
 					return;
 				}
 			} catch (SQLException e) {
-				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+				Alerts.showAlert(null, e.getMessage(), AlertType.ERROR);
 				e.printStackTrace();
 			}
 			if (linhasVisiveis > 1)
@@ -439,7 +438,7 @@ public class ModalInserirController implements Initializable {
 					return;
 				}
 			} catch (SQLException e) {
-				Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+				Alerts.showAlert(null, e.getMessage(), AlertType.ERROR);
 				e.printStackTrace();
 			}
 			if (linhasVisiveis > 1)
@@ -451,7 +450,7 @@ public class ModalInserirController implements Initializable {
 			if (linhasVisiveis > 4)
 				inserirOutrosItensML(cbItem5, cbTipoAnuncio5, txtQtde5, txtValorUnitario5);
 		}
-		Alerts.showAlert("Sucesso", "INSERIDO COM SUCESSO", null, AlertType.INFORMATION);
+		Alerts.showAlert("INSERIDO COM SUCESSO", null, AlertType.INFORMATION);
 		LoadScene.getModalStage().close();
 		buscaAutomatica();
 	}
@@ -466,7 +465,7 @@ public class ModalInserirController implements Initializable {
 		try {
 			shopeeController.insertItemVenda(codItem, qtde, valorUnitario, valorTotal, valorRecebido, Boolean.FALSE);
 		} catch (SQLException e) {
-			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert(null, e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}
@@ -485,7 +484,7 @@ public class ModalInserirController implements Initializable {
 			mercadoLivreController.insertItemVenda(codItem, tipoAnuncio, custoFrete, qtde, valorUnitario, valorTotal,
 					valorRecebido);
 		} catch (SQLException e) {
-			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert(null, e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}

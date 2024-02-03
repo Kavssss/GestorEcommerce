@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import backend.controllers.UsuarioController;
+import backend.controllers.LoginController;
 import frontend.utils.LoadScene;
 import frontend.views.utils.CSS;
 import frontend.views.utils.Constraints;
@@ -20,7 +20,7 @@ import javafx.scene.layout.StackPane;
 
 public class ModalLoginController implements Initializable {
 
-	UsuarioController controller = new UsuarioController();
+	LoginController controller = new LoginController();
 	
 	@FXML
     private StackPane background;

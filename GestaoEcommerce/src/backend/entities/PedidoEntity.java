@@ -1,6 +1,7 @@
 package backend.entities;
 
 import java.sql.Date;
+import java.util.List;
 
 import backend.utils.CanalVenda;
 import backend.utils.StatusPedido;
@@ -21,5 +22,6 @@ public class PedidoEntity {
 	private Date data;
 	private CanalVenda canalVenda;
 	private StatusPedido statusPedido;
+	private List<VendaEntity> vendas;
 	
 }

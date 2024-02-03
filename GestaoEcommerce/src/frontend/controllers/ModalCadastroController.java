@@ -4,9 +4,9 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import backend.controllers.UsuarioController;
+import backend.controllers.LoginController;
+import backend.utils.TipoLogin;
 import frontend.utils.LoadScene;
-import frontend.utils.enums.TipoUsuario;
 import frontend.views.utils.Constraints;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +19,7 @@ import javafx.scene.control.ToggleButton;
 
 public class ModalCadastroController implements Initializable {
 
-	UsuarioController controller = new UsuarioController();
+	LoginController controller = new LoginController();
 	Boolean isAdmin = false;
 	
 	@FXML
@@ -55,7 +55,7 @@ public class ModalCadastroController implements Initializable {
     	String usuario = !txtUsuario.getText().isBlank() ? txtUsuario.getText() : null;
     	String senha = !txtSenha.getText().isBlank() ? txtSenha.getText().replaceAll(" ", "") : null;
     	String confirmaSenha = !txtConfirmarSenha.getText().isBlank() ? txtConfirmarSenha.getText() : null;
-    	TipoUsuario tipo;
+    	TipoLogin tipo;
     	
     	if (Objects.isNull(usuario)) {
     		displayErrorMessage("Usuário não pode ser vazio!");
@@ -78,7 +78,7 @@ public class ModalCadastroController implements Initializable {
     		return;
     	}
     	
-    	tipo = isAdmin ? TipoUsuario.ADMINISTRADOR : TipoUsuario.PADRAO;
+    	tipo = isAdmin ? TipoLogin.ADMINISTRADOR : TipoLogin.PADRAO;
     	controller.insertNewUser(usuario, senha, tipo);
     	LoadScene.getModalStage().close();
     }

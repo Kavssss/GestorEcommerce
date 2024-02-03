@@ -185,7 +185,7 @@ public class DashboardController implements Initializable {
 				valorPorMesML = mercadoLivreController.findValorTotalPorMes(ano, 7, 12);
 				prepareLineChart(valorPorMesShopee, valorPorMesML, TipoOperacao.SEMESTRAL_2);
 			} else {
-				Alerts.showAlert("Campo não preenchido", "Selecione o semestre", null, AlertType.INFORMATION);
+				Alerts.showAlert("Campo não preenchido", "Selecione o semestre", AlertType.INFORMATION);
 				return;
 			}
 		} else {

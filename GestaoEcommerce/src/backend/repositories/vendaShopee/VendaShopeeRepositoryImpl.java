@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import backend.controllers.ItemController;
+import backend.controllers.ProdutoController;
 import backend.dto.VendaShopeeDTO;
 import backend.entities.shopee.ItemShopeeEntity;
 import backend.entities.shopee.VendaShopeeEntity;
@@ -21,7 +21,7 @@ import models.DbException;
 
 public class VendaShopeeRepositoryImpl extends DAO implements VendaShopeeRepository {
 
-	ItemController itemController = new ItemController();
+	ProdutoController itemController = new ProdutoController();
 
 	PreparedStatement preparedStatement;
 	ResultSet resultSet;

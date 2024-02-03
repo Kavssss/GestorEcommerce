@@ -18,7 +18,19 @@ public class ProdutoEntity {
 	private String modelo;
 	private String variacao;
 	private String descricao;
-	private Boolean isAtivo;
 	private Integer estoque;
-	
+	private Boolean isAtivo;
+
+	public ProdutoEntity(Long id, String codItem, Integer categoria, String modelo, String variacao, String descricao,
+			Integer estoque, Boolean isAtivo) {
+		this.id = id;
+		this.codItem = codItem;
+		this.categoria = Categoria.obterPorValor(categoria);
+		this.modelo = modelo;
+		this.variacao = variacao;
+		this.descricao = descricao;
+		this.estoque = estoque;
+		this.isAtivo = isAtivo;
+	}
+
 }

@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import backend.controllers.ItemController;
+import backend.controllers.ProdutoController;
 import backend.dto.VendaMercadoLivreDTO;
 import backend.entities.mercadoLivre.ItemMercadoLivreEntity;
 import backend.entities.mercadoLivre.VendaMercadoLivreEntity;
@@ -22,7 +22,7 @@ import models.DbException;
 
 public class VendaMercadoLivreRepositoryImpl extends DAO implements VendaMercadoLivreRepository {
 
-	ItemController itemController = new ItemController();
+	ProdutoController itemController = new ProdutoController();
 
 	PreparedStatement preparedStatement;
 	ResultSet resultSet;

@@ -57,7 +57,7 @@ public class ModalTaxasController implements Initializable {
 //		Double frete = !txtFrete.getText().isBlank() ? Double.valueOf(txtFrete.getText()) : null;
 
 		if (Objects.isNull(canal) || Objects.isNull(custoFixo) || Objects.isNull(taxa)) {
-			Alerts.showAlert("Informações incompletas", "Preencha todos os campos", null, AlertType.ERROR);
+			Alerts.showAlert("Preencha todos os campos!", null, AlertType.ERROR);
 			return;
 		}
 
@@ -68,7 +68,7 @@ public class ModalTaxasController implements Initializable {
 		else if (canal.equals(Constants.LOJA.MERCADO_LIVRE_PREMIUM))
 			Taxas.buildTaxasMLPremium(taxa, custoFixo);
 
-		Alerts.showAlert("Sucesso", "Taxas atualizadas com sucesso", null, AlertType.INFORMATION);
+		Alerts.showAlert("Taxas atualizadas com sucesso", null, AlertType.INFORMATION);
 		LoadScene.getModalStage().close();
 	}
 

@@ -5,8 +5,9 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import backend.controllers.ItemController;
-import backend.entities.ItemEntity;
+import backend.controllers.ProdutoController;
+import backend.entities.ProdutoEntity;
+import backend.utils.Categoria;
 import frontend.utils.Constants;
 import frontend.utils.LoadScene;
 import frontend.views.utils.Alerts;
@@ -19,7 +20,7 @@ import javafx.scene.control.TextField;
 
 public class ModalProdutoController implements Initializable {
 
-	ItemController itemController = new ItemController();
+	ProdutoController controller = new ProdutoController();
 
 	@FXML
 	private Button btnX;
@@ -64,11 +65,11 @@ public class ModalProdutoController implements Initializable {
 
 		try {
 			if (btnDesativar.getText().equals("ATIVAR"))
-				itemController.enableProduto(idItem);
+				controller.setFlagProduto(idItem, 1);
 			else if (btnDesativar.getText().equals("DESATIVAR"))
-				itemController.disableProduto(idItem);
+				controller.setFlagProduto(idItem, 0);
 		} catch (SQLException e) {
-			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("ERRO", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}
@@ -77,38 +78,40 @@ public class ModalProdutoController implements Initializable {
 	void onSalvarAction(ActionEvent event) {
 		Long idItem = !txtIdItem.getText().isBlank() ? Long.valueOf(txtIdItem.getText()) : null;
 		String codItem = !txtCodItem.getText().isBlank() ? txtCodItem.getText() : null;
+		Categoria categoria = Categoria.obterPorValor(null); //Colocar o valor que vem aqui
 		String modelo = !txtModelo.getText().isBlank() ? txtModelo.getText() : null;
 		String variacao = !txtVariacao.getText().isBlank() ? txtVariacao.getText() : null;
 		String descricao = !txtDescricao.getText().isBlank() ? txtDescricao.getText() : null;
+		Integer estoque = null; //Colocar valor aqui
 
-		if (Objects.isNull(codItem) || Objects.isNull(descricao)) {
-			Alerts.showAlert("Campos não preenchidos", "ERRO", Constants.MESSAGE.CAMPOS_NAO_PREENCHIDOS,
-					AlertType.INFORMATION);
+		if (Objects.isNull(codItem) || Objects.isNull(descricao) || Objects.isNull(categoria)) {
+			Alerts.showAlert(null, Constants.MESSAGE.CAMPOS_NAO_PREENCHIDOS, AlertType.INFORMATION);
 			return;
 		}
 
 		try {
 			if (Objects.isNull(idItem)) {
-				itemController.insertItem(codItem, modelo, variacao, descricao, Boolean.FALSE);
+				controller.insertProduto(codItem, categoria, modelo, variacao, descricao, estoque, Boolean.FALSE);
 			} else {
-				itemController.editItem(idItem, codItem, modelo, variacao, descricao);
+				controller.editProduto(idItem, codItem, modelo, variacao, descricao, estoque);
 			}
 			LoadScene.getModalStage().close();
 		} catch (SQLException e) {
-			Alerts.showAlert("SQL Exception", "ERRO", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert(null, e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}
-
+	
+	// ajustar os novos campos
 	public void updateFieldsEdit(Long id) {
 		try {
-			ItemEntity item = itemController.findById(id);
-			txtIdItem.setText(item.getId().toString());
-			txtCodItem.setText(item.getCodItem());
-			txtModelo.setText(item.getCodItem().split("-")[0]);
-			txtVariacao.setText(item.getCodItem().split("-")[1]);
-			txtDescricao.setText(item.getDescricao());
-			btnDesativar.setText(item.getIsAtivo() ? "DESATIVAR" : "ATIVAR");
+			ProdutoEntity produto = controller.findById(id);
+			txtIdItem.setText(produto.getId().toString());
+			txtCodItem.setText(produto.getCodItem());
+			txtModelo.setText(produto.getCodItem().split("-")[0]);
+			txtVariacao.setText(produto.getCodItem().split("-")[1]);
+			txtDescricao.setText(produto.getDescricao());
+			btnDesativar.setText(produto.getIsAtivo() ? "DESATIVAR" : "ATIVAR");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -76,7 +76,7 @@ public class LoadScene {
 		try {
 			buildModal(parentStage, currentClass, Constants.MODAL.INSERIR_VENDA, "Inserir venda", false);
 		} catch (IOException e) {
-			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("ERROR", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}
@@ -85,7 +85,7 @@ public class LoadScene {
 		try {
 			buildModal(parentStage, currentClass, Constants.MODAL.LOGIN, "Login", true);
 		} catch (IOException e) {
-			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("ERROR", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}
@@ -94,7 +94,7 @@ public class LoadScene {
 		try {
 			buildModal(parentStage, currentClass, Constants.MODAL.CADASTRO, "Cadastrar", false);
 		} catch (IOException e) {
-			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("ERROR", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}
@@ -136,7 +136,7 @@ public class LoadScene {
 			setModalStage(modalStage);
 			modalStage.showAndWait();
 		} catch (IOException e) {
-			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("ERROR", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}
@@ -145,7 +145,7 @@ public class LoadScene {
 		try {
 			buildModal(parentStage, currentClass, Constants.MODAL.INSERIR_PRODUTO, "Inserir produto", false);
 		} catch (IOException e) {
-			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("ERROR", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}
@@ -168,7 +168,7 @@ public class LoadScene {
 			setModalStage(modalStage);
 			modalStage.showAndWait();
 		} catch (IOException e) {
-			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("ERROR", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}
@@ -177,7 +177,7 @@ public class LoadScene {
 		try {
 			buildModal(parentStage, currentClass, Constants.MODAL.TAXAS, "Opções", false);
 		} catch (IOException e) {
-			Alerts.showAlert("IO Exception", "ERROR", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("ERROR", e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}
