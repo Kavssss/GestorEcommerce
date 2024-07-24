@@ -188,6 +188,7 @@ public class ViewVendasController implements Initializable {
 			cbTipoAnuncio.setPromptText("-");
 			cbTipoAnuncio.setItems(null);
 		}
+		
 	}
 
 	@FXML
@@ -389,12 +390,10 @@ public class ViewVendasController implements Initializable {
 	@SuppressWarnings("resource")
 	@FXML
 	void onInserirEmMassaAction(ActionEvent event) {
-		Alerts.showAlert("Inserção em massa", null, "Selecione o arquivo do tipo CSV (Separado por vírgulas)",
-				AlertType.INFORMATION);
+		Alerts.showAlert("Inserção em massa", null, "Selecione o arquivo do tipo CSV (Separado por vírgulas)", AlertType.INFORMATION);
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Selecione um arquivo");
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo Separado por Vírgulas(*.csv)",
-				"*.csv");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo Separado por Vírgulas(*.csv)", "*.csv");
 		fileChooser.getExtensionFilters().add(extFilter);
 
 		File file = fileChooser.showOpenDialog(Constraints.currentStage(event));

@@ -109,7 +109,7 @@ public class DashboardController implements Initializable {
 		cbMes.setItems(FXCollections.observableArrayList(DataUtils.getListMeses()));
 		cbAno.setValue(Constants.ANO._2023);
 		labelPor.setText("Por Ano");
-		atualizaDados();
+		//atualizaDados();
 	}
 
 	@FXML
